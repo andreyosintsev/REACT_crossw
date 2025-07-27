@@ -36,45 +36,45 @@ function App() {
   const loadTask = () => {
     console.log('In loadTask');
     //////////////////////////////////////////////////////////////////
-    // const data = {    
-    //   "task": [
-    //     "0", "0", "1", "0", "0", "0", "0", "1", "0",
-    //     "0", "1", "0", "1", "0", "0", "1", "0", "1",
-    //     "1", "1", "1", "1", "1", "0", "1", "0", "1",
-    //     "1", "0", "0", "0", "1", "0", "0", "1", "0",
-    //     "1", "0", "0", "0", "1", "0", "0", "1", "0",
-    //     "1", "1", "1", "1", "1", "0", "0", "1", "0"
-    //   ],
-    //   "width": 9,
-    //   "height": 6,
-    //   "success": "true"
-    // };
+    const data = {    
+      "task": [
+        "0", "0", "1", "0", "0", "0", "0", "1", "0",
+        "0", "1", "0", "1", "0", "0", "1", "0", "1",
+        "1", "1", "1", "1", "1", "0", "1", "0", "1",
+        "1", "0", "0", "0", "1", "0", "0", "1", "0",
+        "1", "0", "0", "0", "1", "0", "0", "1", "0",
+        "1", "1", "1", "1", "1", "0", "0", "1", "0"
+      ],
+      "width": 9,
+      "height": 6,
+      "success": "true"
+    };
 
-    // saveTaskToLocalStorage(data);
-    // setLoading({ isLoading: false, hasError: false, isLoaded: true });
+    saveTaskToLocalStorage(data);
+    setLoading({ isLoading: false, hasError: false, isLoaded: true });
     //////////////////////////////////////////////////////////////////
-    try {  
-      request('/'
-      )
-      .then(data=> {
-        console.log('In loadTask: then');
-        console.log('APP loadTask: task loaded');
-        saveTaskToLocalStorage(data);
-        console.log('In loadTask: saved to localStorage');
-        setLoading({ isLoading: false, hasError: false, isLoaded: true });
-      })
-      .catch((error) => {
-        console.log('In loadTask: error');
-        console.error (`Ошибка Promise: ${error}`);
-        setLoading({ isLoading: false, hasError: true, isLoaded: false});
-        setModalShow(true);
-      });
-    } catch (error) {
-      console.log('In loadTask: catch error');
-      console.error((`Не удалось получить task от API: ${error.message}`));
-      setLoading({ isLoading: false, hasError: true, isLoaded: false});
-      setModalShow(true);
-    }
+    // try {  
+    //   request('/'
+    //   )
+    //   .then(data=> {
+    //     console.log('In loadTask: then');
+    //     console.log('APP loadTask: task loaded');
+    //     saveTaskToLocalStorage(data);
+    //     console.log('In loadTask: saved to localStorage');
+    //     setLoading({ isLoading: false, hasError: false, isLoaded: true });
+    //   })
+    //   .catch((error) => {
+    //     console.log('In loadTask: error');
+    //     console.error (`Ошибка Promise: ${error}`);
+    //     setLoading({ isLoading: false, hasError: true, isLoaded: false});
+    //     setModalShow(true);
+    //   });
+    // } catch (error) {
+    //   console.log('In loadTask: catch error');
+    //   console.error((`Не удалось получить task от API: ${error.message}`));
+    //   setLoading({ isLoading: false, hasError: true, isLoaded: false});
+    //   setModalShow(true);
+    // }
     //////////////////////////////////////////////////////////////////
   };
 

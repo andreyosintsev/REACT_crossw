@@ -1,4 +1,5 @@
-export const API = '/api/api.php';
+export const API = 'http://crossw.ru/task.php?task=1';
+
 
 const checkFetchResponse = (res) => {
   return res.ok 
@@ -13,6 +14,7 @@ const checkSuccess = (data) => {
 };
 
 const request = (endpoint, options) => {
+  console.log('request: ', `${API}${endpoint}`);
   return fetch(`${API}${endpoint}`, options)
     .then(checkFetchResponse)
     .then(checkSuccess);
