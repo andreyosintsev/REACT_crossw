@@ -1,0 +1,22 @@
+@import "../../declarations/constants.module.scss";
+
+.news__items {
+    padding: 0;
+}
+
+.entry {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+
+    margin-bottom: 4px;
+    padding-left: 0;
+
+    list-style: none;
+}
+
+.entry__date {
+    margin-right: 10px;
+
+    font-weight: bold;
+}

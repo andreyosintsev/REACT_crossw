@@ -1,3 +1,30 @@
-title {
-    font-size: 16px;
+.header {
+    display: flex;
+    width: 100%;
+    height: 48px;
+    margin-bottom: 20px;
+    padding: 0 20px;
+
+    background-color: var(--background-white);
+}
+
+.header__wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    max-width: 1440px;
+    margin: auto;
+}
+
+.headertitle {
+    display: flex;
+    align-items: center;
+}
+
+.headertitle__link {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    text-decoration: none;
 }

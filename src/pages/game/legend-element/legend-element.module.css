@@ -1,0 +1,17 @@
+.le {
+    float: left;
+    width: 24px;
+    height: 24px;
+    border-right: 1px solid #DDDDDD;
+    border-bottom: 1px solid rgb(221, 221, 221);
+    background-color: #F7F7F7;
+}
+.border_right {
+    border-right: 1px solid rgb(153, 153, 153);
+}
+.border_bottom {
+  border-bottom: 1px solid #999999;
+}
+.contented {
+  background-color: rgb(206, 206, 206);
+}

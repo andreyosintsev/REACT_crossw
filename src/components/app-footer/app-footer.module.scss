@@ -1,0 +1,17 @@
+.footer {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+
+    width: 100%;
+    max-width: 1440px;
+    height: 48px;
+    margin: 0 auto;
+    padding: 0 20px;
+
+    font-size: 14px;
+
+    line-height: 14px;
+
+    background-color: var(--background-white);
+}

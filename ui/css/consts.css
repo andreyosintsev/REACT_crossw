@@ -49,10 +49,17 @@
     Рамки
 */
     --border:                   var(--pink-offwhite);
+    --border-radius:            6px;
 
 
 /*
     Меню
 */
-    --menu-item:                   var(--text-second);
+    --menu-item:                var(--text-second);
+
+/*
+    Ссылки
+*/
+    --link:                     var(--text-second);
+    --link-hover:               var(--blue-medium);
 }

@@ -1,7 +1,12 @@
 .wrapper {
-    position: relative;
-    max-width: 1240px;
+    display: flex;
+    max-width: 1440px;
     height: 100%;
     margin: 0 auto;
-    background-color: #FFFFFF;
-  }
+}
+
+@media screen and (max-width: 1200px) {
+    .wrapper {
+        display: block;    
+    }
+}

@@ -1,29 +1,45 @@
-function saveBoardToLocalStorage(board) {
-  localStorage.setItem('crosswBoard', JSON.stringify(board));
+function saveBoardToLocalStorage(id, board) {
+    if (!id) {
+        console.error('saveBoardToLocalStorage: no id provided');
+        return;
+    }
+    if (!board) {
+        console.error('saveBoardToLocalStorage: no board provided');
+        return;
+    }    
+    localStorage.setItem('crosswBoard' + id, JSON.stringify(board));
 }
 
-function loadBoardFromLocalStorage() {
-  const board = localStorage.getItem('crosswBoard');
+function loadBoardFromLocalStorage(id) {
+  const board = localStorage.getItem('crosswBoard' + id);
   return board ? JSON.parse(board) : null;
 }
 
-function clearBoardInLocalStorage() {
-  console.log('clearBoard');
-  localStorage.removeItem('crosswBoard');
+function clearBoardInLocalStorage(id) {
+    console.log('clearBoardInLocalStorage: id: ' + id);
+    localStorage.removeItem('crosswBoard' + id);
 }
 
-function saveTaskToLocalStorage(board) {
-  localStorage.setItem('crosswTask', JSON.stringify(board));
+function saveTaskToLocalStorage(id, task) {
+    if (!id) {
+        console.error('saveTaskToLocalStorage: no id provided');
+        return;
+    }
+    if (!task) {
+        console.error('saveTaskToLocalStorage: no task provided');
+        return;
+    }    
+    localStorage.setItem('crosswTask' + id, JSON.stringify(task));
 }
 
-function loadTaskFromLocalStorage() {
-  const board = localStorage.getItem('crosswTask');
-  return board ? JSON.parse(board) : null;
+function loadTaskFromLocalStorage(id) {
+  const task = localStorage.getItem('crosswTask' + id);
+  return task ? JSON.parse(task) : null;
 }
 
-function clearTaskInLocalStorage() {
-  console.log('clearTask');
-  localStorage.removeItem('crosswTask');
+function clearTaskInLocalStorage(id) {
+  console.log('clearTaskInLocalStorage: id: ' + id);
+  localStorage.removeItem('crosswTask' + id);
 }
 
 function saveTasksToLocalStorage(board) {

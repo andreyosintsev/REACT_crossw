@@ -1,0 +1,13 @@
+@import "../../declarations/constants.module.scss";
+
+.logo {
+    margin-right: 10px;
+}
+
+.title {
+    color: var(--text-main);
+    font-size: 16px;
+    font-weight: bold;
+
+    text-transform: uppercase;
+}

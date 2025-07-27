@@ -1,13 +1,59 @@
+/*
+    ПРОЕКТ "CROSSW.RU - ЯПОНСКИЕ КРОССВОРДЫ"
+    ФАЙЛ СТИЛЕЙ
+
+    Последняя версия: 10.02.2024
+
+    UPD: начальная версия
+*/
+
+/*
+    Импорты
+*/
+
+@import "./declarations/constants.module.scss";
+@import "./normalize.css";
+
+
+/*
+    Страница в целом
+*/
+
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+
+    font-family: var(--base-font-family);
+    color: var(--text-main);
+
+    border-bottom: 1px solid var(--border);
+    
+    background-color: var(--background-pink);
+
+    scroll-behavior: smooth;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb);
+}
+
+body::-webkit-scrollbar-track {
+    background-color: var(--scrollbar-track);
+}
+
+body::-moz-scrollbar-button, ::-webkit-scrollbar-button {
+    display: none;
+    width: 0px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+
+.h2 {
+    font-size: 20px;
 }

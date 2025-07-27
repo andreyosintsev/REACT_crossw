@@ -1,0 +1,36 @@
+@import "../../declarations/constants.module.scss";
+
+.menumain {
+    font-size: 14px;
+    color: var(--text-second);    
+}
+
+.menumain__items {
+    display: flex;
+    list-style: none;
+}
+
+.menumain__item {
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.menumain__item:nth-last-child(1) {
+    margin-right: 0;
+}
+
+.menumain__link {
+    color: var(--menu-item);
+
+    text-decoration: none;
+}
+
+.menumain__link:hover {
+    color: var(--link-hover);
+}
+
+@media screen and (max-width: 768px) {
+    .menumain {
+        display: none;
+    }
+}
