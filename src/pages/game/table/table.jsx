@@ -11,12 +11,42 @@ import {  clearBoardInLocalStorage } from '../../../utils/local-storage';
 
 import TableStyles from './table.module.css';
 
+/**
+ * @component - Основной компонент игрового поля с легендами и логикой игры
+ * @param {Object} task - Объект задачи кроссворда
+ * @param {boolean} help - Флаг включения режима подсказок
+ * @returns {JSX.Element} Полное игровое поле с легендами и модальными окнами
+ * 
+ * @description
+ * Компонент реализует полную логику игры в кроссворд:
+ * - Создание горизонтальных и вертикальных легенд
+ * - Проверку победы
+ * - Управление состоянием игры
+ * - Отображение модальных окон
+ * - Интеграцию всех дочерних компонентов
+ * 
+ * @state
+ * @property {boolean} modalShow - Видимость модального окна
+ * @property {boolean} isWin - Флаг победы
+ * @property {Object} horizontalLegend - Данные горизонтальной легенды
+ * @property {Object} verticalLegend - Данные вертикальной легенды
+ * 
+ * @method createHorizontalLegend - Генерирует данные для горизонтальной легенды
+ * @method createVerticalLegend - Генерирует данные для вертикальной легенды
+ * @method checkWin - Проверяет решение на корректность
+ * @method closeHandler - Обрабатывает закрытие модального окна
+**/
 const Table = ({task, help}) => {
   const [modalShow, setModalShow] = useState(false);
   const [isWin, setWin] = useState(false);
   const [horizontalLegend, setHorizontalLegend] = useState(null);
   const [verticalLegend, setVerticalLegend] = useState(null);
 
+    /**
+     * Создает данные для горизонтальной легенды
+     * @param {Object} task - Объект задачи
+     * @returns {Object} Данные легенды {legend: Array, width: number, height: number}
+    **/
     const createHorizontalLegend = (task) => {
     let legend = [];
     let col = [];
@@ -67,6 +97,11 @@ const Table = ({task, help}) => {
     };
   };
 
+  /**
+   * Создает данные для вертикальной легенды
+   * @param {Object} task - Объект задачи
+   * @returns {Object} Данные легенды {legend: Array, width: number, height: number}
+  **/
   const createVerticalLegend = (task) => {
     let legend = [];
     let row = [];
@@ -119,6 +154,10 @@ const Table = ({task, help}) => {
     };
   };
 
+  /**
+   * Проверяет соответствие текущего поля решению
+   * @param {Array} board - Текущее состояние игрового поля
+  **/
   function checkWin (board) {
     if (board.length === 0) {
       setWin(false);
@@ -155,6 +194,10 @@ const Table = ({task, help}) => {
     console.log('Total Width: ' + ((Number.parseInt(verticalLegend.width) + Number.parseInt(task.width)) * 25 + 4));
   }, []);
 
+  /**
+   * Обрабатывает закрытие модального окна
+   * @param {Event} e - Событие
+  **/
   const closeHandler = (e) => {
     e.preventDefault();
     setModalShow(false);
