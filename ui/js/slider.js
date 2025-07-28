@@ -1,4 +1,27 @@
+/**
+ * @class - Класс для управления слайдером изображений
+ * @param {string} sliderId - ID контейнера слайдера
+ * @throws {Error} Если не передан ID или элементы слайдера не найдены
+ * 
+ * @description
+ * Реализует функциональность горизонтального слайдера с:
+ * - Плавной прокруткой
+ * - Кнопками навигации (влево/вправо)
+ * - Автоматическим расчетом размеров
+ * - Ограничением прокрутки по краям
+ * 
+ * @requires
+ * HTML-структура должна содержать:
+ * - Основной контейнер с ID
+ * - Элемент .slider__items для контента
+ * - Элементы .slider__item для слайдов
+ * - Кнопки .slider-button_left и .slider-button_right
+**/
 class Slider {
+    /**
+     * Создает экземпляр слайдера
+     * @param {string} sliderId - ID контейнера слайдера
+    **/
     constructor (sliderId) {
         if (!sliderId) {
             throw new Error('Slider id not supplied as constructor param');
@@ -21,18 +44,32 @@ class Slider {
         this.init();
     }
 
+    /**
+     * Рассчитывает ширину слайда с учетом margin
+     * @param {number} slideNum - Номер слайда
+     * @returns {number} Полная ширина слайда (включая margin)
+    **/
     getSlideWidthByNum(slideNum) {
         const marginLeft = Number.parseInt(getComputedStyle(this.slides[slideNum], true).marginLeft);
         const marginRight = Number.parseInt(getComputedStyle(this.slides[slideNum], true).marginRight);
         return this.slides[slideNum].offsetWidth + marginLeft + marginRight;   
     }
 
+    /**
+     * Рассчитывает ширину переданного слайда с учетом margin
+     * @param {HTMLElement} slide - Элемент слайда
+     * @returns {number} Полная ширина слайда (включая margin)
+    **/
     getSlideWidthBySlide(slide) {
         const marginLeft = Number.parseInt(getComputedStyle(slide, true).marginLeft);
         const marginRight = Number.parseInt(getComputedStyle(slide, true).marginRight);
         return slide.offsetWidth + marginLeft + marginRight;   
     }
 
+    /**
+     * Инициализирует слайдер
+     * @private
+    **/
     init() {
         this.sliderWidth = this.slider.clientWidth;
         this.slidesWidth = 0
@@ -49,6 +86,10 @@ class Slider {
         this.buttonRight.addEventListener('click', () => this.slideRight());
     }
 
+    /**
+     * Прокручивает слайдер влево
+     * @private
+    **/
     slideLeft() {
         console.log('sliderLeft()');
         console.log('sliderStart: ', this.sliderStart);
@@ -59,6 +100,10 @@ class Slider {
         this.slider.scroll({top: 0, left: this.sliderStart, behavior: "smooth"});
     }
 
+    /**
+     * Прокручивает слайдер вправо
+     * @private
+    **/
     slideRight() {
         console.log('sliderRight()');
         console.log('sliderStart: ', this.sliderStart);
@@ -72,6 +117,7 @@ class Slider {
     }
 }
 
+// Автоматическая инициализация слайдеров после загрузки страницы
 document.addEventListener('DOMContentLoaded', () => {
     new Slider('slider-new');
     new Slider('slider-solved');
