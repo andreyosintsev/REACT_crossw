@@ -36,7 +36,7 @@ import TableStyles from './table.module.css';
  * @method checkWin - Проверяет решение на корректность
  * @method closeHandler - Обрабатывает закрытие модального окна
 **/
-const Table = ({task, help}) => {
+const Table = ({task, help, onRestart}) => {
   const [modalShow, setModalShow] = useState(false);
   const [isWin, setWin] = useState(false);
   const [horizontalLegend, setHorizontalLegend] = useState(null);
@@ -200,6 +200,7 @@ const Table = ({task, help}) => {
   **/
   const closeHandler = (e) => {
     e.preventDefault();
+    onRestart(); // @tudo: Добавлена очистка поля
     setModalShow(false);
     setWin(false);
   };

@@ -38,6 +38,7 @@ const Controls = ({onRestart, onHelp}) => {
    * @param {MouseEvent} e - Событие клика
   **/
   const restartHandler = (e) => {
+    console.log(e, 'restartHandler')
     e.preventDefault();
     setModalShow(true);
   };
@@ -56,6 +57,7 @@ const Controls = ({onRestart, onHelp}) => {
    * @param {MouseEvent} e - Событие клика
   **/
   const dialogRestartHandler = (e) => {
+    console.log(e, 'dialogRestartHandler')
     setModalShow(false);
     onRestart(e);
   };

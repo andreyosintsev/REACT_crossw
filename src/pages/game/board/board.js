@@ -39,9 +39,12 @@ const Board = ({ taskId, width, height, checkWin, help }) => {
   const [board, setBoard] = useState([]);
 
   useEffect(() => {
-    initBoard(help);
     checkWin(board);
-  }, [checkWin, board]);
+  }, [checkWin, board]);  // @tudo: убирает ошибку перерендиренга, вынася initBoar в отдельный вызов
+
+  useEffect(() => {
+    initBoard(help);
+  }, [help])
 
   /**
    * Обработчик кликов по игровому полю

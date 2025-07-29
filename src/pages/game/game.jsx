@@ -108,17 +108,17 @@ const Game = () => {
   };
 
     const restartHandler = (e) => {
-        clearBoardInLocalStorage();
+        clearBoardInLocalStorage(taskNumber); // @tudo: Добавлен номер игрового поля для очистки
         clearTaskInLocalStorage();
         setHelp(false);
         setTaskLoading({ isLoading: true, hasError: false, isLoaded: true });
-        loadTask();
+        loadTask(taskNumber); // @tudo: Добавлен номер игрового поля для очистки
         loadTasks();
         setRestart(true);
     };
 
   const helpHandler = () => {
-    const data = loadTaskFromLocalStorage();
+    const data = loadTaskFromLocalStorage(taskNumber); // @tudo: добавлен номер игрового поля
     let help = {};
     let pos = 0;
     if (data && data.task) {
@@ -168,7 +168,7 @@ const Game = () => {
             {
                 !taskLoading.isLoading && !taskLoading.hasError && task && (
                     <PageBlock title = { "Кроссворд № " + taskNumber }>
-                        <Table task = {task} help = {isHelp} />
+                        <Table task = {task} help = {isHelp}  onRestart={restartHandler} />
                         <Controls onRestart={restartHandler} onHelp={helpHandler} />
                     </PageBlock>
                 )
