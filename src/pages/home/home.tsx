@@ -7,10 +7,12 @@ import PageNews from '../../components/page-news/page-news';
 import IHome from './home.interface';
 import styles from './home.module.scss';
 
-import { apiGetTasks } from '../../utils/api';
+import { Api } from '../../utils/api';
 
 import { SITE_PROTOCOL, SITE_DOMAIN } from '../../declarations/constants';
-import { ITask, ITasks } from '../../types/api.interface';
+import { ITask } from '../../types/api.interface';
+
+const api = new Api();
 
 /**
  * @component - Главная страница приложения с японскими кроссвордами
@@ -62,7 +64,7 @@ const Home: FC<IHome> = () => {
     })
 
     try {
-      apiGetTasks(10)
+      api.apiGetTasks(10)
         .then(data => {
           setTasksLoading({
             isLoading: false,

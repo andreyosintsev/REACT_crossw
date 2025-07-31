@@ -1,12 +1,15 @@
 import { Fragment, useState, useEffect } from "react";
 import BoardElement from "../board-element/board-element";
 
-import {
-  saveBoardToLocalStorage,
-  loadBoardFromLocalStorage
-} from "../../../utils/local-storage";
-
+// import {
+  //   saveBoardToLocalStorage,
+  //   loadBoardFromLocalStorage
+  // } from "../../../utils/local-storage";
+  
 import BoardStyles from "./board.module.css";
+import { LocalStorage } from "../../../utils/local-storage";
+
+const localStorage = new LocalStorage();
 
 /**
  * @component - Компонент игрового поля для кроссворда/судоку
@@ -39,12 +42,12 @@ const Board = ({ taskId, width, height, checkWin, help }) => {
   const [board, setBoard] = useState([]);
 
   useEffect(() => {
-    checkWin(board);
-  }, [checkWin, board]);  // @tudo: убирает ошибку перерендиренга, вынася initBoar в отдельный вызов
+      checkWin(board);
+  }, [checkWin, board]);  
 
   useEffect(() => {
     initBoard(help);
-  }, [help])
+  }, [help]); // @tudo: убирает ошибку перерендиренга, вынася initBoar в отдельный вызов
 
   /**
    * Обработчик кликов по игровому полю
@@ -57,7 +60,7 @@ const Board = ({ taskId, width, height, checkWin, help }) => {
     const y = +e.target.dataset.y;
 
     let newBoard = [...board];
-
+    console.log(board)
     switch (e.button) {
       case 0: // ЛКМ
         newBoard[y * width + x].content =
@@ -72,7 +75,7 @@ const Board = ({ taskId, width, height, checkWin, help }) => {
           board[y * width + x].content !== "X" ? "X" : "0";
     }
     setBoard(newBoard);
-    saveBoardToLocalStorage(taskId, newBoard);
+    localStorage.saveBoardToLocalStorage(taskId, newBoard);
   };
 
   /**
@@ -82,7 +85,7 @@ const Board = ({ taskId, width, height, checkWin, help }) => {
   const initBoard = (help) => {
     console.log('BOARD: initBoard');
     console.log('BOARD: help: ', help);
-    const newBoard = loadBoardFromLocalStorage(taskId) || [];
+    const newBoard = localStorage.loadBoardFromLocalStorage(taskId) || [];
 
     if (newBoard.length === 0) {
       for (let y = 0; y < height; y++) {
@@ -108,7 +111,7 @@ const Board = ({ taskId, width, height, checkWin, help }) => {
     }
 
     setBoard(newBoard);
-    saveBoardToLocalStorage(taskId, newBoard);
+    localStorage.saveBoardToLocalStorage(taskId, newBoard);
   };
 
   return (

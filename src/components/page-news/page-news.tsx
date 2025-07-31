@@ -4,8 +4,10 @@ import { v4 as uuid } from 'uuid';
 import IPageNews from './page-news.interface';
 import styles from './page-news.module.scss';
 
-import { apiGetNews } from '../../utils/api';
+import { Api } from '../../utils/api';
 import { INews } from '../../types/api.interface';
+
+const api = new Api();
 
 /**
  * @component - Компонент блока новостей сайта
@@ -55,7 +57,7 @@ const PageBlock: FC<IPageNews> = () => {
     })
 
     try {
-      apiGetNews()
+      api.apiGetNews()
         .then(data => {
           setNewsLoading({
             isLoading: false,

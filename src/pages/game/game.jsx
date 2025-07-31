@@ -11,16 +11,15 @@ import Controls from './controls/controls';
 import ModalButton from '../../components/modal-button/modal-button';
 import Tasks from './tasks/tasks';
 
-import {  apiGetTask,
-          apiGetTasks } from '../../utils/api';
+import {
+  Api
+} from '../../utils/api';
 
-import {  loadTaskFromLocalStorage, 
-          saveTaskToLocalStorage,
-          clearTaskInLocalStorage,
-          loadTasksFromLocalStorage, 
-          saveTasksToLocalStorage,
-          clearTasksInLocalStorage,
-          clearBoardInLocalStorage } from '../../utils/local-storage';
+import { LocalStorage } from '../../utils/local-storage'
+
+const localStorage = new LocalStorage();
+const api = new Api();
+
 
 const Game = () => {
   const [taskLoading, setTaskLoading] = useState({
@@ -52,11 +51,11 @@ const Game = () => {
   const loadTasks = () => {
     console.log("In loadTasks");
     try {
-      apiGetTasks("")
+      api.apiGetTasks("")
         .then((data) => {
           console.log("In loadTasks: then");
           console.log("APP loadTasks: tasks loaded");
-          saveTasksToLocalStorage(data);
+          localStorage.saveTasksToLocalStorage(data);
           console.log("In loadTasks: saved to localStorage");
           setTasksLoading({
             isLoading: false,
@@ -85,11 +84,12 @@ const Game = () => {
   const loadTask = (taskNumber) => {
     console.log("In loadTask");
     try {
-      apiGetTask(taskNumber)
+      api.apiGetTask(taskNumber)
         .then((data) => {
+          console.log(data, 'data')
           console.log("GAME: loadTask: then");
           console.log("GAME: loadTask: task loaded");
-          saveTaskToLocalStorage(taskNumber, data);
+          localStorage.saveTaskToLocalStorage(taskNumber, data);
           console.log("GAME: loadTask: saved to localStorage");
           setTaskLoading({ isLoading: false, hasError: false, isLoaded: true });
         })
@@ -107,18 +107,18 @@ const Game = () => {
     }
   };
 
-    const restartHandler = (e) => {
-        clearBoardInLocalStorage(taskNumber); // @tudo: Добавлен номер игрового поля для очистки
-        clearTaskInLocalStorage();
-        setHelp(false);
-        setTaskLoading({ isLoading: true, hasError: false, isLoaded: true });
-        loadTask(taskNumber); // @tudo: Добавлен номер игрового поля для очистки
-        loadTasks();
-        setRestart(true);
-    };
+  const restartHandler = (e) => {
+    localStorage.clearBoardInLocalStorage(taskNumber); // @tudo: Добавлен номер игрового поля для очистки
+    localStorage.clearTaskInLocalStorage();
+    setHelp(false);
+    setTaskLoading({ isLoading: true, hasError: false, isLoaded: true });
+    loadTask(taskNumber); // @tudo: Добавлен номер игрового поля для очистки
+    loadTasks();
+    setRestart(true);
+  };
 
   const helpHandler = () => {
-    const data = loadTaskFromLocalStorage(taskNumber); // @tudo: добавлен номер игрового поля
+    const data = localStorage.loadTaskFromLocalStorage(taskNumber); // @tudo: добавлен номер игрового поля
     let help = {};
     let pos = 0;
     if (data && data.task) {
@@ -140,8 +140,8 @@ const Game = () => {
     console.log("GAME: REDRAW!!");
     console.log("GAME: taskNumber: " + taskNumber);
 
-    setTask(loadTaskFromLocalStorage(taskNumber));
-    
+    setTask(localStorage.loadTaskFromLocalStorage(taskNumber));
+
     if (!task) {
       console.log("GAME: No Task In LocalStorage, loading");
       setTaskLoading({ isLoading: true, hasError: false, isLoaded: false });
@@ -161,33 +161,33 @@ const Game = () => {
 
   return (
     <>
-        <aside>
-            <Tasks />
-        </aside>
-        <main className={AppStyles.main}>
-            {
-                !taskLoading.isLoading && !taskLoading.hasError && task && (
-                    <PageBlock title = { "Кроссворд № " + taskNumber }>
-                        <Table task = {task} help = {isHelp}  onRestart={restartHandler} />
-                        <Controls onRestart={restartHandler} onHelp={helpHandler} />
-                    </PageBlock>
-                )
-            }
-            {
-                taskLoading.isLoading && <Preloader />
-            }
-            {
-                taskLoading.hasError && isModalShow && (
-                    <Modal
-                        image="modal1.png"
-                        title="Ошибка загрузки кроссворда."
-                        onClick={closeHandler}
-                    >
-                        <ModalButton onClick={closeHandler}>Закрыть</ModalButton>
-                    </Modal>
-                )
-            }
-        </main>
+      <aside>
+        <Tasks />
+      </aside>
+      <main className={AppStyles.main}>
+        {
+          !taskLoading.isLoading && !taskLoading.hasError && task && (
+            <PageBlock title={"Кроссворд № " + taskNumber}>
+              <Table task={task} help={isHelp} onRestart={restartHandler} />
+              <Controls onRestart={restartHandler} onHelp={helpHandler} />
+            </PageBlock>
+          )
+        }
+        {
+          taskLoading.isLoading && <Preloader />
+        }
+        {
+          taskLoading.hasError && isModalShow && (
+            <Modal
+              image="modal1.png"
+              title="Ошибка загрузки кроссворда."
+              onClick={closeHandler}
+            >
+              <ModalButton onClick={closeHandler}>Закрыть</ModalButton>
+            </Modal>
+          )
+        }
+      </main>
     </>
   );
 };
