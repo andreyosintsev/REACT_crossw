@@ -6,6 +6,7 @@ import styles from './page-menu-main.module.scss';
 
 const PageMenuMain: FC<IPageMenuMain> = ({ menuItems }) => {
 
+<<<<<<< HEAD
     return (
         <div className = { styles.menumain }>
             <ul className = { styles.menumain__items }>
@@ -26,6 +27,27 @@ const PageMenuMain: FC<IPageMenuMain> = ({ menuItems }) => {
             </ul>
         </div>
     );
+=======
+  return (
+    <div className={styles.menumain}>
+      <ul className={styles.menumain__items}>
+        {
+          menuItems.map(menuItem => (
+            <li key={uuid()} className={styles.menumain__item}>
+              <a
+                className={styles.menumain__link}
+                href={menuItem.link}
+                title={menuItem.title}>
+                {menuItem.title}
+              </a>
+            </li>
+          )
+          )
+        }
+      </ul>
+    </div>
+  );
+>>>>>>> 65b6eeb (feat<ts>: local-storage moved to ts)
 }
 
 export default PageMenuMain

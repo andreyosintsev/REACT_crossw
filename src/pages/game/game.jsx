@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 
 import AppStyles from './game.module.scss';
@@ -11,6 +11,7 @@ import Controls from './controls/controls';
 import ModalButton from '../../components/modal-button/modal-button';
 import Tasks from './tasks/tasks';
 
+<<<<<<< HEAD
 import {  apiGetTask,
           apiGetTasks } from '../../utils/api';
 
@@ -21,26 +22,56 @@ import {  loadTaskFromLocalStorage,
           saveTasksToLocalStorage,
           clearTasksInLocalStorage,
           clearBoardInLocalStorage } from '../../utils/local-storage';
+=======
+import * as Api from '../../utils/api';
+
+import { LocalStorage } from '../../utils/local-storage'
+const localStorage = new LocalStorage();
+>>>>>>> 65b6eeb (feat<ts>: local-storage moved to ts)
 
 const Game = () => {
+  const [task, setTask] = useState(null);
+  
   const [taskLoading, setTaskLoading] = useState({
     isLoading: true,
     hasError: false,
-    loaded: false,
   });
 
   const [tasksLoading, setTasksLoading] = useState({
     isLoading: true,
     hasError: false,
-    loaded: false,
   });
 
   const [isModalShow, setModalShow] = useState(false);
   const [isRestart, setRestart] = useState(false);
   const [isHelp, setHelp] = useState(false);
 
-  const [task, setTask] = useState(null);
+  
+  
   const { taskNumber } = useParams();
+
+  useEffect(() => {
+    console.log("GAME: REDRAW!!");
+    console.log("GAME: taskNumber: " + taskNumber);
+
+    setTask(localStorage.loadTaskFromLocalStorage(taskNumber));
+
+    if (!task) {
+      console.log("GAME: No Task In LocalStorage, loading");
+      setTaskLoading({ isLoading: true, hasError: false, isLoaded: false });
+      loadTask(taskNumber);
+    } else {
+      console.log("GAME: Task In LocalStorage, can play");
+      setTaskLoading({ isLoading: false, hasError: false, isLoaded: true });
+    }
+    // if (!loadTasksFromLocalStorage()) {
+    //   setTasksLoading({ isLoading: true, hasError: false, isLoaded: false });
+    //   loadTasks(10);
+    // } else {
+    //   setTasksLoading({ isLoading: false, hasError: false, isLoaded: true });
+    // }
+    setRestart(false);
+  }, [isRestart]);
 
   const closeHandler = (e) => {
     e.preventDefault();
@@ -52,7 +83,11 @@ const Game = () => {
   const loadTasks = () => {
     console.log("In loadTasks");
     try {
+<<<<<<< HEAD
       apiGetTasks("")
+=======
+      Api.apiGetTasks("")
+>>>>>>> 65b6eeb (feat<ts>: local-storage moved to ts)
         .then((data) => {
           console.log("In loadTasks: then");
           console.log("APP loadTasks: tasks loaded");
@@ -84,8 +119,13 @@ const Game = () => {
 
   const loadTask = (taskNumber) => {
     console.log("In loadTask");
+   
     try {
+<<<<<<< HEAD
       apiGetTask(taskNumber)
+=======
+      Api.apiGetTask(taskNumber)
+>>>>>>> 65b6eeb (feat<ts>: local-storage moved to ts)
         .then((data) => {
           console.log("GAME: loadTask: then");
           console.log("GAME: loadTask: task loaded");
@@ -107,6 +147,7 @@ const Game = () => {
     }
   };
 
+<<<<<<< HEAD
     const restartHandler = (e) => {
         clearBoardInLocalStorage();
         clearTaskInLocalStorage();
@@ -119,6 +160,20 @@ const Game = () => {
 
   const helpHandler = () => {
     const data = loadTaskFromLocalStorage();
+=======
+  const restartHandler = (e) => {
+    localStorage.clearBoardInLocalStorage(taskNumber); // @fix: Добавлен номер игрового поля для очистки
+    localStorage.clearTaskInLocalStorage();
+    setHelp(false);
+    setTaskLoading({ isLoading: true, hasError: false, isLoaded: true });
+    loadTask(taskNumber); // @tudo: Добавлен номер игрового поля для очистки
+    loadTasks();
+    setRestart(true);
+  };
+
+  const helpHandler = () => {
+    const data = localStorage.loadTaskFromLocalStorage(taskNumber); // @fix: добавлен номер игрового поля
+>>>>>>> 65b6eeb (feat<ts>: local-storage moved to ts)
     let help = {};
     let pos = 0;
     if (data && data.task) {
@@ -136,6 +191,7 @@ const Game = () => {
     setHelp(help);
   };
 
+<<<<<<< HEAD
   useEffect(() => {
     console.log("GAME: REDRAW!!");
     console.log("GAME: taskNumber: " + taskNumber);
@@ -159,6 +215,8 @@ const Game = () => {
     setRestart(false);
   }, [isRestart]);
 
+=======
+>>>>>>> 65b6eeb (feat<ts>: local-storage moved to ts)
   return (
     <>
         <aside>

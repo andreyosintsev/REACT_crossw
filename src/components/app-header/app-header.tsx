@@ -16,7 +16,7 @@ const AppHeader: FC<IAppHeader> = ({ siteName }) => {
         <div className = { styles.header__wrapper }>
             <div className = { styles.headertitle }>
                 <Link className = { styles.headertitle__link } to="/" title="На главную">
-                    <PageLogo image = { SITE_LOGO } title = {siteName} />
+                    <PageLogo image = { SITE_LOGO } title = { siteName } />
                 </Link>
             </div>
             <PageMenuMain menuItems = { SITE_MENU_MAIN }/>

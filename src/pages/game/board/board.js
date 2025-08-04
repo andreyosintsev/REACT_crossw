@@ -6,14 +6,55 @@ import {  saveBoardToLocalStorage,
 
 import BoardStyles from "./board.module.css";
 
+<<<<<<< HEAD
+=======
+const localStorage = new LocalStorage();
+
+/**
+ * @component - Компонент игрового поля для кроссворда
+ * @param {string} taskId - Номер кроссворда
+ * @param {number} width - Ширина игрового поля (в клетках)
+ * @param {number} height - Высота игрового поля (в клетках)
+ * @param {Function} checkWin - Функция проверки победы
+ * @param {Object|null} help - Объект подсказки (опционально)
+ * @returns {JSX.Element} Игровое поле
+ * 
+ * @description
+ * Компонент реализует интерактивное игровое поле с возможностью:
+ * - ЛКМ - закрасить клетку
+ * - ПКМ - поставить крестик
+ * - Автосохранение состояния
+ * - Загрузку сохранённого состояния
+ * - Обработку подсказок
+ * 
+ * @state
+ * @property {Array} board - Массив клеток игрового поля
+ * 
+ * @method initBoard - инициализирует новое или загружает сохранённое поле
+ * @method boardClickHandler - обрабатывает клики по полю
+ * 
+ * @see BoardElement - дочерний компонент клетки поля
+ * @see saveBoardToLocalStorage - для сохранения состояния
+ * @see loadBoardFromLocalStorage - для загрузки состояния
+ */
+>>>>>>> 65b6eeb (feat<ts>: local-storage moved to ts)
 const Board = ({ taskId, width, height, checkWin, help }) => {
   const [board, setBoard] = useState([]);
 
   useEffect(() => {
     initBoard(help);
+<<<<<<< HEAD
     checkWin(board);
   }, [checkWin, board]);
 
+=======
+  }, [help]); // @todo: убирает ошибку перерендеринга, вынося initBoard в отдельный вызов
+
+  /**
+   * Обработчик кликов по игровому полю
+   * @param {MouseEvent} e - событие мыши
+   */
+>>>>>>> 65b6eeb (feat<ts>: local-storage moved to ts)
   const boardClickHandler = (e) => {
     e.preventDefault();
 

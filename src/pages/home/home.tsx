@@ -12,6 +12,35 @@ import { apiGetTasks } from '../../utils/api';
 import { SITE_PROTOCOL, SITE_DOMAIN } from '../../declarations/constants';
 import { ITask, ITasks } from '../../types/api.interface';
 
+<<<<<<< HEAD
+=======
+const api = new Api();
+
+/**
+ * @component - Главная страница приложения с японскими кроссвордами
+ * @returns {JSX.Element} Главная страница приложения
+ * 
+ * @description
+ * Компонент реализует главную страницу приложения с:
+ * - Приветственным текстом
+ * - Слайдером новых кроссвордов
+ * - Секцией решенных кроссвордов
+ * - Блоком новостей сайта
+ * 
+ * @state
+ * @property {Object} tasksLoading - Состояние загрузки задач:
+ *   @property {boolean} isLoading - Флаг процесса загрузки
+ *   @property {boolean} hasError - Флаг ошибки загрузки
+ *   @property {ITask[]} tasks - Массив загруженных задач
+ * 
+ * @method getTasks - загружает задачи с сервера
+ * @method tasksToImages - преобразует задачи в формат для слайдера
+ * 
+ * @see PageBlock - компонент блока страницы
+ * @see PageSlider - компонент слайдера
+ * @see PageNews - компонент новостей
+**/
+>>>>>>> 65b6eeb (feat<ts>: local-storage moved to ts)
 const Home: FC<IHome> = () => {
     const [tasksLoading, setTasksLoading] = useState<{
                                                 isLoading: boolean,
@@ -24,13 +53,35 @@ const Home: FC<IHome> = () => {
                                                 tasks: []
                                             });
 
+<<<<<<< HEAD
     const getTasks = () => {
         setTasksLoading({ 
             isLoading: true, 
+=======
+  /**
+     * Загружает задачи с сервера
+     * @async
+     * @function
+     * @throws {Error} При ошибке API-запроса
+  **/
+  const getTasks = (maxTasks: number = 10) => {
+    setTasksLoading({
+      isLoading: true,
+      hasError: false,
+      tasks: []
+    })
+
+    try {
+      api.apiGetTasks(maxTasks)
+        .then(data => {
+          setTasksLoading({
+            isLoading: false,
+>>>>>>> 65b6eeb (feat<ts>: local-storage moved to ts)
             hasError: false,
             tasks: []        
         })
 
+<<<<<<< HEAD
         try {  
             apiGetTasks(10)
             .then(data => {
@@ -73,6 +124,21 @@ const Home: FC<IHome> = () => {
         () => getTasks,
         []
     )
+=======
+  /**
+   * Преобразует массив задач в формат для слайдера
+   * @param {ITask[]} tasks - Массив задач
+   * @returns {Array<{src: string, alt: string, link: string}>} Массив изображений для слайдера
+  **/
+  const tasksToImages = (tasks: ITask[]) =>
+    tasks.map(task => {
+      return {
+        src: `${SITE_PROTOCOL}${SITE_DOMAIN}/tasks/${task.image_preview}`,
+        alt: `Разгадать кроссворд № ${task.id}`,
+        link: `game/${task.id}`
+      }
+    })
+>>>>>>> 65b6eeb (feat<ts>: local-storage moved to ts)
 
     return (
         <main className = { styles.main }>
