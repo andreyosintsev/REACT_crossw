@@ -202,7 +202,7 @@ const Table = ({ task, help, onRestart }) => {
   **/
   const closeHandler = (e) => {
     e.preventDefault();
-    onRestart(); // @tudo: Добавлена очистка поля
+    onRestart();
     setModalShow(false);
     setWin(false);
   };

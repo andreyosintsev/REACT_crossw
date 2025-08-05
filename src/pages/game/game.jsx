@@ -20,27 +20,37 @@ import { LocalStorage } from '../../utils/local-storage'
 const localStorage = new LocalStorage();
 const api = new Api();
 
-
+/**
+ * Компонент игры кроссвордов
+ */
 const Game = () => {
+  // Состояние загрузки задачи
   const [taskLoading, setTaskLoading] = useState({
     isLoading: true,
     hasError: false,
     loaded: false,
   });
 
+  // Состояние загрузки списка задач
   const [tasksLoading, setTasksLoading] = useState({
     isLoading: true,
     hasError: false,
     loaded: false,
   });
 
+  // Состояние отображения модального окна
   const [isModalShow, setModalShow] = useState(false);
   const [isRestart, setRestart] = useState(false);
   const [isHelp, setHelp] = useState(false);
 
+  // Текущая задача и номер задачи
   const [task, setTask] = useState(null);
   const { taskNumber } = useParams();
 
+  /**
+   * Обработчик закрытия модального окна
+   * @param e событие клика
+   */
   const closeHandler = (e) => {
     e.preventDefault();
     setModalShow(false);
@@ -48,6 +58,9 @@ const Game = () => {
     loadTask();
   };
 
+  /**
+   * Загрузка списка всех задач
+   */
   const loadTasks = () => {
     console.log("In loadTasks");
     try {
@@ -81,6 +94,10 @@ const Game = () => {
     }
   };
 
+  /**
+   * Загрузка конкретной задачи
+   * @param taskNumber номер задачи
+   */
   const loadTask = (taskNumber) => {
     console.log("In loadTask");
     try {
@@ -107,18 +124,25 @@ const Game = () => {
     }
   };
 
+  /**
+   * Обработчик перезапуска игры
+   * @param e событие клика
+   */
   const restartHandler = (e) => {
-    localStorage.clearBoardInLocalStorage(taskNumber); // @tudo: Добавлен номер игрового поля для очистки
+    localStorage.clearBoardInLocalStorage(taskNumber);
     localStorage.clearTaskInLocalStorage();
     setHelp(false);
     setTaskLoading({ isLoading: true, hasError: false, isLoaded: true });
-    loadTask(taskNumber); // @tudo: Добавлен номер игрового поля для очистки
+    loadTask(taskNumber);
     loadTasks();
     setRestart(true);
   };
 
+  /**
+   * Обработчик подсказки
+   */
   const helpHandler = () => {
-    const data = localStorage.loadTaskFromLocalStorage(taskNumber); // @tudo: добавлен номер игрового поля
+    const data = localStorage.loadTaskFromLocalStorage(taskNumber);
     let help = {};
     let pos = 0;
     if (data && data.task) {
@@ -136,6 +160,9 @@ const Game = () => {
     setHelp(help);
   };
 
+  /**
+   * Эффекты компонента
+   */
   useEffect(() => {
     console.log("GAME: REDRAW!!");
     console.log("GAME: taskNumber: " + taskNumber);

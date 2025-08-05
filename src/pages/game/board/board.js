@@ -1,11 +1,5 @@
 import { Fragment, useState, useEffect } from "react";
 import BoardElement from "../board-element/board-element";
-
-// import {
-  //   saveBoardToLocalStorage,
-  //   loadBoardFromLocalStorage
-  // } from "../../../utils/local-storage";
-  
 import BoardStyles from "./board.module.css";
 import { LocalStorage } from "../../../utils/local-storage";
 
@@ -47,10 +41,9 @@ const Board = ({ taskId, width, height, checkWin, help }) => {
 
   useEffect(() => {
     initBoard(help);
-  }, [help]); // @tudo: убирает ошибку перерендиренга, вынася initBoar в отдельный вызов
+  }, [help]);
 
-  /**
-   * Обработчик кликов по игровому полю
+  /** Обработчик кликов по игровому полю
    * @param {MouseEvent} e - Событие мыши
    */
   const boardClickHandler = (e) => {
@@ -78,8 +71,7 @@ const Board = ({ taskId, width, height, checkWin, help }) => {
     localStorage.saveBoardToLocalStorage(taskId, newBoard);
   };
 
-  /**
-   * Инициализирует игровое поле
+  /** Инициализирует игровое поле
    * @param {Object|null} help - Объект подсказки
    */
   const initBoard = (help) => {

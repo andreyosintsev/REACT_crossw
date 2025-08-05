@@ -1,6 +1,5 @@
 import { FC } from 'react';
 
-
 import IAppWrapper from './app-wrapper.interface';
 
 import styles from './app-wrapper.module.scss';

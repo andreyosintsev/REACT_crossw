@@ -1,4 +1,3 @@
-import React from 'react';
 import { FC } from 'react';
 
 import { SITE_DOMAIN } from '../../declarations/constants';
