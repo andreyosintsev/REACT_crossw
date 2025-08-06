@@ -4,4 +4,4 @@ interface IAppWrapper {
     children: ReactNode;
 }
 
-export default IAppWrapper
+export default IAppWrapper;

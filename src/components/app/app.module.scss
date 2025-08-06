@@ -1,50 +1,50 @@
 .wrapper {
-  position: relative;
-  max-width: 1240px;
-  height: 100%;
-  margin: 0 auto;
-  background-color: #FFFFFF;
+    position: relative;
+    max-width: 1240px;
+    height: 100%;
+    margin: 0 auto;
+    background-color: #ffffff;
 }
 .app {
-  background-color: #FFFFFF;
-  position: relative;
-  text-align: center;
+    background-color: #ffffff;
+    position: relative;
+    text-align: center;
 }
 .title {
-  font-family: Arial, Tahoma, sans-serif;
-  font-size: 40px;
-  font-weight: bold;
-  text-align: left;
+    font-family: Arial, Tahoma, sans-serif;
+    font-size: 40px;
+    font-weight: bold;
+    text-align: left;
 }
 .content {
-  display: flex;
-  height: calc(100vh - 140px);
-  gap: 40px;
+    display: flex;
+    height: calc(100vh - 140px);
+    gap: 40px;
 }
 aside {
-  width: 200px;
+    width: 200px;
 }
 .main {
-  height: calc(100vh - 140px);
+    height: calc(100vh - 140px);
 }
 .footer {
-  height: 20px;
-  font-size: 14px;
-  text-align: left;
+    height: 20px;
+    font-size: 14px;
+    text-align: left;
 }
 
 @media screen and (width < 800px) {
-  .title {
-    font-size: 30px;
-  }
+    .title {
+        font-size: 30px;
+    }
 }
 
 @media screen and (width < 576px) {
-  .title {
-    font-size: 20px;
-  }
-  .footer {
-    font-size: 10px;
-    text-align: center;
-  }  
+    .title {
+        font-size: 20px;
+    }
+    .footer {
+        font-size: 10px;
+        text-align: center;
+    }
 }

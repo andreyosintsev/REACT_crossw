@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 interface IPageSidebar {
     title?: string;
-    children?: ReactNode;    
+    children?: ReactNode;
 }
 
-export default IPageSidebar
+export default IPageSidebar;

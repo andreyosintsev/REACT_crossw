@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 interface IAppSidebar {
-    children?: ReactNode;    
+    children?: ReactNode;
 }
 
-export default IAppSidebar
+export default IAppSidebar;

@@ -1,5 +1,3 @@
-interface IPageNews {
+interface IPageNews {}
 
-}
-
-export default IPageNews
+export default IPageNews;

@@ -1,5 +1,5 @@
 interface IAppHeader {
-    siteName: string
+    siteName: string;
 }
 
-export default IAppHeader
+export default IAppHeader;

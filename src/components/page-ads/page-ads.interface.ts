@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 interface IPageAds {
-    children?: ReactNode;    
+    children?: ReactNode;
 }
 
-export default IPageAds
+export default IPageAds;

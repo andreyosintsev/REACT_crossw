@@ -1,9 +1,9 @@
 .preloader {
-  display: block;
-  position: absolute;
-  height: 64px;
-  width: 64px;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+    display: block;
+    position: absolute;
+    height: 64px;
+    width: 64px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }

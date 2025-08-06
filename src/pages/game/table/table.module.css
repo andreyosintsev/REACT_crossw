@@ -2,17 +2,21 @@
     display: inline-block;
     margin-top: 20px;
     margin-bottom: 20px;
-    background-color: #FFFFFF;  
+    background-color: #FFFFFF;
 }
+
 .zero_field {
     float: left;
 }
+
 .horizontal_legend {
-      float: left;
+    float: left;
 }
+
 .new_line {
     clear: both;
 }
+
 .board {
-      float: left;
+    float: left;
 }

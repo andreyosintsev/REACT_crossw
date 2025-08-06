@@ -1,5 +1,5 @@
 interface IAppFooter {
-    siteName: string
+    siteName: string;
 }
 
-export default IAppFooter
+export default IAppFooter;

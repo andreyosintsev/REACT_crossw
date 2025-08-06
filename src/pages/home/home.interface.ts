@@ -1,5 +1,3 @@
-interface IHome {
-    
-}
+interface IHome {}
 
-export default IHome
+export default IHome;

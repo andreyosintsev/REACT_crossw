@@ -1,9 +1,5 @@
 const Tasks = () => {
-  return (
-    <>
+    return <></>;
+};
 
-    </>
-  );
-}
-
-export default Tasks
+export default Tasks;

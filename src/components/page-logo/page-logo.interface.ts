@@ -3,4 +3,4 @@ interface IPageLogo {
     title: string;
 }
 
-export default IPageLogo
+export default IPageLogo;

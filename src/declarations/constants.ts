@@ -1,29 +1,29 @@
 //Домен сайта
-export const SITE_DOMAIN = 'crossw.ru';
+export const SITE_DOMAIN = "crossw.ru";
 
 //Протокол стайта
-export const SITE_PROTOCOL = 'http://';
+export const SITE_PROTOCOL = "http://";
 
 //Название сайта
-export const SITE_NAME = 'Японские кроссворды';
+export const SITE_NAME = "Японские кроссворды";
 
 //Год создания сайта
-export const SITE_YOB = '2024';
+export const SITE_YOB = "2024";
 
 //Главное меню
 export const SITE_MENU_MAIN = [
     {
-        title: 'О кроссвордах',
-        link: '/about'
+        title: "О кроссвордах",
+        link: "/about",
     },
     {
-        title: 'Наши рекордсмены',
-        link: '/hiscore'
+        title: "Наши рекордсмены",
+        link: "/hiscore",
     },
     {
-        title: 'Лучшие кроссворды',
-        link: '/best'
-    }
+        title: "Лучшие кроссворды",
+        link: "/best",
+    },
 ];
 
 /*
@@ -31,13 +31,13 @@ export const SITE_MENU_MAIN = [
 */
 
 //Новости сайта
-export const API_NEWS = '/api/news.php';
+export const API_NEWS = "/api/news.php";
 
 //Задача по номеру
-export const API_TASK = '/api/task.php';
+export const API_TASK = "/api/task.php";
 
 //Все задачи
-export const API_TASKS = '/api/tasks.php';
+export const API_TASKS = "/api/tasks.php";
 
 /*
     ГРАФИКА
@@ -45,4 +45,4 @@ export const API_TASKS = '/api/tasks.php';
 
 //Логотип
 
-export const SITE_LOGO = '/imgs/logo.png';
+export const SITE_LOGO = "/imgs/logo.png";

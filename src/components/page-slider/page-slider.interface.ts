@@ -1,7 +1,7 @@
-import { TImageLink } from '../../types/types';
+import { TImageLink } from "../../types/types";
 
 interface IPageSlider {
     images: TImageLink[];
 }
 
-export default IPageSlider
+export default IPageSlider;

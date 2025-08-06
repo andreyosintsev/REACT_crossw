@@ -14,7 +14,6 @@
 @import "./declarations/constants.module.scss";
 @import "./normalize.css";
 
-
 /*
     Страница в целом
 */
@@ -26,7 +25,7 @@ body {
     color: var(--text-main);
 
     border-bottom: 1px solid var(--border);
-    
+
     background-color: var(--background-pink);
 
     scroll-behavior: smooth;
@@ -45,12 +44,18 @@ body::-webkit-scrollbar-track {
     background-color: var(--scrollbar-track);
 }
 
-body::-moz-scrollbar-button, ::-webkit-scrollbar-button {
+body::-moz-scrollbar-button,
+::-webkit-scrollbar-button {
     display: none;
     width: 0px;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     margin: 0;
 }
 

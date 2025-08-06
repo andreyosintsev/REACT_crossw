@@ -4,7 +4,7 @@ export interface INews {
 }
 
 export interface ITask {
-    id: number
+    id: number;
     name: string;
     task: number[];
     width: number;
@@ -19,10 +19,10 @@ export interface ITasks {
 
 interface IApiResult {
     success: boolean;
-  }
+}
 
 export interface IApiNews extends IApiResult {
-   news: INews[];
+    news: INews[];
 }
 
 export interface IApiTask extends IApiResult {
@@ -31,4 +31,4 @@ export interface IApiTask extends IApiResult {
 
 export interface IApiTasks extends IApiResult {
     tasks: ITask[];
- }
+}

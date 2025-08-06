@@ -1,111 +1,101 @@
-import { FC, useState, useEffect } from 'react';
-import { v4 as uuid } from 'uuid';
+import { FC, useState, useEffect } from "react";
+import { v4 as uuid } from "uuid";
 
-import IPageNews from './page-news.interface';
-import styles from './page-news.module.scss';
+import IPageNews from "./page-news.interface";
+import styles from "./page-news.module.scss";
 
-import { apiGetNews } from '../../utils/api/api';
-import { INews } from '../../utils/api/api.interface';
+import { apiGetNews } from "../../utils/api/api";
+import { INews } from "../../utils/api/api.interface";
 
 /**
  * @component - Компонент блока новостей сайта
  * @returns {JSX.Element} Блок с лентой новостей и состоянием загрузки
- * 
+ *
  * @description
  * Компонент отображает список новостей с возможностями:
  * - Автоматическая загрузка новостей при монтировании
  * - Отображение состояния загрузки
  * - Обработка ошибок при загрузке
  * - Форматированное отображение даты и текста новости
- * 
+ *
  * @state
  * @property {Object} newsLoading - Состояние загрузки новостей:
  * @property {boolean} isLoading - Флаг процесса загрузки
  * @property {boolean} hasError - Флаг ошибки загрузки
  * @property {INews[]} news - Массив загруженных новостей
- * 
+ *
  * @method getNews - Загружает новости с сервера
- * 
+ *
  * @see apiGetNews API-метод для получения новостей
  * @see INews Интерфейс структуры новости
-**/
+ **/
 const PageBlock: FC<IPageNews> = () => {
     const [newsLoading, setNewsLoading] = useState<{
-                                                isLoading: boolean,
-                                                hasError: boolean,
-                                                news: INews[]
-                                            }>
-                                            ({
-                                                isLoading: false,
-                                                hasError: false,
-                                                news: []
-                                            });
+        isLoading: boolean;
+        hasError: boolean;
+        news: INews[];
+    }>({
+        isLoading: false,
+        hasError: false,
+        news: [],
+    });
 
     const getNews = () => {
-        setNewsLoading({ 
-            isLoading: true, 
+        setNewsLoading({
+            isLoading: true,
             hasError: false,
-            news: []        
-        })
+            news: [],
+        });
 
-        try {  
+        try {
             apiGetNews()
-            .then(data => {
-                setNewsLoading({
-                    isLoading: false,
-                    hasError: false,
-                    news: data.news
+                .then((data) => {
+                    setNewsLoading({
+                        isLoading: false,
+                        hasError: false,
+                        news: data.news,
+                    });
+                })
+                .catch((error) => {
+                    console.error(`Ошибка Promise: ${error}`);
+                    setNewsLoading({
+                        isLoading: false,
+                        hasError: true,
+                        news: [],
+                    });
                 });
-            })
-            .catch(error => {
-                console.error (`Ошибка Promise: ${error}`);
-                setNewsLoading({
-                    isLoading: false,
-                    hasError: true,
-                    news: []
-                });
-            })            
-          } catch (error) {
-            const errorMessage: string = error instanceof Error ? error.message : '';
-            console.error((`Не удалось получить новости от API: ${errorMessage}`));
+        } catch (error) {
+            const errorMessage: string =
+                error instanceof Error ? error.message : "";
+            console.error(
+                `Не удалось получить новости от API: ${errorMessage}`
+            );
             setNewsLoading({
                 isLoading: false,
                 hasError: true,
-                news: []
+                news: [],
             });
-          }  
-    }
+        }
+    };
 
-    useEffect(
-        () => getNews(), 
-        []
-    );
-
+    useEffect(() => getNews(), []);
 
     return (
         <>
-            {
-                newsLoading.isLoading && <p>Загрузка новостей...</p>
-            }
-            {
-                !newsLoading.isLoading && newsLoading.hasError && <p>Ошибка загрузки новостей</p>
-            }
-            <ul className = { styles.news__items }>
-                {
-                    newsLoading.news.map(news => 
-                        <li className = { styles.entry } key = { uuid() }>
-                            <div className = { styles.entry__date }>
-                                { news.date }
-                            </div>
-                            <div className = { styles.entry__content }>
-                                { news.text }
-                            </div>
-                        </li>
-                    )
-                }
+            {newsLoading.isLoading && <p>Загрузка новостей...</p>}
+            {!newsLoading.isLoading && newsLoading.hasError && (
+                <p>Ошибка загрузки новостей</p>
+            )}
+            <ul className={styles.news__items}>
+                {newsLoading.news.map((news) => (
+                    <li className={styles.entry} key={uuid()}>
+                        <div className={styles.entry__date}>{news.date}</div>
+                        <div className={styles.entry__content}>{news.text}</div>
+                    </li>
+                ))}
             </ul>
         </>
-    )
-}
+    );
+};
 
-export default PageBlock
+export default PageBlock;
