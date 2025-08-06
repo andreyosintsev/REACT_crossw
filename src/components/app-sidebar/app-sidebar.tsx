@@ -3,8 +3,6 @@ import { FC } from 'react';
 import IAppSidebar from './app-sidebar.interface';
 import styles from './app-sidebar.module.scss';
 
-<<<<<<< HEAD
-=======
 /**
  * @component - Компонент боковой панели приложения
  * @param {ReactNode} children - Дочерние элементы панели (меню, виджеты и т.д.)
@@ -24,7 +22,7 @@ import styles from './app-sidebar.module.scss';
  * @see IAppSidebar Интерфейс входных параметров
  * @see AppWrapper Основной контейнер приложения
  */
->>>>>>> 65b6eeb (feat<ts>: local-storage moved to ts)
+
 const AppSidebar: FC<IAppSidebar> = ({ children }) => {
     return (
         <aside className = { styles.sidebar }>

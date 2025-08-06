@@ -1,14 +1,10 @@
-import {Fragment, useState, useEffect } from "react";
+import { Fragment, useState, useEffect } from "react";
 import BoardElement from "../board-element/board-element";
 
-import {  saveBoardToLocalStorage,
-          loadBoardFromLocalStorage } from "../../../utils/local-storage";
+import { saveBoardToLocalStorage,
+         loadBoardFromLocalStorage } from "../../../utils/local-storage/local-storage";
 
 import BoardStyles from "./board.module.css";
-
-<<<<<<< HEAD
-=======
-const localStorage = new LocalStorage();
 
 /**
  * @component - Компонент игрового поля для кроссворда
@@ -37,24 +33,17 @@ const localStorage = new LocalStorage();
  * @see saveBoardToLocalStorage - для сохранения состояния
  * @see loadBoardFromLocalStorage - для загрузки состояния
  */
->>>>>>> 65b6eeb (feat<ts>: local-storage moved to ts)
 const Board = ({ taskId, width, height, checkWin, help }) => {
   const [board, setBoard] = useState([]);
 
   useEffect(() => {
     initBoard(help);
-<<<<<<< HEAD
-    checkWin(board);
-  }, [checkWin, board]);
-
-=======
   }, [help]); // @todo: убирает ошибку перерендеринга, вынося initBoard в отдельный вызов
 
   /**
    * Обработчик кликов по игровому полю
    * @param {MouseEvent} e - событие мыши
    */
->>>>>>> 65b6eeb (feat<ts>: local-storage moved to ts)
   const boardClickHandler = (e) => {
     e.preventDefault();
 

@@ -4,9 +4,31 @@ import { v4 as uuid } from 'uuid';
 import IPageNews from './page-news.interface';
 import styles from './page-news.module.scss';
 
-import { apiGetNews } from '../../utils/api';
-import { INews } from '../../types/api.interface';
+import { apiGetNews } from '../../utils/api/api';
+import { INews } from '../../utils/api/api.interface';
 
+/**
+ * @component - Компонент блока новостей сайта
+ * @returns {JSX.Element} Блок с лентой новостей и состоянием загрузки
+ * 
+ * @description
+ * Компонент отображает список новостей с возможностями:
+ * - Автоматическая загрузка новостей при монтировании
+ * - Отображение состояния загрузки
+ * - Обработка ошибок при загрузке
+ * - Форматированное отображение даты и текста новости
+ * 
+ * @state
+ * @property {Object} newsLoading - Состояние загрузки новостей:
+ * @property {boolean} isLoading - Флаг процесса загрузки
+ * @property {boolean} hasError - Флаг ошибки загрузки
+ * @property {INews[]} news - Массив загруженных новостей
+ * 
+ * @method getNews - Загружает новости с сервера
+ * 
+ * @see apiGetNews API-метод для получения новостей
+ * @see INews Интерфейс структуры новости
+**/
 const PageBlock: FC<IPageNews> = () => {
     const [newsLoading, setNewsLoading] = useState<{
                                                 isLoading: boolean,

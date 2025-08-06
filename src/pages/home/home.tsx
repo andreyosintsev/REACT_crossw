@@ -7,14 +7,10 @@ import PageNews from '../../components/page-news/page-news';
 import IHome from './home.interface';
 import styles from './home.module.scss';
 
-import { apiGetTasks } from '../../utils/api';
+import { apiGetTasks } from '../../utils/api/api';
 
 import { SITE_PROTOCOL, SITE_DOMAIN } from '../../declarations/constants';
-import { ITask, ITasks } from '../../types/api.interface';
-
-<<<<<<< HEAD
-=======
-const api = new Api();
+import { ITask, ITasks } from '../../utils/api/api.interface';
 
 /**
  * @component - Главная страница приложения с японскими кроссвордами
@@ -40,7 +36,6 @@ const api = new Api();
  * @see PageSlider - компонент слайдера
  * @see PageNews - компонент новостей
 **/
->>>>>>> 65b6eeb (feat<ts>: local-storage moved to ts)
 const Home: FC<IHome> = () => {
     const [tasksLoading, setTasksLoading] = useState<{
                                                 isLoading: boolean,
@@ -53,11 +48,6 @@ const Home: FC<IHome> = () => {
                                                 tasks: []
                                             });
 
-<<<<<<< HEAD
-    const getTasks = () => {
-        setTasksLoading({ 
-            isLoading: true, 
-=======
   /**
      * Загружает задачи с сервера
      * @async
@@ -71,60 +61,39 @@ const Home: FC<IHome> = () => {
       tasks: []
     })
 
-    try {
-      api.apiGetTasks(maxTasks)
+    try {  
+        apiGetTasks(10)
         .then(data => {
-          setTasksLoading({
-            isLoading: false,
->>>>>>> 65b6eeb (feat<ts>: local-storage moved to ts)
-            hasError: false,
-            tasks: []        
+            setTasksLoading({
+                isLoading: false,
+                hasError: false,
+                tasks: data.tasks
+            });
         })
-
-<<<<<<< HEAD
-        try {  
-            apiGetTasks(10)
-            .then(data => {
-                setTasksLoading({
-                    isLoading: false,
-                    hasError: false,
-                    tasks: data.tasks
-                });
-            })
-            .catch(error => {
-                console.error (`Ошибка Promise: ${error}`);
-                setTasksLoading({
-                    isLoading: false,
-                    hasError: true,
-                    tasks: []
-                });
-            })            
-          } catch (error) {
-            const errorMessage: string = error instanceof Error ? error.message : '';
-            console.error((`Не удалось получить задачи от API: ${errorMessage}`));
+        .catch(error => {
+            console.error (`Ошибка Promise: ${error}`);
             setTasksLoading({
                 isLoading: false,
                 hasError: true,
                 tasks: []
             });
-          }  
+        })            
+        } catch (error) {
+        const errorMessage: string = error instanceof Error ? error.message : '';
+        console.error((`Не удалось получить задачи от API: ${errorMessage}`));
+        setTasksLoading({
+            isLoading: false,
+            hasError: true,
+            tasks: []
+        });
+        }  
     }
-
-    const tasksToImages = (tasks: ITask[]) => 
-         tasks.map(task => {
-                 return {
-                     src: `${SITE_PROTOCOL}${SITE_DOMAIN}/tasks/${task.image_preview}`,
-                     alt: `Разгадать кроссворд № ${task.id}`,
-                     link: `game/${task.id}`
-                 }
-             }
-        )
 
     useEffect(
         () => getTasks,
         []
     )
-=======
+
   /**
    * Преобразует массив задач в формат для слайдера
    * @param {ITask[]} tasks - Массив задач
@@ -138,7 +107,7 @@ const Home: FC<IHome> = () => {
         link: `game/${task.id}`
       }
     })
->>>>>>> 65b6eeb (feat<ts>: local-storage moved to ts)
+
 
     return (
         <main className = { styles.main }>
