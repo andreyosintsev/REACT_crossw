@@ -46,4 +46,3 @@ export const API_TASKS = '/api/tasks.php';
 //Логотип
 
 export const SITE_LOGO = '/imgs/logo.png';
-

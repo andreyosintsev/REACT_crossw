@@ -15,7 +15,7 @@ import PreloaderStyles from './preloader.module.css';
  * 
  * @see PreloaderStyles Модуль стилей компонента
  */
-function Preloader() {
+const Preloader = () => {
   return (
     <div className={PreloaderStyles.preloader}>
       <img src={`/imgs/preloader.gif`} alt="Загрузка"/>
