@@ -10,7 +10,7 @@ import styles from "./home.module.scss";
 import { apiGetTasks } from "../../utils/api/api";
 
 import { SITE_PROTOCOL, SITE_DOMAIN } from "../../declarations/constants";
-import { ITask, ITasks } from "../../utils/api/api.interface";
+import { ITask } from "../../utils/api/api.interface";
 
 /**
  * @component - Главная страница приложения с японскими кроссвордами

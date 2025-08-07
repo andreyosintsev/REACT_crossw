@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import AppStyles from "./game.module.scss";
@@ -35,7 +35,7 @@ const Game = () => {
     });
 
     // Состояние загрузки списка задач
-    const [tasksLoading, setTasksLoading] = useState({
+    const [, setTasksLoading] = useState({
         isLoading: true,
         hasError: false,
     });
@@ -51,9 +51,10 @@ const Game = () => {
         console.log("GAME: REDRAW!!");
         console.log("GAME: taskNumber: " + taskNumber);
 
-        setTask(loadTaskFromLocalStorage(taskNumber));
+        const storedTask = loadTaskFromLocalStorage(taskNumber);
+        setTask(storedTask);
 
-        if (!task) {
+        if (!storedTask) {
             console.log("GAME: No Task In LocalStorage, loading");
             setTaskLoading({
                 isLoading: true,
@@ -76,7 +77,7 @@ const Game = () => {
         //   setTasksLoading({ isLoading: false, hasError: false, isLoaded: true });
         // }
         setRestart(false);
-    }, [isRestart]);
+    }, [taskNumber, isRestart]);
 
     /**
      * Обработчик закрытия модального окна
@@ -178,7 +179,7 @@ const Game = () => {
      * @param e событие клика
      */
     const restartHandler = (e) => {
-        clearBoardInLocalStorage(taskNumber); // @fix: Добавлен номер игрового поля для очистки
+        clearBoardInLocalStorage(taskNumber);
         clearTaskInLocalStorage();
         setHelp(false);
         setTaskLoading({ isLoading: true, hasError: false, isLoaded: true });
@@ -191,7 +192,7 @@ const Game = () => {
      * Обработчик подсказки
      */
     const helpHandler = () => {
-        const data = loadTaskFromLocalStorage(taskNumber); // @fix: добавлен номер игрового поля
+        const data = loadTaskFromLocalStorage(taskNumber);
         let help = {};
         let pos = 0;
         if (data && data.task) {
@@ -208,37 +209,6 @@ const Game = () => {
         }
         setHelp(help);
     };
-
-    useEffect(() => {
-        console.log("GAME: REDRAW!!");
-        console.log("GAME: taskNumber: " + taskNumber);
-
-        setTask(loadTaskFromLocalStorage(taskNumber));
-
-        if (!task) {
-            console.log("GAME: No Task In LocalStorage, loading");
-            setTaskLoading({
-                isLoading: true,
-                hasError: false,
-                isLoaded: false,
-            });
-            loadTask(taskNumber);
-        } else {
-            console.log("GAME: Task In LocalStorage, can play");
-            setTaskLoading({
-                isLoading: false,
-                hasError: false,
-                isLoaded: true,
-            });
-        }
-        // if (!loadTasksFromLocalStorage()) {
-        //   setTasksLoading({ isLoading: true, hasError: false, isLoaded: false });
-        //   loadTasks(10);
-        // } else {
-        //   setTasksLoading({ isLoading: false, hasError: false, isLoaded: true });
-        // }
-        setRestart(false);
-    }, [isRestart]);
 
     return (
         <>

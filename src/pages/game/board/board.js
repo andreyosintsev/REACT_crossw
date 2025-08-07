@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState, useEffect, useCallback } from "react";
 import BoardElement from "../board-element/board-element";
 
 import {
@@ -38,10 +38,6 @@ import BoardStyles from "./board.module.css";
 const Board = ({ taskId, width, height, checkWin, help }) => {
     const [board, setBoard] = useState([]);
 
-    useEffect(() => {
-        initBoard(help);
-    }, [help]); // @todo: убирает ошибку перерендеринга, вынося initBoard в отдельный вызов
-
     /**
      * Обработчик кликов по игровому полю
      * @param {MouseEvent} e - событие мыши
@@ -51,57 +47,65 @@ const Board = ({ taskId, width, height, checkWin, help }) => {
 
         const x = +e.target.dataset.x;
         const y = +e.target.dataset.y;
+        const cellIndex = y * width + x;
 
         let newBoard = [...board];
 
         switch (e.button) {
             case 0:
-                newBoard[y * width + x].content =
-                    board[y * width + x].content !== "1" ? "1" : "0";
+                newBoard[cellIndex].content =
+                    board[cellIndex].content !== "1" ? "1" : "0";
                 break;
             case 2:
-                newBoard[y * width + x].content =
-                    board[y * width + x].content !== "X" ? "X" : "0";
+                newBoard[cellIndex].content =
+                    board[cellIndex].content !== "X" ? "X" : "0";
                 break;
             default:
-                newBoard[y * width + x].content =
-                    board[y * width + x].content !== "X" ? "X" : "0";
+                newBoard[cellIndex].content =
+                    board[cellIndex].content !== "X" ? "X" : "0";
         }
         setBoard(newBoard);
         saveBoardToLocalStorage(taskId, newBoard);
     };
 
-    const initBoard = (help) => {
-        console.log("BOARD: initBoard");
-        console.log("BOARD: help: ", help);
-        const newBoard = loadBoardFromLocalStorage(taskId) || [];
+    const initBoard = useCallback(
+        (help) => {
+            console.log("BOARD: initBoard");
+            console.log("BOARD: help: ", help);
+            const newBoard = loadBoardFromLocalStorage(taskId) || [];
 
-        if (newBoard.length === 0) {
-            for (let y = 0; y < height; y++) {
-                for (let x = 0; x < width; x++) {
-                    newBoard.push({
-                        xCoord: x,
-                        yCoord: y,
-                        content: "0",
-                    });
+            if (newBoard.length === 0) {
+                for (let y = 0; y < height; y++) {
+                    for (let x = 0; x < width; x++) {
+                        newBoard.push({
+                            xCoord: x,
+                            yCoord: y,
+                            content: "0",
+                        });
+                    }
                 }
             }
-        }
 
-        if (help) {
-            console.log(help);
-            console.log("xCoord: ", help.pos % width);
-            console.log("yCoord: ", Math.floor(help.pos / width));
-            console.log("content: ", help.content);
+            if (help) {
+                console.log(help);
+                console.log("xCoord: ", help.pos % width);
+                console.log("yCoord: ", Math.floor(help.pos / width));
+                console.log("content: ", help.content);
 
-            newBoard[help.pos].xCoord = help.pos % width;
-            newBoard[help.pos].yCoord = Math.floor(help.pos / width);
-            newBoard[help.pos].content = "" + help.content;
-        }
+                newBoard[help.pos].xCoord = help.pos % width;
+                newBoard[help.pos].yCoord = Math.floor(help.pos / width);
+                newBoard[help.pos].content = "" + help.content;
+            }
 
-        setBoard(newBoard);
-        saveBoardToLocalStorage(taskId, newBoard);
-    };
+            setBoard(newBoard);
+            saveBoardToLocalStorage(taskId, newBoard);
+        },
+        [width, height, taskId]
+    );
+
+    useEffect(() => {
+        initBoard(help);
+    }, [help, initBoard]);
 
     return (
         <>
@@ -114,20 +118,11 @@ const Board = ({ taskId, width, height, checkWin, help }) => {
             >
                 {board.map((item, i) => {
                     //Состояние клетки: '0' - пустая, '1' - закрашенная, 'X' - с крестом
-                    let content = "";
-
-                    switch (item.content) {
-                        case "0":
-                            content = BoardStyles.free;
-                            break;
-                        case "1":
-                            content = BoardStyles.full;
-                            break;
-                        case "X":
-                            content = BoardStyles.cross;
-                            break;
-                        default:
-                    }
+                    const contentMap = {
+                        0: BoardStyles.free,
+                        1: BoardStyles.full,
+                        X: BoardStyles.cross,
+                    };
 
                     return (
                         <Fragment key={`board${i}`}>
@@ -137,16 +132,15 @@ const Board = ({ taskId, width, height, checkWin, help }) => {
                             <BoardElement
                                 xCoord={item.xCoord}
                                 yCoord={item.yCoord}
-                                content={content}
+                                content={
+                                    contentMap[item.content] || BoardStyles.free
+                                }
                             />
                         </Fragment>
                     );
                 })}
             </div>
-            <div
-                key={`bn${board.length + 1}`}
-                className={BoardStyles.newLine}
-            />
+            <div className={BoardStyles.newLine} />
         </>
     );
 };
