@@ -21,7 +21,7 @@ import BoardElementStyles from "./board-element.module.css";
  *
  * @see Board Родительский компонент игрового поля
  **/
-const BoardElement = ({ xCoord, yCoord, content }) => {
+const BoardElement = React.memo(({ xCoord, yCoord, content }) => {
     let style = "";
     if ((xCoord + 1) % 5 === 0) {
         style = BoardElementStyles["border_right"];
@@ -31,12 +31,11 @@ const BoardElement = ({ xCoord, yCoord, content }) => {
     }
     return (
         <div
-            key={`bel${xCoord * yCoord}`}
             className={`${BoardElementStyles.be} ${content} ${style}`}
             data-x={xCoord}
             data-y={yCoord}
         ></div>
     );
-};
+});
 
 export default BoardElement;

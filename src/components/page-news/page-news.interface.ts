@@ -1,3 +1,7 @@
-interface IPageNews {}
+import { INews } from "../../utils/api/api.interface";
 
-export default IPageNews;
+export interface INewsLoading {
+    isLoading: boolean;
+    hasError: boolean;
+    news: INews[];
+}

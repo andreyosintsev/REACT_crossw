@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import BoardZeroField from "../board-zero-field/board-zero-field";
 import Board from "../board/board";
@@ -6,8 +6,6 @@ import LegendHorizontal from "../legend-horizontal/legend-horizontal";
 import LegendVertical from "../legend-vertical/legend-vertical";
 import Modal from "../../../components/modal/modal";
 import ModalButton from "../../../components/modal-button/modal-button";
-
-import { clearBoardInLocalStorage } from "../../../utils/local-storage/local-storage";
 
 import TableStyles from "./table.module.css";
 
@@ -37,9 +35,16 @@ import TableStyles from "./table.module.css";
  * @method closeHandler - Обрабатывает закрытие модального окна
  **/
 const Table = ({ task, help }) => {
+    // Отображение модального окна
     const [modalShow, setModalShow] = useState(false);
+
+    // Состояние выигрыша
     const [isWin, setWin] = useState(false);
+
+    // Горизонтальная легенда
     const [horizontalLegend, setHorizontalLegend] = useState(null);
+
+    // Вертикальная легенда
     const [verticalLegend, setVerticalLegend] = useState(null);
 
     /**
@@ -164,49 +169,39 @@ const Table = ({ task, help }) => {
      * Проверяет соответствие текущего поля решению
      * @param {Array} board - Текущее состояние игрового поля
      **/
-    function checkWin(board) {
-        if (board.length === 0) {
-            setWin(false);
-            return;
-        }
-
-        for (let i = 0; i < board.length; i++) {
-            const content = board[i].content === "X" ? "0" : board[i].content;
-
-            if (content !== task.task[i]) {
+    const checkWin = useCallback(
+        (board) => {
+            if (board.length === 0) {
                 setWin(false);
                 return;
             }
-        }
 
-        setWin(true);
-    }
+            for (let i = 0; i < board.length; i++) {
+                const content =
+                    board[i].content === "X" ? "0" : board[i].content;
+
+                if (content !== task.task[i]) {
+                    setWin(false);
+                    return;
+                }
+            }
+
+            setWin(true);
+        },
+        [task.task]
+    );
 
     useEffect(() => {
         if (isWin) {
-            clearBoardInLocalStorage(task.id);
-            help = false;
+            //clearBoardInLocalStorage(task.id);
             setModalShow(true);
         }
-    }, [isWin]);
+    }, [isWin, task.id]);
 
     useEffect(() => {
-        console.log("Task: ", task);
-        console.log("Task Width: " + Number.parseInt(task.width));
         setHorizontalLegend(createHorizontalLegend(task));
-        const verticalLegend = createVerticalLegend(task);
-        console.log(
-            "Vertical Legend Width: " + Number.parseInt(verticalLegend.width)
-        );
-        setVerticalLegend(verticalLegend);
-        console.log(
-            "Total Width: " +
-                ((Number.parseInt(verticalLegend.width) +
-                    Number.parseInt(task.width)) *
-                    25 +
-                    4)
-        );
-    }, []);
+        setVerticalLegend(createVerticalLegend(task));
+    }, [task]);
 
     /**
      * Обрабатывает закрытие модального окна

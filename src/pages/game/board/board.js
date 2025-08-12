@@ -9,13 +9,13 @@ import {
 import BoardStyles from "./board.module.css";
 
 /**
- * @component - Компонент игрового поля для кроссворда
+ * @component - компонент игрового поля собственно с рисунком
  * @param {string} taskId - Номер кроссворда
  * @param {number} width - Ширина игрового поля (в клетках)
  * @param {number} height - Высота игрового поля (в клетках)
  * @param {Function} checkWin - Функция проверки победы
  * @param {Object|null} help - Объект подсказки (опционально)
- * @returns {JSX.Element} Игровое поле
+ * @returns {JSX.Element} - Игровое поле
  *
  * @description
  * Компонент реализует интерактивное игровое поле с возможностью:
@@ -70,8 +70,6 @@ const Board = ({ taskId, width, height, checkWin, help }) => {
 
     const initBoard = useCallback(
         (help) => {
-            console.log("BOARD: initBoard");
-            console.log("BOARD: help: ", help);
             const newBoard = loadBoardFromLocalStorage(taskId) || [];
 
             if (newBoard.length === 0) {
@@ -87,11 +85,6 @@ const Board = ({ taskId, width, height, checkWin, help }) => {
             }
 
             if (help) {
-                console.log(help);
-                console.log("xCoord: ", help.pos % width);
-                console.log("yCoord: ", Math.floor(help.pos / width));
-                console.log("content: ", help.content);
-
                 newBoard[help.pos].xCoord = help.pos % width;
                 newBoard[help.pos].yCoord = Math.floor(help.pos / width);
                 newBoard[help.pos].content = "" + help.content;
@@ -105,7 +98,11 @@ const Board = ({ taskId, width, height, checkWin, help }) => {
 
     useEffect(() => {
         initBoard(help);
-    }, [help, initBoard]);
+    }, [initBoard, help]);
+
+    useEffect(() => {
+        checkWin(board);
+    }, [checkWin, board]);
 
     return (
         <>

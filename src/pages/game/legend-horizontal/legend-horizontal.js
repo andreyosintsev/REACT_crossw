@@ -27,10 +27,7 @@ import LegendHorizontalStyles from "./legend-horizontal.module.css";
  **/
 const LegendHorizontal = ({ legend, width }) => {
     return (
-        <div
-            key="legendHorizontal"
-            className={LegendHorizontalStyles.horizontal_legend}
-        >
+        <div className={LegendHorizontalStyles.horizontal_legend}>
             {legend.map((item, i) => {
                 return (
                     <Fragment key={`lh${i}`}>

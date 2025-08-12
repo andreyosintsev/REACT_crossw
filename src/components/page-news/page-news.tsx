@@ -1,11 +1,10 @@
 import { FC, useState, useEffect } from "react";
 import { v4 as uuid } from "uuid";
 
-import IPageNews from "./page-news.interface";
 import styles from "./page-news.module.scss";
 
 import { apiGetNews } from "../../utils/api/api";
-import { INews } from "../../utils/api/api.interface";
+import { INewsLoading } from "./page-news.interface";
 
 /**
  * @component - Компонент блока новостей сайта
@@ -29,12 +28,8 @@ import { INews } from "../../utils/api/api.interface";
  * @see apiGetNews API-метод для получения новостей
  * @see INews Интерфейс структуры новости
  **/
-const PageBlock: FC<IPageNews> = () => {
-    const [newsLoading, setNewsLoading] = useState<{
-        isLoading: boolean;
-        hasError: boolean;
-        news: INews[];
-    }>({
+const PageBlock: FC = () => {
+    const [newsLoading, setNewsLoading] = useState<INewsLoading>({
         isLoading: false,
         hasError: false,
         news: [],

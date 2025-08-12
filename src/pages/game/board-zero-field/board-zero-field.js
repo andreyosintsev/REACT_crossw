@@ -31,15 +31,9 @@ const BoardZeroField = ({ width, height }) => {
      * @param {number} width - Ширина поля
      * @param {number} height - Высота поля
      **/
-    const createZeroField = (width, height) => {
-        let zeroField = [];
-        for (let x = 0; x < width; x++) {
-            for (let y = 0; y < height; y++) {
-                zeroField.push("");
-            }
-        }
-        setZeroField(zeroField);
-    };
+
+    const createZeroField = (width, height) =>
+        setZeroField(new Array(width * height).fill(""));
 
     useEffect(() => {
         createZeroField(width, height);
@@ -47,7 +41,7 @@ const BoardZeroField = ({ width, height }) => {
 
     return (
         <div key="boardZeroField" className={BoardZeroFieldStyles.zero_field}>
-            {zeroField.map((item, i) => {
+            {zeroField.map((_, i) => {
                 return (
                     <Fragment key={`zero${i}`}>
                         {i !== 0 && i % width === 0 && (

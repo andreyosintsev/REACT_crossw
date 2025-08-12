@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 
 import AppStyles from "./game.module.scss";
@@ -47,53 +47,10 @@ const Game = () => {
 
     const { taskNumber } = useParams();
 
-    useEffect(() => {
-        console.log("GAME: REDRAW!!");
-        console.log("GAME: taskNumber: " + taskNumber);
-
-        const storedTask = loadTaskFromLocalStorage(taskNumber);
-        setTask(storedTask);
-
-        if (!storedTask) {
-            console.log("GAME: No Task In LocalStorage, loading");
-            setTaskLoading({
-                isLoading: true,
-                hasError: false,
-                isLoaded: false,
-            });
-            loadTask(taskNumber);
-        } else {
-            console.log("GAME: Task In LocalStorage, can play");
-            setTaskLoading({
-                isLoading: false,
-                hasError: false,
-                isLoaded: true,
-            });
-        }
-        // if (!loadTasksFromLocalStorage()) {
-        //   setTasksLoading({ isLoading: true, hasError: false, isLoaded: false });
-        //   loadTasks(10);
-        // } else {
-        //   setTasksLoading({ isLoading: false, hasError: false, isLoaded: true });
-        // }
-        setRestart(false);
-    }, [taskNumber, isRestart]);
-
-    /**
-     * Обработчик закрытия модального окна
-     * @param e событие клика
-     */
-    const closeHandler = (e) => {
-        e.preventDefault();
-        setModalShow(false);
-        setTaskLoading({ isLoading: true, hasError: false, isLoaded: false });
-        loadTask();
-    };
-
     /**
      * Загрузка списка всех задач
      */
-    const loadTasks = () => {
+    const loadTasks = useCallback(() => {
         console.log("In loadTasks");
         try {
             apiGetTasks("")
@@ -128,13 +85,13 @@ const Game = () => {
             });
             setModalShow(true);
         }
-    };
+    }, []);
 
     /**
      * Загрузка конкретной задачи
      * @param taskNumber номер задачи
      */
-    const loadTask = (taskNumber) => {
+    const loadTask = useCallback((taskNumber) => {
         console.log("In loadTask");
 
         try {
@@ -172,43 +129,102 @@ const Game = () => {
             });
             setModalShow(true);
         }
-    };
+    }, []);
+
+    /**
+     * Обработчик закрытия модального окна
+     * @param e событие клика
+     */
+    const closeHandler = useCallback(
+        (e) => {
+            e.preventDefault();
+            setModalShow(false);
+            setTaskLoading({
+                isLoading: true,
+                hasError: false,
+                isLoaded: false,
+            });
+            loadTask();
+        },
+        [loadTask]
+    );
 
     /**
      * Обработчик перезапуска игры
      * @param e событие клика
      */
-    const restartHandler = (e) => {
-        clearBoardInLocalStorage(taskNumber);
-        clearTaskInLocalStorage();
-        setHelp(false);
-        setTaskLoading({ isLoading: true, hasError: false, isLoaded: true });
-        loadTask(taskNumber); // @tudo: Добавлен номер игрового поля для очистки
-        loadTasks();
-        setRestart(true);
-    };
+    const restartHandler = useCallback(
+        (e) => {
+            clearBoardInLocalStorage(taskNumber);
+            clearTaskInLocalStorage();
+            setHelp(false);
+            setTaskLoading({
+                isLoading: true,
+                hasError: false,
+                isLoaded: true,
+            });
+            loadTask(taskNumber);
+            loadTasks();
+            setRestart(true);
+        },
+        [taskNumber, loadTask, loadTasks]
+    );
+
+    useEffect(() => {
+        console.log("GAME: REDRAW!!");
+        console.log("GAME: taskNumber: " + taskNumber);
+
+        const storedTask = loadTaskFromLocalStorage(taskNumber);
+        setTask(storedTask);
+
+        if (!storedTask) {
+            console.log("GAME: No Task In LocalStorage, loading");
+            setTaskLoading({
+                isLoading: true,
+                hasError: false,
+                isLoaded: false,
+            });
+            loadTask(taskNumber);
+        } else {
+            console.log("GAME: Task In LocalStorage, can play");
+            setTaskLoading({
+                isLoading: false,
+                hasError: false,
+                isLoaded: true,
+            });
+        }
+        // if (!loadTasksFromLocalStorage()) {
+        //   setTasksLoading({ isLoading: true, hasError: false, isLoaded: false });
+        //   loadTasks(10);
+        // } else {
+        //   setTasksLoading({ isLoading: false, hasError: false, isLoaded: true });
+        // }
+        setRestart(false);
+    }, [taskNumber, isRestart, loadTask, loadTasks]);
 
     /**
      * Обработчик подсказки
+     *
+     * Передается в качестве пропса в компонент Controls - оборачиваем в useCallback
      */
-    const helpHandler = () => {
+    const helpHandler = useCallback(() => {
         const data = loadTaskFromLocalStorage(taskNumber);
         let help = {};
         let pos = 0;
-        if (data && data.task) {
-            while (true) {
-                pos = Math.floor(Math.random() * data.task.length);
-                if (data.task[pos] === "1") {
-                    break;
-                }
-            }
-            help.content = data.task[pos];
-            help.pos = pos;
-        } else {
-            help = false;
+        if (!(data || data.task)) {
+            return;
         }
+        while (true) {
+            pos = Math.floor(Math.random() * data.task.length);
+            if (data.task[pos] === "1") {
+                break;
+            }
+        }
+        help.content = data.task[pos];
+        help.pos = pos;
+        help.x = pos % 5;
         setHelp(help);
-    };
+    }, [taskNumber]);
 
     return (
         <>

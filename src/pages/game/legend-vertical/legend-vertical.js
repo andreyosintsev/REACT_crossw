@@ -32,10 +32,7 @@ import LegendVerticalStyles from "./legend-vertical.module.css";
  **/
 const LegendVertical = ({ legend, width }) => {
     return (
-        <div
-            key="legendVertical"
-            className={LegendVerticalStyles.vertical_legend}
-        >
+        <div className={LegendVerticalStyles.vertical_legend}>
             {legend.map((item, i) => {
                 return (
                     <Fragment key={`lv${i}`}>

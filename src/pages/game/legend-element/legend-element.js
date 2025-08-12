@@ -36,7 +36,7 @@ const LegendElement = ({ text, xCoord, yCoord }) => {
     if (text) {
         style += " " + LegendElementStyles["contented"];
     }
-    return <div className={`${LegendElementStyles.le} ${style} `}>{text}</div>;
+    return <div className={`${LegendElementStyles.le} ${style}`}>{text}</div>;
 };
 
 export default LegendElement;
