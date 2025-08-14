@@ -1,46 +1,21 @@
 import { FC } from "react";
-import { v4 as uuid } from "uuid";
 
-import IPageMenuMain from "./page-menu-main.interface";
-import styles from "./page-menu-main.module.scss";
+import { IPageMenuMain } from "./page-menu-main.interface";
+import PageMenuMainUI from "../ui/page-menu-main/page-menu-main";
 
 /**
- * @component - Компонент главного меню навигации сайта
- * @param {Array<{link: string, title: string}>} menuItems - Массив пунктов меню
- * @returns {JSX.Element} Навигационное меню сайта
- *
- * @description
- * Компонент реализует главное меню навигации с:
- * - Семантической HTML-разметкой
- * - Поддержкой произвольного количества пунктов
- * - Title-атрибутами для доступности
- * - Генерацией уникальных ключей для каждого элемента
- *
- * @features
- * 1. Гибкость через передачу пунктов меню в props
- * 2. Поддержка accessibility (title атрибуты)
- * 3. Оптимизированный рендеринг списка
- *
- * @see IPageMenuMain Интерфейс входных параметров
- **/
-const PageMenuMain: FC<IPageMenuMain> = ({ menuItems }) => {
-    return (
-        <div className={styles.menumain}>
-            <ul className={styles.menumain__items}>
-                {menuItems.map((menuItem) => (
-                    <li key={uuid()} className={styles.menumain__item}>
-                        <a
-                            className={styles.menumain__link}
-                            href={menuItem.link}
-                            title={menuItem.title}
-                        >
-                            {menuItem.title}
-                        </a>
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
-};
+ * @component Функциональный компонент основного меню страницы
+ * 
+ * @param {Object} IPageMenuMain - Интерфейс пропсов компонента основного меню
+ * @param {Array} menuItems - Массив объектов, содержащих пункты меню
+ * 
+ * @returns {JSX.Element} Визуализированный компонент основного меню с пунктами навигации
+ * 
+ * @description Компонент представляет собой контейнер для отображения основного меню
+ * навигации на странице приложения. Принимает массив пунктов меню для рендеринга
+ */
+const PageMenuMain: FC<IPageMenuMain> = ({ menuItems }) => (
+    <PageMenuMainUI menuItems={menuItems}></PageMenuMainUI>
+)
 
 export default PageMenuMain;

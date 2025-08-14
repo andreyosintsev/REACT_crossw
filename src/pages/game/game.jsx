@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import AppStyles from "./game.module.scss";
 
 import Modal from "../../components/modal/modal";
-import Preloader from "../../components/preloader/preloader";
+import Preloader from "../../components/ui/preloader/preloader";
 import PageBlock from "../../components/page-block/page-block";
 import Table from "./table/table";
 import Controls from "./controls/controls";

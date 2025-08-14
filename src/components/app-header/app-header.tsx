@@ -1,32 +1,21 @@
 import { FC } from "react";
-import { Link } from "react-router-dom";
 
 import IAppHeader from "./app-header.interface";
-import styles from "./app-header.module.scss";
-
-import PageLogo from "../page-logo/page-logo";
-import PageMenuMain from "../page-menu-main/page-menu-main";
 
 import { SITE_LOGO } from "../../declarations/constants";
 import { SITE_MENU_MAIN } from "../../declarations/constants";
+import AppHeaderUI from "../ui/app-header/app-header";
 
+/**
+ * @component Функциональный компонент шапки приложения
+ * @param {IAppHeader} props - Пропсы компонента
+ * @param {string} props.siteName - Название сайта
+ * @returns {JSX.Element} Визуальный компонент шапки приложения
+ * 
+ * @description Компонент представляет собой шапку приложения, которая отображает название сайта, логотип и основное меню
+ */
 const AppHeader: FC<IAppHeader> = ({ siteName }) => {
-    return (
-        <header className={styles.header}>
-            <div className={styles.header__wrapper}>
-                <div className={styles.headertitle}>
-                    <Link
-                        className={styles.headertitle__link}
-                        to="/"
-                        title="На главную"
-                    >
-                        <PageLogo image={SITE_LOGO} title={siteName} />
-                    </Link>
-                </div>
-                <PageMenuMain menuItems={SITE_MENU_MAIN} />
-            </div>
-        </header>
-    );
+    return (<AppHeaderUI siteName={siteName} logo={SITE_LOGO} menuItems={SITE_MENU_MAIN}></AppHeaderUI>);
 };
 
 export default AppHeader;
