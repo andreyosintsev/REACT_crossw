@@ -1,5 +1,6 @@
 import { FC } from "react";
-import styles from "./preloader.module.scss";
+
+import PreloaderUI from "../ui/preloader/preloader";
 
 /**
  * @component - Компонент индикатора загрузки
@@ -9,19 +10,14 @@ import styles from "./preloader.module.scss";
  * Для работы требует наличия файла preloader.gif в папке /imgs
  *
  * @see styles Модуль стилей компонента
- * 
+ *
  * @description
  * Компонент отображает анимированную GIF-прелоадер с особенностями:
  * - Стандартный индикатор загрузки
  * - Поддержка accessibility (alt-атрибут)
  * - Минималистичный дизайн
  */
-const PreloaderUI: FC = () => {
-    return (
-        <div className={styles.preloader}>
-            <img src={`/imgs/preloader.gif`} alt="Загрузка" />
-        </div>
-    );
-};
 
-export default PreloaderUI;
+const Preloader: FC = () => <PreloaderUI />;
+
+export default Preloader;
