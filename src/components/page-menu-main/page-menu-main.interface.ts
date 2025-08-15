@@ -4,5 +4,5 @@ export interface IMenuItem {
 }
 
 export interface IPageMenuMain {
-    menuItems: Array<IMenuItem>;
+    menuItems: IMenuItem[];
 }
