@@ -1,10 +1,8 @@
-interface IMenuItem {
+export interface IMenuItem {
     title: string;
     link: string;
 }
 
-interface IPageMenuMain {
-    menuItems: Array<IMenuItem>;
+export interface IPageMenuMain {
+    menuItems: IMenuItem[];
 }
-
-export default IPageMenuMain;

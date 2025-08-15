@@ -1,27 +1,21 @@
 import { FC } from "react";
 
 import IPageAds from "./page-ads.interface";
-import styles from "./page-ads.module.scss";
+import PageAdsUI from "../ui/page-ads/page-ads";
 
 /**
- * @component - компонент рекламного блока
- * @param {ReactNode} children - дополнительный контент (опционально)
- * @returns {JSX.Element} рекламный баннер с возможностью кастомизации
- *
- * @description
- * Компонент отображает рекламный блок с особенностями:
- * - Поддержка дополнительного контента через children
- * - Семантический alt-атрибут для изображения
- * - Готовые стили для позиционирования
- *
- * @see IPageAds Интерфейс входных параметров
+ * @component Функциональный компонент рекламного блока страницы
+ * 
+ * @param {Object} IPageAds - Интерфейс пропсов компонента рекламного блока
+ * @param {ReactNode} children - Вложенные элементы с рекламным контентом
+ * 
+ * @returns {JSX.Element} Визуализированный компонент рекламного блока с контентом
+ * 
+ * @description Компонент представляет собой контейнер для размещения рекламных материалов
+ * на странице приложения. Принимает вложенные элементы для отображения рекламы
  */
-const PageAds: FC<IPageAds> = ({ children }) => {
-    return (
-        <div className={styles.ads}>
-            <img src="/imgs/banner-300x800.png" alt="Реклама" />
-        </div>
-    );
-};
+const PageAds: FC<IPageAds> = ({ children }) => (
+    <PageAdsUI>{children}</PageAdsUI>
+)
 
 export default PageAds;

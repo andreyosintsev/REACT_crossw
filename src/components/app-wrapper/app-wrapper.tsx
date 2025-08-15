@@ -2,33 +2,21 @@ import { FC } from "react";
 
 import IAppWrapper from "./app-wrapper.interface";
 
-import styles from "./app-wrapper.module.scss";
+import AppWrapperUI from "../ui/app-wrapper/app-wrapper";
 
 /**
- * @component - компонент-обертка для основного содержимого приложения
- * @param {ReactNode} children - дочерние элементы приложения
- * @returns {JSX.Element} - контейнер для основного контента приложения
+ * @component Функциональный компонент обёртки приложения
+ * 
+ * @param {Object} IAppWrapper - Интерфейс пропсов компонента обёртки
+ * @param {ReactNode} children - Вложенные элементы для отображения внутри обёртки
+ * 
+ * @returns {JSX.Element} Визуализированный компонент обёртки с вложенным контентом
  *
- * @description
- * Компонент предоставляет базовый контейнер для:
- * - Централизации стилей layout
- * - Обеспечения единого отступа/фона
- * - Группировки основного содержимого
- * - Создания общего контекста стилизации
- *
- * @styleFeatures
- * 1. Базовые стили для всего приложения
- * 2. Единые отступы и выравнивание
- * 3. Гибкая система наследования стилей
- *
- * @note
- * Должен быть корневым элементом или находиться близко к корню приложения
- *
- * @see IAppWrapper Интерфейс входных параметров
- * @see styles Модуль CSS-стилей
- **/
+ * @description Основной контейнер для обёртки приложения, который принимает вложенные элементы
+ * через пропс children и обеспечивает базовую структуру макета
+ */
 const AppWrapper: FC<IAppWrapper> = ({ children }) => {
-    return <div className={styles.wrapper}>{children}</div>;
+    return <AppWrapperUI>{children}</AppWrapperUI>
 };
 
 export default AppWrapper;
