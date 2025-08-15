@@ -2,18 +2,33 @@
     float: left;
     width: 24px;
     height: 24px;
-    /* border-right: 1px solid #AAAAAA;
-    border-bottom: 1px solid #AAAAAA; */
     border-right: 1px solid #AAAAAA;
     border-bottom: 1px solid #AAAAAA;
 
     cursor: pointer;
 }
 
-.border_right {
+.be_0 {
+    background: #FFFFFF;
+}
+
+.be_1 {
+    background: #000000;
+    border-right: 1px solid #AAAAAA !important;
+    border-bottom: 1px solid #AAAAAA !important;
+}
+
+.be_X {
+    background: #FFFFFF;
+    background-image: url('./images/cross2.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.be_border-right {
     border-right: 1px solid #333333;
 }
 
-.border_bottom {
+.be_border-bottom {
     border-bottom: 1px solid #333333;
 }
