@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect, useCallback } from "react";
+import { Fragment, useState, useEffect, useCallback, FC } from "react";
 import BoardElement from "../board-element/board-element";
 
 import {
@@ -7,6 +7,7 @@ import {
 } from "../../../utils/local-storage/local-storage";
 
 import BoardStyles from "./board.module.css";
+import { IBoard } from "../../../utils/local-storage/local-storage.interface";
 
 /**
  * @component - компонент игрового поля собственно с рисунком
@@ -35,7 +36,7 @@ import BoardStyles from "./board.module.css";
  * @see saveBoardToLocalStorage - для сохранения состояния
  * @see loadBoardFromLocalStorage - для загрузки состояния
  */
-const Board = ({ taskId, width, height, checkWin, help }) => {
+const Board: FC<IBoard> = ({ taskId, width, height, checkWin, help }) => {
     const [board, setBoard] = useState([]);
 
     /**
