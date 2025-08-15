@@ -21,21 +21,23 @@ import BoardElementStyles from "./board-element.module.css";
  *
  * @see Board Родительский компонент игрового поля
  **/
-const BoardElement = React.memo(({ xCoord, yCoord, content }) => {
+const BoardElement = ({ xCoord, yCoord, content }) => {
     let style = "";
     if ((xCoord + 1) % 5 === 0) {
-        style = BoardElementStyles["border_right"];
+        style = BoardElementStyles["be_border-right"];
     }
     if ((yCoord + 1) % 5 === 0) {
-        style += " " + BoardElementStyles["border_bottom"];
+        style += " " + BoardElementStyles["be_border-bottom"];
     }
     return (
         <div
-            className={`${BoardElementStyles.be} ${content} ${style}`}
+            className={`${BoardElementStyles.be} ${
+                BoardElementStyles["be_" + content]
+            } ${style}`}
             data-x={xCoord}
             data-y={yCoord}
         ></div>
     );
-});
+};
 
 export default BoardElement;

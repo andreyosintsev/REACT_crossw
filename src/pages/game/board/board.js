@@ -114,13 +114,6 @@ const Board = ({ taskId, width, height, checkWin, help }) => {
                 }}
             >
                 {board.map((item, i) => {
-                    //Состояние клетки: '0' - пустая, '1' - закрашенная, 'X' - с крестом
-                    const contentMap = {
-                        0: BoardStyles.free,
-                        1: BoardStyles.full,
-                        X: BoardStyles.cross,
-                    };
-
                     return (
                         <Fragment key={`board${i}`}>
                             {i !== 0 && i % width === 0 && (
@@ -129,9 +122,7 @@ const Board = ({ taskId, width, height, checkWin, help }) => {
                             <BoardElement
                                 xCoord={item.xCoord}
                                 yCoord={item.yCoord}
-                                content={
-                                    contentMap[item.content] || BoardStyles.free
-                                }
+                                content={item.content}
                             />
                         </Fragment>
                     );
