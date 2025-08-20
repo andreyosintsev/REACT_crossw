@@ -1,5 +1,5 @@
 interface IModalBackdrop {
-    onClick: () => void;
+    onClick: (e: React.MouseEvent) => void;
 }
 
 export default IModalBackdrop;

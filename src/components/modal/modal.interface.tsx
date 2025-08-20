@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 interface IModal {
     title: string;
     image: string;
-    onClick: () => void;
+    onClick: (e: React.MouseEvent) => void;
     children: ReactNode;
 }
 

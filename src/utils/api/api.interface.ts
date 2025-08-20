@@ -6,7 +6,7 @@ export interface INews {
 export interface ITask {
     id: number;
     name: string;
-    task: number[];
+    task: string[];
     width: number;
     height: number;
     image_preview: string;

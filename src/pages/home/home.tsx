@@ -61,7 +61,7 @@ const Home: FC<IHome> = () => {
         });
 
         try {
-            apiGetTasks(10)
+            apiGetTasks('10')
                 .then((data) => {
                     setTasksLoading({
                         isLoading: false,

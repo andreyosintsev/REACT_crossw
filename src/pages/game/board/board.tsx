@@ -1,106 +1,114 @@
-import { Fragment, useState, useEffect, useCallback, FC } from "react";
-import BoardElement from "../board-element/board-element";
+import { useState, useEffect, useCallback, FC, Fragment } from "react";
 
 import {
     saveBoardToLocalStorage,
     loadBoardFromLocalStorage,
 } from "../../../utils/local-storage/local-storage";
 
-import BoardStyles from "./board.module.css";
-import { IBoard } from "../../../utils/local-storage/local-storage.interface";
+import { IBoard, IGameBoardProps, IHelp } from "./board.interface";
+
+import styles from "./board.module.scss";
+import BoardElement from "../board-element/board-element";
 
 /**
- * @component - компонент игрового поля собственно с рисунком
- * @param {string} taskId - Номер кроссворда
- * @param {number} width - Ширина игрового поля (в клетках)
- * @param {number} height - Высота игрового поля (в клетках)
- * @param {Function} checkWin - Функция проверки победы
- * @param {Object|null} help - Объект подсказки (опционально)
- * @returns {JSX.Element} - Игровое поле
- *
- * @description
- * Компонент реализует интерактивное игровое поле с возможностью:
- * - ЛКМ - закрасить клетку
- * - ПКМ - поставить крестик
- * - Автосохранение состояния
- * - Загрузку сохранённого состояния
- * - Обработку подсказок
- *
- * @state
- * @property {Array} board - Массив клеток игрового поля
- *
- * @method initBoard - инициализирует новое или загружает сохранённое поле
- * @method boardClickHandler - обрабатывает клики по полю
- *
- * @see BoardElement - дочерний компонент клетки поля
- * @see saveBoardToLocalStorage - для сохранения состояния
- * @see loadBoardFromLocalStorage - для загрузки состояния
+ * @component Компонент игрового поля для японских кроссвордов
+ * @param {IGameBoardProps} props - Свойства компонента
+ * @param {string} props.taskId - Уникальный идентификатор задачи/кроссворда
+ * @param {number} props.width - Ширина игрового поля в клетках
+ * @param {number} props.height - Высота игрового поля в клетках
+ * @param {Function} props.checkWin - Функция проверки завершения кроссворда
+ * @param {IHelp | null} [props.help] - Объект подсказки (опционально)
+ * @returns {JSX.Element} Интерактивное игровое поле
  */
-const Board: FC<IBoard> = ({ taskId, width, height, checkWin, help }) => {
-    const [board, setBoard] = useState([]);
+const Board: FC<IGameBoardProps> = ({ taskId, width, height, checkWin, help }) => {
+    // Состояние игрового поля
+    const [board, setBoard] = useState<IBoard[]>([]);
 
     /**
      * Обработчик кликов по игровому полю
-     * @param {MouseEvent} e - событие мыши
+     * @param {React.MouseEvent<HTMLDivElement>} e - Событие мыши
      */
-    const boardClickHandler = (e) => {
+    const boardClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
+        // Предотвращаем стандартное поведение браузера
         e.preventDefault();
 
-        const x = +e.target.dataset.x;
-        const y = +e.target.dataset.y;
+        const target = e.target as HTMLElement;
+
+        // Проверяем наличие dataset свойств
+        if (!target.dataset.x || !target.dataset.y) {
+            return;
+        }
+
+        // Получаем координаты клетки
+        const x = +target.dataset.x;
+        const y = +target.dataset.y;
         const cellIndex = y * width + x;
 
-        let newBoard = [...board];
+        // Создаем копию текущего состояния поля
+        let newBoard = [...board]
 
+        // Обрабатываем разные типы кликов
         switch (e.button) {
-            case 0:
+            case 0: // Левая кнопка мыши - закрашивание
                 newBoard[cellIndex].content =
                     board[cellIndex].content !== "1" ? "1" : "0";
                 break;
-            case 2:
+            case 2: // Правая кнопка мыши - крестик
                 newBoard[cellIndex].content =
                     board[cellIndex].content !== "X" ? "X" : "0";
                 break;
-            default:
+            default: // Другие кнопки - ноль по умолчанию
                 newBoard[cellIndex].content =
                     board[cellIndex].content !== "X" ? "X" : "0";
         }
+
+        // Обновляем состояние и сохраняем в localStorage
         setBoard(newBoard);
         saveBoardToLocalStorage(taskId, newBoard);
     };
 
+    /**
+     * Инициализация игрового поля
+     * @param {IHelp | null} help - Объект подсказки или null
+     */
     const initBoard = useCallback(
-        (help) => {
-            const newBoard = loadBoardFromLocalStorage(taskId) || [];
+        (help: IHelp | null) => {
+            // Загружаем сохраненное состояние или создаем пустой массив
+            const newBoard: IBoard[] = loadBoardFromLocalStorage(taskId) || [];
 
+            // Если поле пустое - создаем новое
             if (newBoard.length === 0) {
                 for (let y = 0; y < height; y++) {
                     for (let x = 0; x < width; x++) {
                         newBoard.push({
-                            xCoord: x,
-                            yCoord: y,
-                            content: "0",
+                            xCoord: x,       // X-координата клетки
+                            yCoord: y,       // Y-координата клетки
+                            content: "0",    // Состояние: "0" - пусто, "1" - закрашено, "X" - крестик
                         });
                     }
                 }
             }
 
+            // Если предоставлена подсказка - применяем ее
             if (help) {
                 newBoard[help.pos].xCoord = help.pos % width;
                 newBoard[help.pos].yCoord = Math.floor(help.pos / width);
                 newBoard[help.pos].content = "" + help.content;
             }
 
+            // Устанавливаем состояние и сохраняем
             setBoard(newBoard);
             saveBoardToLocalStorage(taskId, newBoard);
         },
-        [width, height, taskId]
+        [width, height, taskId] // Зависимости для useCallback
     );
 
+    // Эффект для инициализации поля при монтировании и изменении подсказок
     useEffect(() => {
-        initBoard(help);
+        initBoard(help || null);
     }, [initBoard, help]);
 
+    // Эффект для проверки победы при изменении состояния поля
     useEffect(() => {
         checkWin(board);
     }, [checkWin, board]);
@@ -108,37 +116,28 @@ const Board: FC<IBoard> = ({ taskId, width, height, checkWin, help }) => {
     return (
         <>
             <div
-                className={BoardStyles.board}
+                className={styles.board}
                 onMouseDown={boardClickHandler}
                 onContextMenu={(e) => {
                     e.preventDefault();
                 }}
             >
                 {board.map((item, i) => {
-                    //Состояние клетки: '0' - пустая, '1' - закрашенная, 'X' - с крестом
-                    const contentMap = {
-                        0: BoardStyles.free,
-                        1: BoardStyles.full,
-                        X: BoardStyles.cross,
-                    };
-
                     return (
                         <Fragment key={`board${i}`}>
                             {i !== 0 && i % width === 0 && (
-                                <div className={BoardStyles.newLine}></div>
+                                <div className={styles.newLine}></div>
                             )}
                             <BoardElement
                                 xCoord={item.xCoord}
                                 yCoord={item.yCoord}
-                                content={
-                                    contentMap[item.content] || BoardStyles.free
-                                }
+                                content={item.content}
                             />
                         </Fragment>
                     );
                 })}
             </div>
-            <div className={BoardStyles.newLine} />
+            <div className={styles.newLine} />
         </>
     );
 };

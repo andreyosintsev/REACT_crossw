@@ -1,6 +1,7 @@
-import React from "react";
+import { FC } from "react";
 
-import LegendElementStyles from "./legend-element.module.css";
+import styles from "./legend-element.module.scss";
+import ILegendElement from "./legend-element.interfaca";
 
 /**
  * @component - Компонент элемента легенды игрового поля
@@ -22,21 +23,21 @@ import LegendElementStyles from "./legend-element.module.css";
  * 3. Каждый 5-й элемент по Y получает 'border_bottom'
  * 4. Элементы с текстом получают 'contented'
  *
- * @see LegendElementStyles Модуль стилей компонента
+ * @see styles Модуль стилей компонента
  * @see BoardElement Аналогичный компонент игрового поля
  */
-const LegendElement = ({ text, xCoord, yCoord }) => {
+const LegendElement: FC<ILegendElement> = ({ text, xCoord, yCoord }) => {
     let style = "";
     if ((xCoord + 1) % 5 === 0) {
-        style = LegendElementStyles["border_right"];
+        style = styles["border_right"];
     }
     if ((yCoord + 1) % 5 === 0) {
-        style += " " + LegendElementStyles["border_bottom"];
+        style += " " + styles["border_bottom"];
     }
     if (text) {
-        style += " " + LegendElementStyles["contented"];
+        style += " " + styles["contented"];
     }
-    return <div className={`${LegendElementStyles.le} ${style}`}>{text}</div>;
+    return <div className={`${styles.le} ${style}`}>{text}</div>;
 };
 
 export default LegendElement;

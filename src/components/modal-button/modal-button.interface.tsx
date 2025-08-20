@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 interface IModalButton {
-    onClick: () => void;
+    onClick: (e: React.MouseEvent) => void;
     children: ReactNode;
 }
 
