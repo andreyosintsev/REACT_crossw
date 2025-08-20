@@ -2,23 +2,10 @@
     display: block;
     float: left;
     border-right: 1px solid #000000;
-    border-bottom:  1px solid #000000;
+    border-bottom: 1px solid #000000;
     border-left: 1px solid #666666;
 }
+
 .newLine {
     clear: both;
-}
-.free {
-    background: #FFFFFF;
-}
-.full {
-    background: #000000;
-    border-right: 1px solid #AAAAAA !important;
-    border-bottom: 1px solid #AAAAAA !important;
-}
-.cross {
-    background: #FFFFFF;
-    background-image: url('./images/cross2.png');
-    background-repeat: no-repeat;
-    background-size: cover;
 }

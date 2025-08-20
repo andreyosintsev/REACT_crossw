@@ -54,12 +54,12 @@ const BoardElement: FC<IBoardElement> = memo(({ xCoord, yCoord, content }) => {
 
     // Добавляем правую границу для каждой 5-й клетки по горизонтали
     if ((xCoord + 1) % 5 === 0) {
-        style = styles["border_right"];
+        style = styles["be_border-right"];
     }
 
     // Добавляем нижнюю границу для каждой 5-й клетки по вертикали
     if ((yCoord + 1) % 5 === 0) {
-        style += " " + styles["border_bottom"];
+        style += " " + styles["be_border-bottom"];
     }
 
     return (
