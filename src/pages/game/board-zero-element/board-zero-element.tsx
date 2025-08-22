@@ -1,4 +1,5 @@
-import ZeroElementStyles from "./board-zero-element.module.css";
+import { FC } from "react";
+import styles from "./board-zero-element.module.scss";
 
 /**
  * @component Компонент пустого элемента интерфейса
@@ -15,10 +16,10 @@ import ZeroElementStyles from "./board-zero-element.module.css";
  * Компонент не принимает props и не содержит логики,
  * только стили из модуля ZeroElementStyles
  *
- * @see ZeroElementStyles Модуль стилей для компонента
+ * @see styles Модуль стилей для компонента
  */
-const ZeroElement = () => {
-    return <div className={`${ZeroElementStyles.ze}`}></div>;
+const ZeroElement: FC = () => {
+    return <div className={`${styles.ze}`}></div>;
 };
 
 export default ZeroElement;

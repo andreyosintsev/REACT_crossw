@@ -1,8 +1,9 @@
-import { Fragment } from "react";
+import { FC, Fragment } from "react";
 
 import LegendElement from "../legend-element/legend-element";
 
-import LegendHorizontalStyles from "./legend-horizontal.module.css";
+import styles from "./legend-horizontal.module.scss";
+import ILegendHorizontal from "./legend-horizontal.interface";
 
 /**
  * @component - Компонент горизонтальной легенды игрового поля
@@ -23,17 +24,17 @@ import LegendHorizontalStyles from "./legend-horizontal.module.css";
  * 3. Между строками добавляется разделитель newLine
  *
  * @see LegendElement Компонент элемента легенды
- * @see LegendHorizontalStyles Стили компонента
+ * @see styles Стили компонента
  **/
-const LegendHorizontal = ({ legend, width }) => {
+const LegendHorizontal: FC<ILegendHorizontal> = ({ legend, width }) => {
     return (
-        <div className={LegendHorizontalStyles.horizontal_legend}>
+        <div className={styles.horizontal_legend}>
             {legend.map((item, i) => {
                 return (
                     <Fragment key={`lh${i}`}>
                         {i !== 0 && i % width === 0 && (
                             <div
-                                className={LegendHorizontalStyles.newLine}
+                                className={styles.newLine}
                             ></div>
                         )}
                         <LegendElement

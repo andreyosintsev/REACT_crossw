@@ -37,7 +37,7 @@ export const apiGetTask = (
 };
 
 export const apiGetTasks = (
-    count: number,
+    count: number = 10,
     options?: RequestInit
 ): Promise<IApiTasks> => {
     return fetch(
@@ -47,3 +47,9 @@ export const apiGetTasks = (
         .then(checkFetchResponse)
         .then(checkSuccess);
 };
+
+export function getErrorMessage(error: unknown): string {
+    if (error instanceof Error) return error.message;
+    if (typeof error === "string") return error;
+    return "Неизвестная ошибка";
+}

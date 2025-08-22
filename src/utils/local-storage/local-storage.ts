@@ -1,4 +1,5 @@
-import { IBoard, ITask } from "./local-storage.interface";
+import IBoardElement from "../../pages/game/board-element/board-element.interface";
+import { ITask } from "../api/api.interface";
 import {
     BOARD_PREFIX,
     TASK_PREFIX,
@@ -11,7 +12,7 @@ import {
  */
 export const saveBoardToLocalStorage = (
     boardId: number,
-    board: IBoard[]
+    board: IBoardElement[]
 ): void => {
     localStorage.setItem(`${BOARD_PREFIX}${boardId}`, JSON.stringify(board));
 };
@@ -20,7 +21,9 @@ export const saveBoardToLocalStorage = (
  * @param boardId идентификатор поля
  * @returns загруженное поле или null если не найдено
  */
-export const loadBoardFromLocalStorage = (boardId: number): string | null => {
+export const loadBoardFromLocalStorage = (
+    boardId: number
+): IBoardElement[] | null => {
     const board = localStorage.getItem(`${BOARD_PREFIX}${boardId}`);
     return board ? JSON.parse(board) : null;
 };
@@ -59,6 +62,6 @@ export const clearTaskInLocalStorage = (taskId: number): void => {
 /** Сохраняет список заданий в localStorage
  * @param board массив заданий
  */
-export const saveTasksToLocalStorage = (board: IBoard[]): void => {
+export const saveTasksToLocalStorage = (board: ITask[]): void => {
     localStorage.setItem(`${TASKS_KEY}`, JSON.stringify(board));
 };

@@ -1,8 +1,9 @@
-import { Fragment } from "react";
+import { FC, Fragment } from "react";
 
 import LegendElement from "../legend-element/legend-element";
 
-import LegendVerticalStyles from "./legend-vertical.module.css";
+import LegendVerticalStyles from "./legend-vertical.module.scss";
+import ILegendVertical from "./legend-vertical.interface";
 
 /**
  * @component - Компонент вертикальной легенды игрового поля
@@ -30,7 +31,7 @@ import LegendVerticalStyles from "./legend-vertical.module.css";
  * @see LegendHorizontal Горизонтальный вариант легенды
  * @see LegendVerticalStyles Стили компонента
  **/
-const LegendVertical = ({ legend, width }) => {
+const LegendVertical: FC<ILegendVertical> = ({ legend, width }) => {
     return (
         <div className={LegendVerticalStyles.vertical_legend}>
             {legend.map((item, i) => {
