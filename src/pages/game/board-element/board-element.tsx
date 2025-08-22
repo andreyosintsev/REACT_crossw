@@ -27,7 +27,7 @@ import IBoardElement from "./board-element.interface";
  * Компонент обернут в memo для предотвращения лишних ререндеров
  * при неизменных пропсах
  */
-const BoardElement: FC<IBoardElement> = memo(({ xCoord, yCoord, content }) => {
+const BoardElement: FC<IBoardElement> = ({ xCoord, yCoord, content }) => {
     /**
      * Определяет CSS-класс в зависимости от содержимого клетки
      * @type {string}
@@ -51,6 +51,6 @@ const BoardElement: FC<IBoardElement> = memo(({ xCoord, yCoord, content }) => {
             data-y={yCoord}
         ></div>
     );
-});
+};
 
 export default BoardElement;
