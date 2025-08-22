@@ -1,4 +1,4 @@
-import { FC, memo } from "react";
+import { FC } from "react";
 
 import styles from "./board-element.module.scss";
 import IBoardElement from "./board-element.interface";
@@ -16,7 +16,6 @@ import IBoardElement from "./board-element.interface";
  * - Визуальным отображением состояния клетки
  * - Границами для группировки клеток (каждые 5 клеток)
  * - Data-атрибутами для обработки кликов
- * - Оптимизацией ререндеров через memo
  * 
  * @states
  * - "0" - Пустая клетка (белая)

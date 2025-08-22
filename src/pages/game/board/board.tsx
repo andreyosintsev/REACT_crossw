@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, FC, Fragment, useLayoutEffect } from "react";
+import { useState, useEffect, useCallback, FC, Fragment } from "react";
 
 import {
     saveBoardToLocalStorage,
@@ -105,7 +105,7 @@ const Board: FC<IGameBoardProps> = ({ taskId, width, height, checkWin, help }) =
     );
 
     // Эффект для инициализации поля при монтировании и изменении подсказок
-    useLayoutEffect(() => {
+    useEffect(() => {
         initBoard(help);
     }, [initBoard, help]);
 

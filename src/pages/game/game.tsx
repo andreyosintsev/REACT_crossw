@@ -93,7 +93,8 @@ const Game: FC = () => {
                 .then((data) => {
                     console.log("In loadTasks: then");
                     console.log("APP loadTasks: tasks loaded");
-                    saveTasksToLocalStorage(data.tasks);
+                    const { success, ...newData } = data
+                    saveTasksToLocalStorage(newData.tasks);
                     console.log("In loadTasks: saved to localStorage");
                     setTasksLoading({
                         isLoading: false,
@@ -145,8 +146,9 @@ const Game: FC = () => {
                 .then((data) => {
                     console.log("GAME: loadTask: then");
                     console.log("GAME: loadTask: task loaded");
-                    saveTaskToLocalStorage(taskId, data);
-                    setTask(data);
+                    const { success, ...newData } = data
+                    saveTaskToLocalStorage(taskId, newData);
+                    setTask(newData);
                     console.log("GAME: loadTask: saved to localStorage");
                     setTaskLoading({
                         isLoading: false,
@@ -222,7 +224,7 @@ const Game: FC = () => {
     const restartHandler = useCallback(
         (e: React.MouseEvent) => {
             e.preventDefault();
-            if (!taskId || taskId === 0) return;
+            if (!taskId) return;
             clearBoardInLocalStorage(taskId);
             clearTaskInLocalStorage(taskId);
             setHelp({

@@ -96,15 +96,14 @@ const Home: FC<IHome> = () => {
      * @param {ITask[]} tasks - Массив задач
      * @returns {Array<{src: string, alt: string, link: string}>} Массив изображений для слайдера
      **/
-    const tasksToImages = (tasks: ITask[]) => {
-        return tasks.map((task) => {
-            return {
-                src: `${SITE_PROTOCOL}${SITE_DOMAIN}/tasks/${task.image_preview}`,
-                alt: `Разгадать кроссворд № ${task.id}`,
-                link: `game/${task.id}`,
-            };
-        })
-    };
+    const tasksToImages = (tasks: ITask[]) => tasks.map((task) => {
+        return {
+            src: `${SITE_PROTOCOL}${SITE_DOMAIN}/tasks/${task.image_preview}`,
+            alt: `Разгадать кроссворд № ${task.id}`,
+            link: `game/${task.id}`,
+        };
+    })
+
 
 
     return (

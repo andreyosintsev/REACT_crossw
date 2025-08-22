@@ -6,7 +6,7 @@ import {
     API_TASKS,
 } from "../../declarations/constants";
 
-import { IApiNews, IApiTask, IApiTasks, ITask, ITasks } from "./api.interface";
+import { IApiNews, IApiTask, IApiTasks } from "./api.interface";
 
 const checkFetchResponse = <T>(res: Response): Promise<T> => {
     return res.ok ? res.json() : Promise.reject(`Ошибка Fetch: ${res.status}`);
