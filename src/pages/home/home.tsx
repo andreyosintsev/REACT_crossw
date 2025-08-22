@@ -53,7 +53,7 @@ const Home: FC<IHome> = () => {
      * @function
      * @throws {Error} При ошибке API-запроса
      **/
-    const getTasks = (maxTasks: number = 10) => {
+    const getTasks = () => {
         setTasksLoading({
             isLoading: true,
             hasError: false,
@@ -61,7 +61,7 @@ const Home: FC<IHome> = () => {
         });
 
         try {
-            apiGetTasks('10')
+            apiGetTasks()
                 .then((data) => {
                     setTasksLoading({
                         isLoading: false,
@@ -96,14 +96,16 @@ const Home: FC<IHome> = () => {
      * @param {ITask[]} tasks - Массив задач
      * @returns {Array<{src: string, alt: string, link: string}>} Массив изображений для слайдера
      **/
-    const tasksToImages = (tasks: ITask[]) =>
-        tasks.map((task) => {
+    const tasksToImages = (tasks: ITask[]) => {
+        return tasks.map((task) => {
             return {
                 src: `${SITE_PROTOCOL}${SITE_DOMAIN}/tasks/${task.image_preview}`,
                 alt: `Разгадать кроссворд № ${task.id}`,
                 link: `game/${task.id}`,
             };
-        });
+        })
+    };
+
 
     return (
         <main className={styles.main}>

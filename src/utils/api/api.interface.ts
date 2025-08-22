@@ -25,8 +25,8 @@ export interface IApiNews extends IApiResult {
     news: INews[];
 }
 
-export interface IApiTask extends IApiResult {
-    task: ITask;
+export interface IApiTask extends ITask {
+    success: boolean;
 }
 
 export interface IApiTasks extends IApiResult {

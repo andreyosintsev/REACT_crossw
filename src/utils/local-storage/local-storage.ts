@@ -1,4 +1,4 @@
-import { IBoard } from "../../pages/game/board/board.interface";
+import IBoardElement from "../../pages/game/board-element/board-element.interface";
 import { ITask } from "../api/api.interface";
 import {
     BOARD_PREFIX,
@@ -12,7 +12,7 @@ import {
  */
 export const saveBoardToLocalStorage = (
     boardId: number,
-    board: IBoard[]
+    board: IBoardElement[]
 ): void => {
     localStorage.setItem(`${BOARD_PREFIX}${boardId}`, JSON.stringify(board));
 };
@@ -21,7 +21,9 @@ export const saveBoardToLocalStorage = (
  * @param boardId идентификатор поля
  * @returns загруженное поле или null если не найдено
  */
-export const loadBoardFromLocalStorage = (boardId: number): IBoard[] | null => {
+export const loadBoardFromLocalStorage = (
+    boardId: number
+): IBoardElement[] | null => {
     const board = localStorage.getItem(`${BOARD_PREFIX}${boardId}`);
     return board ? JSON.parse(board) : null;
 };

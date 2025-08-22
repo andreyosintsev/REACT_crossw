@@ -19,7 +19,7 @@ import styles from "./board-zero-element.module.scss";
  * @see styles Модуль стилей для компонента
  */
 const ZeroElement: FC = () => {
-    return <div className={`${styles.zero}`}></div>;
+    return <div className={`${styles.ze}`}></div>;
 };
 
 export default ZeroElement;

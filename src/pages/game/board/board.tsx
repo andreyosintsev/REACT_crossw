@@ -1,14 +1,15 @@
-import { useState, useEffect, useCallback, FC, Fragment } from "react";
+import { useState, useEffect, useCallback, FC, Fragment, useLayoutEffect } from "react";
 
 import {
     saveBoardToLocalStorage,
     loadBoardFromLocalStorage,
 } from "../../../utils/local-storage/local-storage";
 
-import { IBoard, IGameBoardProps, IHelp } from "./board.interface";
+import { IGameBoardProps, IHelp } from "./board.interface";
 
 import styles from "./board.module.scss";
 import BoardElement from "../board-element/board-element";
+import IBoardElement from "../board-element/board-element.interface";
 
 /**
  * @component Компонент игрового поля для японских кроссвордов
@@ -17,12 +18,12 @@ import BoardElement from "../board-element/board-element";
  * @param {number} props.width - Ширина игрового поля в клетках
  * @param {number} props.height - Высота игрового поля в клетках
  * @param {Function} props.checkWin - Функция проверки завершения кроссворда
- * @param {IHelp | null} [props.help] - Объект подсказки (опционально)
+ * @param {IHelp} [props.help] - Объект подсказки
  * @returns {JSX.Element} Интерактивное игровое поле
  */
 const Board: FC<IGameBoardProps> = ({ taskId, width, height, checkWin, help }) => {
     // Состояние игрового поля
-    const [board, setBoard] = useState<IBoard[]>([]);
+    const [board, setBoard] = useState<IBoardElement[]>([]);
 
     /**
      * Обработчик кликов по игровому полю
@@ -69,12 +70,12 @@ const Board: FC<IGameBoardProps> = ({ taskId, width, height, checkWin, help }) =
 
     /**
      * Инициализация игрового поля
-     * @param {IHelp | null} help - Объект подсказки или null
+     * @param {IHelp} help - Объект подсказки
      */
     const initBoard = useCallback(
-        (help: IHelp | null) => {
+        (help: IHelp) => {
             // Загружаем сохраненное состояние или создаем пустой массив
-            const newBoard: IBoard[] = loadBoardFromLocalStorage(taskId) || [];
+            const newBoard: IBoardElement[] = loadBoardFromLocalStorage(taskId) || [];
 
             // Если поле пустое - создаем новое
             if (newBoard.length === 0) {
@@ -89,11 +90,11 @@ const Board: FC<IGameBoardProps> = ({ taskId, width, height, checkWin, help }) =
                 }
             }
 
-            // Если предоставлена подсказка - применяем ее
-            if (help) {
-                newBoard[help.pos].xCoord = help.pos % width;
-                newBoard[help.pos].yCoord = Math.floor(help.pos / width);
-                newBoard[help.pos].content = "" + help.content;
+            // Если предоставлена position в подсказке - применяем подсказку
+            if (help.position) {
+                newBoard[help.position].xCoord = help.position % width;
+                newBoard[help.position].yCoord = Math.floor(help.position / width);
+                newBoard[help.position].content = "" + help.content;
             }
 
             // Устанавливаем состояние и сохраняем
@@ -104,8 +105,8 @@ const Board: FC<IGameBoardProps> = ({ taskId, width, height, checkWin, help }) =
     );
 
     // Эффект для инициализации поля при монтировании и изменении подсказок
-    useEffect(() => {
-        initBoard(help || null);
+    useLayoutEffect(() => {
+        initBoard(help);
     }, [initBoard, help]);
 
     // Эффект для проверки победы при изменении состояния поля

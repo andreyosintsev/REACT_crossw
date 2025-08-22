@@ -9,8 +9,8 @@ import ModalButton from "../../../components/modal-button/modal-button";
 
 import styles from "./table.module.scss";
 import { ITask } from "../../../utils/api/api.interface";
-import { IBoard } from "../board/board.interface";
 import { ILegendHorizontal, ITable, IVerticalLegend } from "./table.interface";
+import IBoardElement from "../board-element/board-element.interface";
 
 /**
  * @component Основной компонент таблицы игрового поля с легендами
@@ -196,7 +196,7 @@ const Table: FC<ITable> = ({ task, help }) => {
      * @memorized Использует useCallback для оптимизации
      */
     const checkWin = useCallback(
-        (board: IBoard[]) => {
+        (board: IBoardElement[]) => {
             if (board.length === 0) {
                 setWin(false);
                 return;
@@ -254,8 +254,8 @@ const Table: FC<ITable> = ({ task, help }) => {
                 <div
                     className={styles.table}
                     style={{
-                        minWidth: `${(verticalLegend.width +
-                            task.width) *
+                        minWidth: `${(Number(verticalLegend.width) +
+                            Number(task.width)) *
                             25 +
                             4
                             }px`,

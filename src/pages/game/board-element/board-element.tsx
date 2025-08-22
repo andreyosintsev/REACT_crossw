@@ -34,24 +34,6 @@ const BoardElement: FC<IBoardElement> = memo(({ xCoord, yCoord, content }) => {
      */
     let style = "";
 
-    /**
-     * Определяет стили границ клетки
-     * @type {string}
-     */
-    let className = '';
-
-    // Выбираем класс в зависимости от состояния клетки
-    switch (content) {
-        case '1':
-            className = styles.be_1;
-            break;
-        case 'X':
-            className = styles.be_X;
-            break;
-        default:
-            className = styles.be_0;
-    }
-
     // Добавляем правую границу для каждой 5-й клетки по горизонтали
     if ((xCoord + 1) % 5 === 0) {
         style = styles["be_border-right"];
@@ -64,7 +46,7 @@ const BoardElement: FC<IBoardElement> = memo(({ xCoord, yCoord, content }) => {
 
     return (
         <div
-            className={`${styles.be} ${className} ${style}`}
+            className={`${styles.be} ${styles["be_" + content]} ${style}`}
             data-x={xCoord}
             data-y={yCoord}
         ></div>

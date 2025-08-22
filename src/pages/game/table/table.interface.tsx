@@ -3,7 +3,7 @@ import { IHelp } from "../board/board.interface";
 
 export interface ITable {
     task: ITask
-    help: IHelp | null;
+    help: IHelp;
 }
 
 export interface ILegend {

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, FC } from "react";
+import { useState, useEffect, useCallback, FC, useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import AppStyles from "./game.module.scss";
@@ -41,11 +41,12 @@ import Tasks from "./tasks/tasks";
  * @property {ILoadingState} tasksLoading - Состояние загрузки списка задач
  * @property {boolean} isModalShow - Видимость модального окна ошибки
  * @property {boolean} isRestart - Флаг перезапуска игры
- * @property {IHelp | null} isHelp - Объект подсказки
+ * @property {IHelp} isHelp - Объект подсказки
  */
 const Game: FC = () => {
     // Текущая задача и номер задачи
     const [task, setTask] = useState<ITask | null>();
+    const [num, setNum] = useState(0);
 
     // Состояние загрузки задачи
     const [taskLoading, setTaskLoading] = useState<ILoadingState>({
@@ -63,10 +64,15 @@ const Game: FC = () => {
     // Состояния отображения модальных окон
     const [isModalShow, setModalShow] = useState(false);
     const [isRestart, setRestart] = useState(false);
-    const [isHelp, setHelp] = useState<IHelp | null>(null);
+    const [isHelp, setHelp] = useState<IHelp>({
+        content: '',
+        xCoord: 0,
+        yCoord: 0,
+        position: 0
+    });
 
     const { taskNumber } = useParams();
-    const taskId = taskNumber ? parseInt(taskNumber, 10) : null;
+    const taskId = taskNumber ? parseInt(taskNumber, 10) : 0;
 
     /**
      * Загружает список всех задач с сервера
@@ -83,7 +89,7 @@ const Game: FC = () => {
     const loadTasks = useCallback(() => {
         console.log("In loadTasks");
         try {
-            apiGetTasks("")
+            apiGetTasks()
                 .then((data) => {
                     console.log("In loadTasks: then");
                     console.log("APP loadTasks: tasks loaded");
@@ -94,6 +100,7 @@ const Game: FC = () => {
                         hasError: false,
                         isLoaded: true,
                     });
+                    setNum(num + 1)
                 })
                 .catch((error) => {
                     console.log("In loadTasks: error");
@@ -131,15 +138,15 @@ const Game: FC = () => {
      * 
      * @memorized Использует useCallback для оптимизации
      */
-    const loadTask = useCallback((taskId: number) => {
+    const loadTask = useCallback(async (taskId: number) => {
         console.log("In loadTask");
-
         try {
             apiGetTask(taskId)
                 .then((data) => {
                     console.log("GAME: loadTask: then");
                     console.log("GAME: loadTask: task loaded");
-                    saveTaskToLocalStorage(taskId, data.task);
+                    saveTaskToLocalStorage(taskId, data);
+                    setTask(data);
                     console.log("GAME: loadTask: saved to localStorage");
                     setTaskLoading({
                         isLoading: false,
@@ -215,19 +222,24 @@ const Game: FC = () => {
     const restartHandler = useCallback(
         (e: React.MouseEvent) => {
             e.preventDefault();
-            if (taskId) {
-                clearBoardInLocalStorage(taskId);
-                clearTaskInLocalStorage(taskId);
-                setHelp(null);
-                setTaskLoading({
-                    isLoading: true,
-                    hasError: false,
-                    isLoaded: false,
-                });
-                loadTask(taskId);
-                loadTasks();
-                setRestart(true);
-            }
+            if (!taskId || taskId === 0) return;
+            clearBoardInLocalStorage(taskId);
+            clearTaskInLocalStorage(taskId);
+            setHelp({
+                content: '',
+                xCoord: 0,
+                yCoord: 0,
+                position: 0
+            });
+            setTaskLoading({
+                isLoading: true,
+                hasError: false,
+                isLoaded: false,
+            });
+            setRestart(true);
+            loadTask(taskId);
+            loadTasks();
+
         },
         [taskId, loadTask, loadTasks]
     );
@@ -250,8 +262,10 @@ const Game: FC = () => {
         const data = loadTaskFromLocalStorage(taskId);
         if (!data) return
         let help: IHelp = {
-            pos: 0,
             content: '',
+            xCoord: 0,
+            yCoord: 0,
+            position: null
         };
         let pos = 0;
         if (!(data || data)) {
@@ -264,14 +278,14 @@ const Game: FC = () => {
             }
         }
         help.content = data.task[pos];
-        help.pos = pos;
-        help.x = pos % 5;
+        help.position = pos;
+        help.xCoord = pos % 5;
         setHelp(help);
     }, [taskId]);
 
     /**
      * Эффект инициализации и загрузки игры
-     * @dependency [taskId, isRestart, loadTask, loadTasks] - Зависит от параметров игры
+     * @dependency [taskId, isRestart, loadTask] - Зависит от параметров игры
      */
     useEffect(() => {
         if (!taskId) return;
@@ -288,7 +302,7 @@ const Game: FC = () => {
                 hasError: false,
                 isLoaded: false,
             });
-            loadTask(taskId);
+            loadTask(taskId)
         } else {
             console.log("GAME: Task In LocalStorage, can play");
             setTaskLoading({
@@ -298,7 +312,7 @@ const Game: FC = () => {
             });
         }
         setRestart(false);
-    }, [taskId, isRestart, loadTask, loadTasks]);
+    }, [taskId, loadTask, setTask]);
 
     return (
         <>
@@ -306,7 +320,7 @@ const Game: FC = () => {
                 <Tasks />
             </aside>
             <main className={AppStyles.main}>
-                {!taskLoading.isLoading && !taskLoading.hasError && task && (
+                {!taskLoading.isLoading && task && (
                     <PageBlock title={"Кроссворд № " + taskId}>
                         <Table task={task} help={isHelp} />
                         <Controls

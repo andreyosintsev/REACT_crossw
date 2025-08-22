@@ -1,19 +1,13 @@
+import IBoardElement from "../board-element/board-element.interface";
+
 export interface IGameBoardProps {
     taskId: number;
     width: number;
     height: number;
-    checkWin: (board: IBoard[]) => void;
-    help?: IHelp | null;
+    checkWin: (board: IBoardElement[]) => void;
+    help: IHelp;
 }
 
-export interface IBoard {
-    xCoord: number;
-    yCoord: number;
-    content: string;
-}
-
-export interface IHelp {
-    pos: number;
-    content: string | number;
-    x?: number;
+export interface IHelp extends IBoardElement {
+    position: number | null;
 }
