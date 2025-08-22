@@ -68,7 +68,7 @@ const Game: FC = () => {
         content: '',
         xCoord: 0,
         yCoord: 0,
-        position: 0
+        position: null
     });
 
     const { taskNumber } = useParams();
@@ -229,7 +229,7 @@ const Game: FC = () => {
                 content: '',
                 xCoord: 0,
                 yCoord: 0,
-                position: 0
+                position: null
             });
             setTaskLoading({
                 isLoading: true,
