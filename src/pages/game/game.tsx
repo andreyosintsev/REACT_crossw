@@ -320,7 +320,7 @@ const Game: FC = () => {
                 <Tasks />
             </aside>
             <main className={AppStyles.main}>
-                {!taskLoading.isLoading && task && (
+                {!taskLoading.isLoading && !taskLoading.hasError && task && (
                     <PageBlock title={"Кроссворд № " + taskId}>
                         <Table task={task} help={isHelp} />
                         <Controls
