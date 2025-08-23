@@ -1,9 +1,10 @@
-import { FC, Fragment } from "react";
+import { FC } from "react";
 
 import LegendElement from "../legend-element/legend-element";
+import styles from './legend-vertical.module.scss'
 
-import LegendVerticalStyles from "./legend-vertical.module.scss";
 import ILegendVertical from "./legend-vertical.interface";
+import DynamicGrid from "../../../components/dynamic-grid/dynamic-grid";
 
 /**
  * @component - Компонент вертикальной легенды игрового поля
@@ -31,24 +32,20 @@ import ILegendVertical from "./legend-vertical.interface";
  * @see LegendHorizontal Горизонтальный вариант легенды
  * @see LegendVerticalStyles Стили компонента
  **/
-const LegendVertical: FC<ILegendVertical> = ({ legend, width }) => {
+const LegendVertical: FC<ILegendVertical> = ({ legend, width, height }) => {
     return (
-        <div className={LegendVerticalStyles.vertical_legend}>
+        <DynamicGrid rows={height} columns={width} className={styles.vertical_legend}>
             {legend.map((item, i) => {
                 return (
-                    <Fragment key={`lv${i}`}>
-                        {i !== 0 && i % width === 0 && (
-                            <div className={LegendVerticalStyles.newLine}></div>
-                        )}
-                        <LegendElement
-                            text={item}
-                            xCoord={i % width}
-                            yCoord={Math.floor(i / width)}
-                        />
-                    </Fragment>
+                    <LegendElement
+                        key={`lv${i}`}
+                        text={item}
+                        xCoord={i % width}
+                        yCoord={Math.floor(i / width)}
+                    />
                 );
             })}
-        </div>
+        </DynamicGrid>
     );
 };
 

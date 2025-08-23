@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, FC, Fragment } from "react";
+import { useState, useEffect, useCallback, FC } from "react";
 
 import {
     saveBoardToLocalStorage,
@@ -7,9 +7,9 @@ import {
 
 import { IGameBoardProps, IHelp } from "./board.interface";
 
-import styles from "./board.module.scss";
 import BoardElement from "../board-element/board-element";
 import IBoardElement from "../board-element/board-element.interface";
+import DynamicGrid from "../../../components/dynamic-grid/dynamic-grid";
 
 /**
  * @component Компонент игрового поля для японских кроссвордов
@@ -29,7 +29,7 @@ const Board: FC<IGameBoardProps> = ({ taskId, width, height, checkWin, help }) =
      * Обработчик кликов по игровому полю
      * @param {React.MouseEvent<HTMLDivElement>} e - Событие мыши
      */
-    const boardClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
+    const boardClickHandler = (e: React.MouseEvent) => {
         // Предотвращаем стандартное поведение браузера
         e.preventDefault();
 
@@ -116,29 +116,18 @@ const Board: FC<IGameBoardProps> = ({ taskId, width, height, checkWin, help }) =
 
     return (
         <>
-            <div
-                className={styles.board}
-                onMouseDown={boardClickHandler}
-                onContextMenu={(e) => {
-                    e.preventDefault();
-                }}
-            >
+            <DynamicGrid columns={width} rows={height} onCellClick={boardClickHandler} onContextMenu={(e) => e.preventDefault()}>
                 {board.map((item, i) => {
                     return (
-                        <Fragment key={`board${i}`}>
-                            {i !== 0 && i % width === 0 && (
-                                <div className={styles.newLine}></div>
-                            )}
-                            <BoardElement
-                                xCoord={item.xCoord}
-                                yCoord={item.yCoord}
-                                content={item.content}
-                            />
-                        </Fragment>
+                        <BoardElement
+                            key={`board${i}`}
+                            xCoord={item.xCoord}
+                            yCoord={item.yCoord}
+                            content={item.content}
+                        />
                     );
                 })}
-            </div>
-            <div className={styles.newLine} />
+            </DynamicGrid>
         </>
     );
 };

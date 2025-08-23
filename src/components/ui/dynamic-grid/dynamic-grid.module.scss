@@ -1,0 +1,8 @@
+.board {
+    display: grid;
+    grid-template-columns: var(--columns);
+    grid-template-rows: var(--rows);
+    gap: var(--gap);
+    width: fit-content;
+    height: fit-content;
+}
