@@ -40,27 +40,45 @@
             </div>
         </aside>
         <main class="main">
-            <div class="block game-info">
-                <div class="game-info__entry crossword-name">
-                    <div class="game-info__entry-key">
-                        Кроссворд
+            <div class="block status-control">
+                <div class="status">
+                    <div class="status__entry crossword-name">
+                        <div class="status__entry-key status__entry-key_number">
+                            Кроссворд
+                        </div>
+                        <div class="status__entry-value">
+                            № 1
+                        </div>
                     </div>
-                    <div class="game-info__entry-value">
-                        № 1
+                    <div class="status__entry crossword-date-add">
+                        <div class="status__entry-key">
+                            Время
+                        </div>
+                        <div class="status__entry-value">
+                            01:16
+                        </div>
                     </div>
                 </div>
-                <div class="game-info__entry crossword-date-add">
-                    <div class="game-info__entry-key">
-                        Добавлен
-                    </div>
-                    <div class="game-info__entry-value">
-                        21.03.2024
-                    </div>
+                <div class="control">
+                    <button class="button control__button control__button_size-up" type="button" title="Взять подсказку">
+                        <img class="control__button-image" src="images/buttons/size-up.svg" alt="Подсказка">
+                    </button>
+                    <button class="button control__button control__button_size-down" type="button" title="Взять подсказку">
+                        <img class="control__button-image" src="images/buttons/size-down.svg" alt="Подсказка">
+                    </button>
+                    <div class="control__line"></div>
+                    <button class="button control__button control__button_help" type="button" title="Взять подсказку">
+                        <img class="control__button-image" src="images/buttons/help.svg" alt="Подсказка">
+                    </button>
+                    <div class="control__line"></div>
+                    <button class="button control__button control__button_restart" type="button"  title="Начать заново">
+                        <img class="control__button-image" src="images/buttons/restart.svg" alt="Перезапуск">
+                    </button>
                 </div>
             </div>
             <div class="block game-board">
                 <div class="game">
-                    <img src="images/mockup-crossword.jpg" alt="Игровое поле">
+                    <img src="images/mockup-crossword-large.jpg" alt="Игровое поле">
                 </div>
             </div>
         </main>

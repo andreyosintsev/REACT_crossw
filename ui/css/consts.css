@@ -30,7 +30,11 @@
     --pink-bright: #f0dedd;
     --blue-medium: #9ABCE9;
     --white: #FFFFFF;
+    --off-white: #DDDDDD;
     --gray-light: #AAAAAA;
+    --gray: #888888;
+    --gray-dark: #333333;
+    --black: #000000;
 
 
     /*
@@ -53,6 +57,7 @@
 */
     --border: var(--pink-offwhite);
     --border-radius: 6px;
+    --border-radius_button: 4px;
 
 
     /*
