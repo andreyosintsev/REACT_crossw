@@ -18,14 +18,14 @@ import DynamicGrid from "../../../components/dynamic-grid/dynamic-grid";
  * @param {ITask} props.task - Объект задачи кроссворда
  * @param {Object} [props.help] - Объект подсказки (опционально)
  * @returns {JSX.Element} Полное игровое поле с легендами и модальными окнами
- * 
+ *
  * @description
  * Компонент реализует полную структуру игрового поля японского кроссворда:
  * - Генерацию горизонтальных и вертикальных легенд
  * - Управление состоянием победы
  * - Отображение модального окна при победе
  * - Координацию всех дочерних компонентов поля
- * 
+ *
  * @state
  * @property {boolean} modalShow - Видимость модального окна победы
  * @property {boolean} isWin - Флаг завершения кроссворда
@@ -40,22 +40,24 @@ const Table: FC<ITable> = ({ task, help }) => {
     const [isWin, setWin] = useState(false);
 
     // Горизонтальная легенда (подсказки сверху)
-    const [horizontalLegend, setHorizontalLegend] = useState<ILegendHorizontal | null>(null);
+    const [horizontalLegend, setHorizontalLegend] =
+        useState<ILegendHorizontal | null>(null);
 
     // Вертикальная легенда (подсказки слева)
-    const [verticalLegend, setVerticalLegend] = useState<IVerticalLegend | null>(null);
+    const [verticalLegend, setVerticalLegend] =
+        useState<IVerticalLegend | null>(null);
 
     /**
      * Создает горизонтальную легенду для подсказок сверху
      * @param {ITask} task - Объект задачи кроссворда
      * @returns {ILegendHorizontal} Объект с данными горизонтальной легенды
-     * 
+     *
      * @description
      * Анализирует решение по столбцам и создает числовые подсказки:
      * - Для каждого столбца подсчитывает группы закрашенных клеток
      * - Выравнивает количество подсказок во всех столбцах
      * - Преобразует в формат для отображения сверху поля
-     * 
+     *
      * @example
      * Столбец [1,1,0,1,1] → Подсказки [2,2]
      */
@@ -90,7 +92,7 @@ const Table: FC<ITable> = ({ task, help }) => {
         });
 
         // Выравниваем все столбцы до максимальной длины
-        let equLegend: (number | null)[][] = legend.map(col => [...col]);
+        let equLegend: (number | null)[][] = legend.map((col) => [...col]);
 
         legend.forEach((col, num) => {
             if (col.length < max) {
@@ -120,18 +122,18 @@ const Table: FC<ITable> = ({ task, help }) => {
      * Создает вертикальную легенду для подсказок слева
      * @param {ITask} task - Объект задачи кроссворда
      * @returns {IVerticalLegend} Объект с данными вертикальной легенды
-     * 
+     *
      * @description
      * Анализирует решение по строкам и создает числовые подсказки:
      * - Для каждой строки подсчитывает группы закрашенных клеток
      * - Выравнивает количество подсказок во всех строках
      * - Преобразует в формат для отображения слева поля
-     * 
+     *
      * @example
      * Строка [1,1,0,1,0] → Подсказки [2,1]
      */
     const createVerticalLegend = (task: ITask): IVerticalLegend => {
-        const legend: number[][] = [];
+        const legend = [];
 
         // Анализируем каждую строку
         for (let y = 0; y < task.height; y++) {
@@ -158,10 +160,10 @@ const Table: FC<ITable> = ({ task, help }) => {
         }
 
         // Находим максимальное количество подсказок в строке
-        const max = Math.max(...legend.map(row => row.length), 0);
+        const max = Math.max(...legend.map((row) => row.length), 0);
 
         // Выравниваем все строки до максимальной длины
-        const equLegend: (number | null)[][] = legend.map(row => {
+        const equLegend: (number | null)[][] = legend.map((row) => {
             const missing = max - row.length;
             return missing > 0
                 ? [...Array(missing).fill(null), ...row]
@@ -169,7 +171,7 @@ const Table: FC<ITable> = ({ task, help }) => {
         });
 
         // Преобразуем в плоский массив для отображения
-        const outLegend: (number | null)[] = [];
+        const outLegend = [];
         for (let y = 0; y < equLegend.length; y++) {
             for (let x = 0; x < max; x++) {
                 outLegend.push(equLegend[y][x]);
@@ -187,12 +189,12 @@ const Table: FC<ITable> = ({ task, help }) => {
      * Проверяет соответствие текущего состояния поля решению
      * @param {IBoard[]} board - Текущее состояние игрового поля
      * @returns {void}
-     * 
+     *
      * @description
      * Сравнивает каждую клетку игрового поля с эталонным решением:
      * - Игнорирует клетки с крестиком (считает их пустыми)
      * - Устанавливает состояние победы при полном совпадении
-     * 
+     *
      * @memorized Использует useCallback для оптимизации
      */
     const checkWin = useCallback(
@@ -251,8 +253,18 @@ const Table: FC<ITable> = ({ task, help }) => {
         horizontalLegend &&
         verticalLegend && (
             <>
-                <DynamicGrid columns={2} rows={2} cellSize={'auto'} className={styles.table}>
-                    <DynamicGrid key="boardZeroField" columns={1} rows={1} className={styles.zero_field} />
+                <DynamicGrid
+                    columns={2}
+                    rows={2}
+                    cellSize={"auto"}
+                    className={styles.table}
+                >
+                    <DynamicGrid
+                        key="boardZeroField"
+                        columns={1}
+                        rows={1}
+                        className={styles.zero_field}
+                    />
                     <LegendHorizontal
                         legend={horizontalLegend.legend}
                         width={horizontalLegend.width}

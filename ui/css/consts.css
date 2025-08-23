@@ -7,59 +7,62 @@
     UPD: начальная версия
 */
 
+@import url('./fonts.css');
+
 :root {
-/*
+    /*
     Шрифты
 */
 
-    --base-font-family:         arial, sans-serif;
+    --base-font-family: arial, sans-serif;
 
-    --text-main:                #333333;
-    --text-second:              #888888;
+    --text-main: #333333;
+    --text-second: #888888;
 
 
-/*
+    /*
     Основная палитра
 */
-    --pink-dark:                #DC6781;
-    --pink-medium:              #F18DAF;
-    --pink-light:               #F4B6C5;
-    --pink-offwhite:            #F5E2E7;
-    --pink-bright:              #f0dedd;
-    --blue-medium:              #9ABCE9;
-    --white:                    #FFFFFF;
+    --pink-dark: #DC6781;
+    --pink-medium: #F18DAF;
+    --pink-light: #F4B6C5;
+    --pink-offwhite: #F5E2E7;
+    --pink-bright: #f0dedd;
+    --blue-medium: #9ABCE9;
+    --white: #FFFFFF;
+    --gray-light: #AAAAAA;
 
 
-/*
+    /*
     Производное использование
 */
-    --background-white:         var(--white);
-    --background-pink:          var(--pink-offwhite);
+    --background-white: var(--white);
+    --background-pink: var(--pink-offwhite);
 
 
-/*
+    /*
     Скроллбары
 */
 
-    --scrollbar-thumb:          var(--pink-medium);
-    --scrollbar-track:          var(--pink-light);          
+    --scrollbar-thumb: var(--pink-medium);
+    --scrollbar-track: var(--pink-light);
 
 
-/*
+    /*
     Рамки
 */
-    --border:                   var(--pink-offwhite);
-    --border-radius:            6px;
+    --border: var(--pink-offwhite);
+    --border-radius: 6px;
 
 
-/*
+    /*
     Меню
 */
-    --menu-item:                var(--text-second);
+    --menu-item: var(--text-second);
 
-/*
+    /*
     Ссылки
 */
-    --link:                     var(--text-second);
-    --link-hover:               var(--blue-medium);
+    --link: var(--text-second);
+    --link-hover: var(--blue-medium);
 }

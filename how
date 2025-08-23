@@ -1,0 +1,22 @@
+[33mc8435c7[m[33m ([m[1;36mHEAD -> [m[1;32mrefactor-to-ts[m[33m)[m fix: something
+[33mc5116d7[m[33m ([m[1;31morigin/refactor-to-ts[m[33m, [m[1;31morigin/refactor(ALL)--Переход-на-TS[m[33m)[m fix conflicts branch
+[33mc1a785d[m refactor: Переход на TS
+[33m9da5ab0[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m Merge pull request #19 from andreyosintsev/refactor/board
+[33mf46acbf[m[33m ([m[1;32mrefactor/board[m[33m)[m refactor(board): удалено преобразование контента в стили, стили перенесены в BoardElement, удален вредный React.memo
+[33m77b0ece[m ref
+[33mbe9edf8[m fix: компоненты Prealoader и PreloaderUI поменял местами, была путаница
+[33m6d1afba[m[33m ([m[1;32mnewapp[m[33m)[m Merge pull request #18 from andreyosintsev/refactor/UI-kit
+[33m0dea857[m fix/component/preloader
+[33m857f094[m[33m ([m[1;32mrefactor/UI-kit[m[33m)[m refactor(Components): Создать UI-kit
+[33m8066ee3[m feat: partial useCallback and useEffect optimization
+[33m89972fe[m fix: устранены все предупреждения eslint
+[33mf561e19[m styles: все файлы отформатированы Prettier
+[33m8d208d9[m fix: все функции немедленно экспортируются при объявлении
+[33mf5d4792[m feat: добавлены комментарии к коду
+[33ma359d62[m fix: after cherry-pick
+[33m16a9fb0[m 2025/07/27 выгрузка локального репозитория
+[33mbb98955[m 2024/02/12 - начинает вырисовываться дизайн главной страницы
+[33m67f5fd1[m 2024/02/11 - начал создавать верстку и элементы дизайна
+[33m2217892[m 2024/02/10 - README.md
+[33mdd0db8b[m 2024/02/10 - начал переход на TS + REDUX
+[33m3293229[m[33m ([m[1;31morigin/original[m[33m, [m[1;32moriginal[m[33m)[m 2024/02/09 - возобновление работы над игрой

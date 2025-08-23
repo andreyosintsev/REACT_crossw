@@ -1,0 +1,9 @@
+.vertical_legend {
+  float: left;
+  border-left: 1px solid #000000;
+  border-right: 1px solid #666666;
+  border-bottom: 1px solid #000000;
+}
+.newLine {
+  clear: both;
+}
