@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback, FC } from "react";
 
-import BoardZeroField from "../board-zero-field/board-zero-field";
 import Board from "../board/board";
 import LegendHorizontal from "../legend-horizontal/legend-horizontal";
 import LegendVertical from "../legend-vertical/legend-vertical";
@@ -11,6 +10,7 @@ import styles from "./table.module.scss";
 import { ITask } from "../../../utils/api/api.interface";
 import { ILegendHorizontal, ITable, IVerticalLegend } from "./table.interface";
 import IBoardElement from "../board-element/board-element.interface";
+import DynamicGrid from "../../../components/dynamic-grid/dynamic-grid";
 
 /**
  * @component Основной компонент таблицы игрового поля с легендами
@@ -251,29 +251,17 @@ const Table: FC<ITable> = ({ task, help }) => {
         horizontalLegend &&
         verticalLegend && (
             <>
-                <div
-                    className={styles.table}
-                    style={{
-                        minWidth: `${(Number(verticalLegend.width) +
-                            Number(task.width)) *
-                            25 +
-                            4
-                            }px`,
-                    }}
-                >
-                    <BoardZeroField
-                        className={styles.zero_field}
-                        width={verticalLegend.width}
-                        height={horizontalLegend.height}
-                    />
+                <DynamicGrid columns={2} rows={2} cellSize={'auto'} className={styles.table}>
+                    <DynamicGrid key="boardZeroField" columns={1} rows={1} className={styles.zero_field} />
                     <LegendHorizontal
                         legend={horizontalLegend.legend}
                         width={horizontalLegend.width}
+                        height={horizontalLegend.height}
                     />
-                    <div className={styles.new_line} />
                     <LegendVertical
                         legend={verticalLegend.legend}
                         width={verticalLegend.width}
+                        height={verticalLegend.height}
                     />
                     <Board
                         taskId={task.id}
@@ -282,7 +270,7 @@ const Table: FC<ITable> = ({ task, help }) => {
                         checkWin={checkWin}
                         help={help}
                     />
-                </div>
+                </DynamicGrid>
                 {modalShow && (
                     <Modal
                         image="modal1.png"

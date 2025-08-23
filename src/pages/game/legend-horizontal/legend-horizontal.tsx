@@ -1,9 +1,10 @@
-import { FC, Fragment } from "react";
+import { FC } from "react";
 
 import LegendElement from "../legend-element/legend-element";
 
 import styles from "./legend-horizontal.module.scss";
 import ILegendHorizontal from "./legend-horizontal.interface";
+import DynamicGrid from "../../../components/dynamic-grid/dynamic-grid";
 
 /**
  * @component - Компонент горизонтальной легенды игрового поля
@@ -26,26 +27,20 @@ import ILegendHorizontal from "./legend-horizontal.interface";
  * @see LegendElement Компонент элемента легенды
  * @see styles Стили компонента
  **/
-const LegendHorizontal: FC<ILegendHorizontal> = ({ legend, width }) => {
+const LegendHorizontal: FC<ILegendHorizontal> = ({ legend, width, height }) => {
     return (
-        <div className={styles.horizontal_legend}>
+        <DynamicGrid rows={height} columns={width} className={styles.horizontal_legend}>
             {legend.map((item, i) => {
                 return (
-                    <Fragment key={`lh${i}`}>
-                        {i !== 0 && i % width === 0 && (
-                            <div
-                                className={styles.newLine}
-                            ></div>
-                        )}
-                        <LegendElement
-                            text={item}
-                            xCoord={i % width}
-                            yCoord={Math.floor(i / width)}
-                        />
-                    </Fragment>
+                    <LegendElement
+                        key={`lh${i}`}
+                        text={item}
+                        xCoord={i % width}
+                        yCoord={Math.floor(i / width)}
+                    />
                 );
             })}
-        </div>
+        </DynamicGrid>
     );
 };
 
