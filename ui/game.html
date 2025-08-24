@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0; maximum-scale=1.0; user-scalable=no">
     <title>Кроссворд № 1 - Японские кроссворды | crossw.ru</title>
     <link rel="stylesheet" type="text/css" href="css/normalize.css"></link>
     <link rel="stylesheet" type="text/css" href="css/styles.css"></link>
@@ -36,7 +36,7 @@
     <div class="wrapper">
         <aside class="sidebar">
             <div class="ads">
-                <img src="images/banner-300x800.png">
+
             </div>
         </aside>
         <main class="main">
@@ -60,18 +60,18 @@
                     </div>
                 </div>
                 <div class="control">
-                    <button class="button control__button control__button_size-up" type="button" title="Взять подсказку">
-                        <img class="control__button-image" src="images/buttons/size-up.svg" alt="Подсказка">
+                    <button class="button control__button control__button_size-up" type="button" data-title="Уменьшить клетки">
+                        <img class="control__button-image" src="images/buttons/size-up.svg" alt="Уменьшить клетки">
                     </button>
-                    <button class="button control__button control__button_size-down" type="button" title="Взять подсказку">
-                        <img class="control__button-image" src="images/buttons/size-down.svg" alt="Подсказка">
+                    <button class="button control__button control__button_size-down" type="button" data-title="Увеличить клетки">
+                        <img class="control__button-image" src="images/buttons/size-down.svg" alt="Увеличить клетки">
                     </button>
                     <div class="control__line"></div>
-                    <button class="button control__button control__button_help" type="button" title="Взять подсказку">
+                    <button class="button control__button control__button_help" type="button" data-title="Взять подсказку">
                         <img class="control__button-image" src="images/buttons/help.svg" alt="Подсказка">
                     </button>
                     <div class="control__line"></div>
-                    <button class="button control__button control__button_restart" type="button"  title="Начать заново">
+                    <button class="button control__button control__button_restart" type="button" data-title="Начать заново">
                         <img class="control__button-image" src="images/buttons/restart.svg" alt="Перезапуск">
                     </button>
                 </div>
@@ -91,5 +91,6 @@
             &copy; 2024 сrossw.ru - Японские кросворды
         </div>
     </footer>
+    <script src="scripts/init.js"></script>
 </body>
 </html>
