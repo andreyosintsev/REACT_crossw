@@ -7,10 +7,9 @@ import PageNews from "../../components/page-news/page-news";
 import IHome from "./home.interface";
 import styles from "./home.module.scss";
 
-import { apiGetTasks } from "../../utils/api/api";
-
 import { SITE_PROTOCOL, SITE_DOMAIN } from "../../declarations/constants";
 import { ITask } from "../../utils/api/api.interface";
+import { useTaskStore } from "../../components/services/storeTask";
 
 /**
  * @component - Главная страница приложения с японскими кроссвордами
@@ -37,12 +36,12 @@ import { ITask } from "../../utils/api/api.interface";
  * @see PageNews - компонент новостей
  **/
 const Home: FC<IHome> = () => {
+    const { tasks } = useTaskStore();
+
     const [tasksLoading, setTasksLoading] = useState<{
-        isLoading: boolean;
         hasError: boolean;
         tasks: ITask[];
     }>({
-        isLoading: false,
         hasError: false,
         tasks: [],
     });
@@ -53,49 +52,48 @@ const Home: FC<IHome> = () => {
      * @function
      * @throws {Error} При ошибке API-запроса
      **/
-    const getTasks = () => {
-        setTasksLoading({
-            isLoading: true,
-            hasError: false,
-            tasks: [],
-        });
+    // const getTasks = () => {
+    //     setTasksLoading({
+    //         isLoading: true,
+    //         hasError: false,
+    //         tasks: [],
+    //     });
 
-        try {
-            apiGetTasks()
-                .then((data) => {
-                    setTasksLoading({
-                        isLoading: false,
-                        hasError: false,
-                        tasks: data.tasks,
-                    });
-                })
-                .catch((error) => {
-                    console.error(`Ошибка Promise: ${error}`);
-                    setTasksLoading({
-                        isLoading: false,
-                        hasError: true,
-                        tasks: [],
-                    });
-                });
-        } catch (error) {
-            const errorMessage: string =
-                error instanceof Error ? error.message : "";
-            console.error(`Не удалось получить задачи от API: ${errorMessage}`);
-            setTasksLoading({
-                isLoading: false,
-                hasError: true,
-                tasks: [],
-            });
-        }
-    };
+    //     try {
+    //         apiGetTasks()
+    //             .then((data) => {
+    //                 setTasksLoading({
+    //                     isLoading: false,
+    //                     hasError: false,
+    //                     tasks: data.tasks,
+    //                 });
+    //             })
+    //             .catch((error) => {
+    //                 console.error(`Ошибка Promise: ${error}`);
+    //                 setTasksLoading({
+    //                     isLoading: false,
+    //                     hasError: true,
+    //                     tasks: [],
+    //                 });
+    //             });
+    //     } catch (error) {
+    //         const errorMessage: string =
+    //             error instanceof Error ? error.message : "";
+    //         console.error(`Не удалось получить задачи от API: ${errorMessage}`);
+    //         setTasksLoading({
+    //             isLoading: false,
+    //             hasError: true,
+    //             tasks: [],
+    //         });
+    //     }
+    // };
 
-    useEffect(() => getTasks, []);
 
     /**
      * Преобразует массив задач в формат для слайдера
      * @param {ITask[]} tasks - Массив задач
      * @returns {Array<{src: string, alt: string, link: string}>} Массив изображений для слайдера
-     **/
+    **/
     const tasksToImages = (tasks: ITask[]) => tasks.map((task) => {
         return {
             src: `${SITE_PROTOCOL}${SITE_DOMAIN}/tasks/${task.image_preview}`,
@@ -104,7 +102,14 @@ const Home: FC<IHome> = () => {
         };
     })
 
-
+    useEffect(() => {
+        if (tasks) {
+            setTasksLoading({
+                hasError: false,
+                tasks: tasks,
+            });
+        }
+    }, [tasks]);
 
     return (
         <main className={styles.main}>

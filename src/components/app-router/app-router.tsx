@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import AppHeader from "../app-header/app-header";
@@ -12,6 +12,10 @@ import { SITE_NAME } from "../../declarations/constants";
 
 import Home from "../../pages/home/home";
 import Game from "../../pages/game/game";
+import ModalButton from "../modal-button/modal-button";
+import Modal from "../modal/modal";
+import Preloader from "../preloader/preloader";
+import { useTaskStore } from "../services/storeTask";
 
 /**
  * @component - основной роутер приложения
@@ -42,20 +46,63 @@ import Game from "../../pages/game/game";
  * @see Routes - система маршрутизации
  */
 const AppRouter: FC = () => {
+    const { getLoading, error } = useTaskStore();
+    const [isModalShow, setModalShow] = useState(false);
+
+    /**
+     * Обрабатывает закрытие модального окна с ошибкой
+     * @param {React.MouseEvent} e - Событие клика
+     * @returns {void}
+     * 
+     * @description
+     * Закрывает модальное окно и повторяет попытку загрузки задачи
+     * 
+     * @memorized Использует useCallback для оптимизации
+     */
+    const closeHandler = useCallback(
+        (e: React.MouseEvent) => {
+            e.preventDefault();
+            setModalShow(false);
+        },
+        []
+    );
+
+    useEffect(() => {
+        if (!error) setModalShow(true)
+    }, [setModalShow, error])
+
+    console.log(getLoading())
+
     return (
         <>
-            <AppHeader siteName={SITE_NAME} />
-            <AppWrapper>
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/game/:taskNumber" element={<Game />} />
-                </Routes>
+            {getLoading() && <Preloader />}
+            {!getLoading() && !error && (
+                <>
+                    <AppHeader siteName={SITE_NAME} />
+                    <AppWrapper>
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/game/:taskNumber" element={<Game />} />
+                        </Routes>
 
-                <AppSidebar>
-                    <PageAds />
-                </AppSidebar>
-            </AppWrapper>
-            <AppFooter siteName={SITE_NAME} />
+                        <AppSidebar>
+                            <PageAds />
+                        </AppSidebar>
+                    </AppWrapper>
+                    <AppFooter siteName={SITE_NAME} />
+                </>
+            )}
+            {error && isModalShow && (
+                <Modal
+                    image="modal1.png"
+                    title="Ошибка загрузки кроссворда."
+                    onClick={closeHandler}
+                >
+                    <ModalButton onClick={() => window.location.reload()}>
+                        Обновить страницу
+                    </ModalButton>
+                </Modal>
+            )}
         </>
     );
 };
