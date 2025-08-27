@@ -26,7 +26,6 @@ interface ITaskStore {
     getTaskById: (id: string) => ITask | null;
     /** Функция очистки ошибки */
     clearError: () => void;
-    getLoading: () => boolean;
 }
 
 /**
@@ -178,8 +177,6 @@ export const useTaskStore = create<ITaskStore>((set, get) => ({
      */
     getTaskById: (id) =>
         get().tasks?.find((task) => `${task.id}` === id.toString()) || null,
-
-    getLoading: () => get().isLoading,
 
     /**
      * Очищает сообщение об ошибке

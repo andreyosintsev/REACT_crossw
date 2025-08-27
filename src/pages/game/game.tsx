@@ -15,27 +15,21 @@ import Tasks from "./tasks/tasks";
 import { useTaskStore } from "../../components/services/storeTask";
 
 /**
- * @component Основной компонент игры в японский кроссворд
+ * @component Компонент страницы игры в японский кроссворд
  * @returns {JSX.Element} Страница игры с полным функционалом
  * 
  * @description
- * Компонент реализует полный цикл игры в японский кроссворд:
- * - Загрузку и управление состоянием задачи
- * - Обработку пользовательских действий (перезапуск, подсказки)
- * - Отображение игрового поля и управляющих элементов
- * - Обработку ошибок и состояний загрузки
- * 
- * @state
- * @property {ITask | null} task - Текущая задача кроссворда
- * @property {ILoadingState} taskLoading - Состояние загрузки задачи
- * @property {ILoadingState} tasksLoading - Состояние загрузки списка задач
- * @property {boolean} isModalShow - Видимость модального окна ошибки
- * @property {boolean} isRestart - Флаг перезапуска игры
- * @property {IHelp} isHelp - Объект подсказки
+ * Компонент реализует основную игровую страницу с:
+ * - Загрузкой и отображением конкретного кроссворда
+ * - Управлением игровым процессом (перезапуск, подсказки)
+ * - Боковой панелью со списком доступных задач
+ * - Обработкой пользовательских действий
  */
 const Game: FC = () => {
+    // Получаем методы и состояние из хранилища задач
     const { task, setTask, getTaskById, error } = useTaskStore();
 
+    // Состояние текущей подсказки
     const [isHelp, setHelp] = useState<IHelp>({
         content: '',
         xCoord: 0,
@@ -43,6 +37,7 @@ const Game: FC = () => {
         position: null
     });
 
+    // Получаем номер задачи из параметров URL
     const { taskNumber } = useParams();
     const taskId = taskNumber ? parseInt(taskNumber, 10) : 0;
 
@@ -116,6 +111,16 @@ const Game: FC = () => {
         setHelp(help);
     }, [getTaskById, taskId]);
 
+    /**
+     * Эффект загрузки задачи при монтировании компонента
+     * @dependency [taskId, getTaskById, setTask, error] - Зависит от ID задачи и методов хранилища
+     * 
+     * @description
+     * Автоматически загружает задачу при изменении ID:
+     * - Получает задачу из хранилища по ID
+     * - Устанавливает как текущую активную задачу
+     * - Обрабатывает ошибки через глобальное состояние
+     */
     useEffect(() => {
         setTask(getTaskById(`${taskId}`));
     }, [taskId, getTaskById, setTask, error]);

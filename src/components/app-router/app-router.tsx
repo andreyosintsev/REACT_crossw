@@ -18,35 +18,22 @@ import Preloader from "../preloader/preloader";
 import { useTaskStore } from "../services/storeTask";
 
 /**
- * @component - основной роутер приложения
- * @returns {JSX.Element} - маршрутизатор приложения с основной структурой
- *
+ * @component Основной роутер приложения с обработкой состояний загрузки
+ * @returns {JSX.Element} Маршрутизатор приложения с обработкой ошибок
+ * 
  * @description
  * Компонент реализует:
- * - Базовую структуру приложения (шапка, контент, подвал)
- * - Маршрутизацию между страницами
- * - Распределение основного и бокового контента
- * - Передачу глобальных параметров (SITE_NAME)
- *
- * @structure
- * 1. AppHeader - шапка сайта
- * 2. AppWrapper - основной контейнер
- *   - Routes - система маршрутов
- *   - AppSidebar - боковая панель
- * 3. AppFooter - подвал сайта
- *
- * @routes
- * - '/' - Главная страница
- * - '/game/:taskNumber' - Страница игры
- *
- * @see AppHeader - компонент шапки
- * @see AppWrapper - основной контейнер
- * @see AppSidebar - боковая панель
- * @see AppFooter - компонент подвала
- * @see Routes - система маршрутизации
+ * - Маршрутизацию между страницами приложения
+ * - Обработку состояний загрузки и ошибок
+ * - Отображение прелоадера во время загрузки
+ * - Модальное окно для ошибок с возможностью перезагрузки
+ * - Основную структуру layout (header, content, sidebar, footer)
  */
 const AppRouter: FC = () => {
-    const { getLoading, error } = useTaskStore();
+    // Получаем состояние загрузки и ошибки из хранилища задач
+    const { isLoading, error } = useTaskStore();
+
+    // Состояние видимости модального окна ошибки
     const [isModalShow, setModalShow] = useState(false);
 
     /**
@@ -67,16 +54,22 @@ const AppRouter: FC = () => {
         []
     );
 
+    /**
+     * Эффект управления отображением модального окна ошибки
+     * @dependency [error, setModalShow] - Зависит от наличия ошибки
+     * 
+     * @description
+     * Автоматически показывает модальное окно при возникновении ошибки
+     */
     useEffect(() => {
         if (!error) setModalShow(true)
     }, [setModalShow, error])
 
-    console.log(getLoading())
 
     return (
         <>
-            {getLoading() && <Preloader />}
-            {!getLoading() && !error && (
+            {isLoading && <Preloader />}
+            {!isLoading && !error && (
                 <>
                     <AppHeader siteName={SITE_NAME} />
                     <AppWrapper>

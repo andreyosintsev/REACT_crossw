@@ -12,32 +12,21 @@ import { ITask } from "../../utils/api/api.interface";
 import { useTaskStore } from "../../components/services/storeTask";
 
 /**
- * @component - Главная страница приложения с японскими кроссвордами
- * @returns {JSX.Element} Главная страница приложения
- *
+ * @component Компонент главной страницы приложения
+ * @returns {JSX.Element} Главная страница с описанием, слайдером и новостями
+ * 
  * @description
  * Компонент реализует главную страницу приложения с:
- * - Приветственным текстом
+ * - Приветственным текстом и описанием нонограмм
  * - Слайдером новых кроссвордов
- * - Секцией решенных кроссвордов
+ * - Секцией для решенных кроссвордов
  * - Блоком новостей сайта
- *
- * @state
- * @property {Object} tasksLoading - Состояние загрузки задач:
- *   @property {boolean} isLoading - Флаг процесса загрузки
- *   @property {boolean} hasError - Флаг ошибки загрузки
- *   @property {ITask[]} tasks - Массив загруженных задач
- *
- * @method getTasks - загружает задачи с сервера
- * @method tasksToImages - преобразует задачи в формат для слайдера
- *
- * @see PageBlock - компонент блока страницы
- * @see PageSlider - компонент слайдера
- * @see PageNews - компонент новостей
- **/
+ */
 const Home: FC<IHome> = () => {
+    // Получаем список задач из глобального хранилища
     const { tasks } = useTaskStore();
 
+    // Локальное состояние для управления отображением задач
     const [tasksLoading, setTasksLoading] = useState<{
         hasError: boolean;
         tasks: ITask[];
@@ -47,53 +36,16 @@ const Home: FC<IHome> = () => {
     });
 
     /**
-     * Загружает задачи с сервера
-     * @async
-     * @function
-     * @throws {Error} При ошибке API-запроса
-     **/
-    // const getTasks = () => {
-    //     setTasksLoading({
-    //         isLoading: true,
-    //         hasError: false,
-    //         tasks: [],
-    //     });
-
-    //     try {
-    //         apiGetTasks()
-    //             .then((data) => {
-    //                 setTasksLoading({
-    //                     isLoading: false,
-    //                     hasError: false,
-    //                     tasks: data.tasks,
-    //                 });
-    //             })
-    //             .catch((error) => {
-    //                 console.error(`Ошибка Promise: ${error}`);
-    //                 setTasksLoading({
-    //                     isLoading: false,
-    //                     hasError: true,
-    //                     tasks: [],
-    //                 });
-    //             });
-    //     } catch (error) {
-    //         const errorMessage: string =
-    //             error instanceof Error ? error.message : "";
-    //         console.error(`Не удалось получить задачи от API: ${errorMessage}`);
-    //         setTasksLoading({
-    //             isLoading: false,
-    //             hasError: true,
-    //             tasks: [],
-    //         });
-    //     }
-    // };
-
-
-    /**
-     * Преобразует массив задач в формат для слайдера
-     * @param {ITask[]} tasks - Массив задач
-     * @returns {Array<{src: string, alt: string, link: string}>} Массив изображений для слайдера
-    **/
+     * Преобразует массив задач в формат для слайдера изображений
+     * @param {ITask[]} tasks - Массив задач кроссвордов
+     * @returns {Array<{src: string, alt: string, link: string}>} Массив объектов для слайдера
+     * 
+     * @description
+     * Создает массив объектов с данными для отображения в слайдере:
+     * - src: URL изображения превью кроссворда
+     * - alt: Описание для accessibility
+     * - link: Ссылка на страницу игры
+     */
     const tasksToImages = (tasks: ITask[]) => tasks.map((task) => {
         return {
             src: `${SITE_PROTOCOL}${SITE_DOMAIN}/tasks/${task.image_preview}`,
@@ -102,6 +54,16 @@ const Home: FC<IHome> = () => {
         };
     })
 
+    /**
+     * Эффект синхронизации задач из глобального хранилища с локальным состоянием
+     * @dependency [tasks] - Зависит от глобального списка задач
+     * 
+     * @description
+     * Автоматически обновляет локальное состояние при изменении глобального списка задач:
+     * - Копирует задачи из глобального хранилища
+     * - Сбрасывает флаг ошибки
+     * - Подготавливает данные для отображения
+     */
     useEffect(() => {
         if (tasks) {
             setTasksLoading({
