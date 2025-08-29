@@ -15,7 +15,7 @@ import Game from "../../pages/game/game";
 import ModalButton from "../modal-button/modal-button";
 import Modal from "../modal/modal";
 import Preloader from "../preloader/preloader";
-import { useTaskStore } from "../services/storeTask";
+import { useStoreTask } from "../../services/useStoreTask/useStoreTask";
 
 /**
  * @component Основной роутер приложения с обработкой состояний загрузки
@@ -31,7 +31,7 @@ import { useTaskStore } from "../services/storeTask";
  */
 const AppRouter: FC = () => {
     // Получаем состояние загрузки и ошибки из хранилища задач
-    const { isLoading, error } = useTaskStore();
+    const { isLoading, error } = useStoreTask();
 
     // Состояние видимости модального окна ошибки
     const [isModalShow, setModalShow] = useState(false);
@@ -62,7 +62,7 @@ const AppRouter: FC = () => {
      * Автоматически показывает модальное окно при возникновении ошибки
      */
     useEffect(() => {
-        if (!error) setModalShow(true)
+        setModalShow(!!error)
     }, [setModalShow, error])
 
 
@@ -85,7 +85,7 @@ const AppRouter: FC = () => {
                     <AppFooter siteName={SITE_NAME} />
                 </>
             )}
-            {error && isModalShow && (
+            {isModalShow && (
                 <Modal
                     image="modal1.png"
                     title="Ошибка загрузки кроссворда."

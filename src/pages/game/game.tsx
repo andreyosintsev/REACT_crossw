@@ -12,7 +12,7 @@ import {
 } from "../../utils/local-storage/local-storage";
 import { IHelp } from "./board/board.interface";
 import Tasks from "./tasks/tasks";
-import { useTaskStore } from "../../components/services/storeTask";
+import { useStoreTask } from "../../services/useStoreTask/useStoreTask";
 
 /**
  * @component Компонент страницы игры в японский кроссворд
@@ -27,7 +27,7 @@ import { useTaskStore } from "../../components/services/storeTask";
  */
 const Game: FC = () => {
     // Получаем методы и состояние из хранилища задач
-    const { task, setTask, getTaskById, error } = useTaskStore();
+    const { task, setTask, getTaskById, error } = useStoreTask();
 
     // Состояние текущей подсказки
     const [isHelp, setHelp] = useState<IHelp>({
@@ -40,8 +40,6 @@ const Game: FC = () => {
     // Получаем номер задачи из параметров URL
     const { taskNumber } = useParams();
     const taskId = taskNumber ? parseInt(taskNumber, 10) : 0;
-
-
 
     /**
      * Обрабатывает перезапуск текущей игры
@@ -72,7 +70,6 @@ const Game: FC = () => {
         },
         [getTaskById, taskId, setTask]
     );
-
 
     /**
      * Генерирует случайную подсказку для игрока
@@ -128,7 +125,7 @@ const Game: FC = () => {
     return (
         <>
             <aside>
-                <Tasks />
+                <Tasks /> {/* Здеся будет ваша реклама */}
             </aside>
             <main className={AppStyles.main}>
                 {!error && task && (

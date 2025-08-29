@@ -3,10 +3,10 @@ import { FC, useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
 
 import AppRouter from "../app-router/app-router";
-import { useTaskStore } from "../services/storeTask";
+import { useStoreTask } from "../../services/useStoreTask/useStoreTask";
 
 const App: FC = () => {
-    const { fetchTasks } = useTaskStore();
+    const { fetchTasks } = useStoreTask();
 
     useEffect(() => {
         fetchTasks();

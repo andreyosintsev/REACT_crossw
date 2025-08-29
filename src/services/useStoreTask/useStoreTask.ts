@@ -1,67 +1,11 @@
 import { create } from "zustand";
-import { IApiTask, IApiTasks, ITask } from "../../utils/api/api.interface";
+import { ITask } from "../../utils/api/api.interface";
 import { apiGetTask, apiGetTasks } from "../../utils/api/api";
-
-/**
- * @interface Интерфейс хранилища задач
- */
-interface ITaskStore {
-    /** Текущая задача */
-    task: ITask | null;
-    /** Список всех задач */
-    tasks: ITask[] | null;
-    /** Флаг загрузки */
-    isLoading: boolean;
-    /** Сообщение об ошибке */
-    error: string | null;
-    /** Функция загрузки конкретной задачи */
-    fetchTask: (taskId: number) => Promise<void>;
-    /** Функция загрузки всех задач */
-    fetchTasks: () => Promise<void>;
-    /** Функция установки текущей задачи */
-    setTask: (taskData: ITask | null) => void;
-    /** Функция установки списка задач */
-    setTasks: (tasksData: ITask[] | null) => void;
-    /** Функция поиска задачи по ID */
-    getTaskById: (id: string) => ITask | null;
-    /** Функция очистки ошибки */
-    clearError: () => void;
-}
-
-/**
- * @function Вспомогательная асинхронная функция для загрузки конкретной задачи через API
- * @param {number} taskId - ID задачи для загрузки
- * @returns {Promise<IApiTask>} Объект с данными задачи
- * @throws {Error} Если произошла ошибка при загрузке
- */
-const apiFetchTask = async (taskId: number): Promise<IApiTask> => {
-    try {
-        const response = await apiGetTask(taskId);
-        return response;
-    } catch (error) {
-        console.error("Error in apiFetchTask:", error);
-        throw error;
-    }
-};
-
-/**
- * @function Вспомогательная асинхронная функция для загрузки всех задач через API
- * @returns {Promise<IApiTasks>} Объект со списком задач
- * @throws {Error} Если произошла ошибка при загрузке
- */
-const apiFetchTasks = async (): Promise<IApiTasks> => {
-    try {
-        const response = await apiGetTasks();
-        return response;
-    } catch (error) {
-        console.error("Error in apiFetchTasks:", error);
-        throw error;
-    }
-};
+import IStoreTask from "./useStoreTask.interface";
 
 /**
  * @function Хранилище Zustand для управления состоянием задач
- * @returns {ITaskStore} Объект хранилища с состоянием и методами
+ * @returns {IStoreTask} Объект хранилища с состоянием и методами
  *
  * @description
  * Хранилище предоставляет централизованное управление:
@@ -70,7 +14,7 @@ const apiFetchTasks = async (): Promise<IApiTasks> => {
  * - Ошибками API-запросов
  * - Методами для работы с задачами
  */
-export const useTaskStore = create<ITaskStore>((set, get) => ({
+export const useStoreTask = create<IStoreTask>((set, get) => ({
     task: null,
     tasks: [],
     isLoading: false,
@@ -79,7 +23,7 @@ export const useTaskStore = create<ITaskStore>((set, get) => ({
     /**
      * @async Загружает конкретную задачу по ID
      * @param {number} taskId - ID задачи для загрузки
-     * @returns {Promise<void>}
+     * @returns {void}
      *
      * @description
      * Выполняет асинхронный запрос к API для получения задачи:
@@ -95,7 +39,7 @@ export const useTaskStore = create<ITaskStore>((set, get) => ({
         set({ isLoading: true, error: null });
 
         try {
-            const taskData = await apiFetchTask(taskId);
+            const taskData = await apiGetTask(taskId);
 
             const transformedTask: ITask = {
                 ...taskData,
@@ -119,7 +63,7 @@ export const useTaskStore = create<ITaskStore>((set, get) => ({
 
     /**
      * @async Загружает все задачи
-     * @returns {Promise<void>}
+     * @returns {void}
      *
      * @description
      * Выполняет асинхронный запрос к API для получения списка задач:
@@ -135,7 +79,7 @@ export const useTaskStore = create<ITaskStore>((set, get) => ({
         set({ isLoading: true, error: null });
 
         try {
-            const tasksData = await apiFetchTasks();
+            const tasksData = await apiGetTasks();
 
             const transformedTasks: ITask[] = tasksData.tasks || [];
 
@@ -177,9 +121,4 @@ export const useTaskStore = create<ITaskStore>((set, get) => ({
      */
     getTaskById: (id) =>
         get().tasks?.find((task) => `${task.id}` === id.toString()) || null,
-
-    /**
-     * Очищает сообщение об ошибке
-     */
-    clearError: () => set({ error: null }),
 }));

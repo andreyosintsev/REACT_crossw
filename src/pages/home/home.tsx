@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from "react";
+import { FC, } from "react";
 
 import PageBlock from "../../components/page-block/page-block";
 import PageSlider from "../../components/page-slider/page-slider";
@@ -9,7 +9,7 @@ import styles from "./home.module.scss";
 
 import { SITE_PROTOCOL, SITE_DOMAIN } from "../../declarations/constants";
 import { ITask } from "../../utils/api/api.interface";
-import { useTaskStore } from "../../components/services/storeTask";
+import { useStoreTask } from "../../services/useStoreTask/useStoreTask";
 
 /**
  * @component Компонент главной страницы приложения
@@ -24,16 +24,7 @@ import { useTaskStore } from "../../components/services/storeTask";
  */
 const Home: FC<IHome> = () => {
     // Получаем список задач из глобального хранилища
-    const { tasks } = useTaskStore();
-
-    // Локальное состояние для управления отображением задач
-    const [tasksLoading, setTasksLoading] = useState<{
-        hasError: boolean;
-        tasks: ITask[];
-    }>({
-        hasError: false,
-        tasks: [],
-    });
+    const { tasks } = useStoreTask();
 
     /**
      * Преобразует массив задач в формат для слайдера изображений
@@ -53,25 +44,6 @@ const Home: FC<IHome> = () => {
             link: `game/${task.id}`,
         };
     })
-
-    /**
-     * Эффект синхронизации задач из глобального хранилища с локальным состоянием
-     * @dependency [tasks] - Зависит от глобального списка задач
-     * 
-     * @description
-     * Автоматически обновляет локальное состояние при изменении глобального списка задач:
-     * - Копирует задачи из глобального хранилища
-     * - Сбрасывает флаг ошибки
-     * - Подготавливает данные для отображения
-     */
-    useEffect(() => {
-        if (tasks) {
-            setTasksLoading({
-                hasError: false,
-                tasks: tasks,
-            });
-        }
-    }, [tasks]);
 
     return (
         <main className={styles.main}>
@@ -95,7 +67,7 @@ const Home: FC<IHome> = () => {
                 </p>
             </PageBlock>
             <PageBlock title={"Новые кроссворды"}>
-                <PageSlider images={tasksToImages(tasksLoading.tasks)} />
+                <PageSlider images={tasksToImages(tasks)} />
             </PageBlock>
             <PageBlock title={"Решённые кроссворды"}></PageBlock>
             <PageBlock title={"Новости сайта"}>
