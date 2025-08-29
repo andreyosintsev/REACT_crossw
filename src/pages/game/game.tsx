@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, FC, useLayoutEffect } from "react";
+import { useState, useEffect, useCallback, FC } from "react";
 import { useParams } from "react-router-dom";
 
 import AppStyles from "./game.module.scss";
@@ -13,6 +13,7 @@ import {
 import { IHelp } from "./board/board.interface";
 import Tasks from "./tasks/tasks";
 import { useStoreTask } from "../../services/useStoreTask/useStoreTask";
+import { ITask } from "../../utils/api/api.interface";
 
 /**
  * @component Компонент страницы игры в японский кроссворд
@@ -27,7 +28,9 @@ import { useStoreTask } from "../../services/useStoreTask/useStoreTask";
  */
 const Game: FC = () => {
     // Получаем методы и состояние из хранилища задач
-    const { task, setTask, getTaskById, error } = useStoreTask();
+    const { getTaskById, error, fetchTask } = useStoreTask();
+
+    const [task, setTask] = useState<ITask | null>(null)
 
     // Состояние текущей подсказки
     const [isHelp, setHelp] = useState<IHelp>({
@@ -109,18 +112,28 @@ const Game: FC = () => {
     }, [getTaskById, taskId]);
 
     /**
-     * Эффект загрузки задачи при монтировании компонента
-     * @dependency [taskId, getTaskById, setTask, error] - Зависит от ID задачи и методов хранилища
+     * Эффект загрузки задачи при изменении taskId
+     * @dependency [taskId, getTaskById, fetchTask, setTask] - Зависимости эффекта
      * 
      * @description
-     * Автоматически загружает задачу при изменении ID:
-     * - Получает задачу из хранилища по ID
-     * - Устанавливает как текущую активную задачу
-     * - Обрабатывает ошибки через глобальное состояние
+     * Выполняет загрузку задачи при монтировании компонента или изменении taskId:
+     * 1. Проверяет наличие задачи в кэше (через getTaskById)
+     * 2. Если задача найдена в кэше - использует ее
+     * 3. Если задача не найдена - загружает через API (fetchTask)
+     * 4. Обновляет состояние задачи (setTask)
      */
     useEffect(() => {
-        setTask(getTaskById(taskId));
-    }, [taskId, getTaskById, setTask, task]);
+        const loadTask = () => {
+            const existingTask = getTaskById(taskId);
+            if (existingTask) {
+                setTask(existingTask);
+            } else {
+                fetchTask(taskId).then(setTask).catch(console.error);
+            }
+        };
+
+        loadTask();
+    }, [taskId, getTaskById, fetchTask, setTask]);
 
     return (
         <>

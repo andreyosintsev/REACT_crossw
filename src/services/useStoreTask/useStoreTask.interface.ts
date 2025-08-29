@@ -13,17 +13,17 @@ interface IStoreTask {
     /** Сообщение об ошибке */
     error: string | null;
     /** Функция загрузки конкретной задачи */
-    fetchTask: (taskId: number) => void;
+    fetchTask: (taskId: number) => Promise<ITask | null>;
     /** Функция загрузки всех задач */
-    fetchTasks: () => void;
+    fetchTasks: () => Promise<ITask[] | null>;
     /** Функция установки текущей задачи */
     setTask: (taskData: ITask | null) => void;
     /** Функция установки списка задач */
     setTasks: (tasksData: ITask[] | null) => void;
     /** Функция поиска задачи по ID */
     getTaskById: (id: number) => ITask | null;
-    /** Асинхронно получает задачу по ID с предварительной загрузкой */
-    getTaskByIdAsync: (id: number) => ITask | null;
+    /** Функция очистки ошибки */
+    clearError: () => void;
 }
 
 export default IStoreTask;

@@ -31,7 +31,7 @@ import { useStoreTask } from "../../services/useStoreTask/useStoreTask";
  */
 const AppRouter: FC = () => {
     // Получаем состояние загрузки и ошибки из хранилища задач
-    const { isLoading, error } = useStoreTask();
+    const { isLoading, error, clearError, fetchTasks } = useStoreTask();
 
     const navigate = useNavigate();
 
@@ -71,29 +71,27 @@ const AppRouter: FC = () => {
     return (
         <>
             {isLoading && <Preloader />}
-            {!isLoading && !error && (
-                <>
-                    <AppHeader siteName={SITE_NAME} />
-                    <AppWrapper>
-                        <Routes>
-                            <Route path="/" element={<Home />} />
-                            <Route path="/game/:taskNumber" element={<Game />} />
-                        </Routes>
+            <>
+                <AppHeader siteName={SITE_NAME} />
+                <AppWrapper>
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/game/:taskNumber" element={<Game />} />
+                    </Routes>
 
-                        <AppSidebar>
-                            <PageAds />
-                        </AppSidebar>
-                    </AppWrapper>
-                    <AppFooter siteName={SITE_NAME} />
-                </>
-            )}
+                    <AppSidebar>
+                        <PageAds />
+                    </AppSidebar>
+                </AppWrapper>
+                <AppFooter siteName={SITE_NAME} />
+            </>
             {isModalShow && (
                 <Modal
                     image="modal1.png"
                     title='Ошибка загрузки кроссворда.'
                     onClick={closeHandler}
                 >
-                    <ModalButton onClick={() => { navigate('/'); window.location.reload() }}>
+                    <ModalButton onClick={() => { navigate('/'); clearError(); }}>
                         На главную
                     </ModalButton>
                 </Modal>

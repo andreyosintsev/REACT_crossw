@@ -1,4 +1,4 @@
-import { FC, } from "react";
+import { FC, useEffect, } from "react";
 
 import PageBlock from "../../components/page-block/page-block";
 import PageSlider from "../../components/page-slider/page-slider";

@@ -34,7 +34,7 @@ export const useStoreTask = create<IStoreTask>((set, get) => ({
      */
     fetchTask: async (taskId: number) => {
         // Предотвращаем одновременные запросы
-        if (get().isLoading) return;
+        if (get().isLoading) return null;
 
         set({ isLoading: true, error: null });
 
@@ -49,6 +49,7 @@ export const useStoreTask = create<IStoreTask>((set, get) => ({
                 task: transformedTask,
                 isLoading: false,
             });
+            return transformedTask;
         } catch (err) {
             const errorMessage =
                 err instanceof Error ? err.message : "Failed to fetch task";
@@ -58,6 +59,7 @@ export const useStoreTask = create<IStoreTask>((set, get) => ({
                 isLoading: false,
                 task: null,
             });
+            return null;
         }
     },
 
@@ -73,20 +75,20 @@ export const useStoreTask = create<IStoreTask>((set, get) => ({
      * - Обновляет состояние хранилища
      */
     fetchTasks: async () => {
-        // Предотвращаем одновременные запросы
-        if (get().isLoading) return;
+        // if (get().isLoading) return null;
 
         set({ isLoading: true, error: null });
 
         try {
             const tasksData = await apiGetTasks();
-
             const transformedTasks: ITask[] = tasksData.tasks || [];
 
             set({
                 tasks: transformedTasks,
                 isLoading: false,
             });
+
+            return transformedTasks; // Возвращаем массив задач
         } catch (err) {
             const errorMessage =
                 err instanceof Error ? err.message : "Failed to fetch tasks";
@@ -96,6 +98,8 @@ export const useStoreTask = create<IStoreTask>((set, get) => ({
                 isLoading: false,
                 tasks: [],
             });
+
+            return null; // Возвращаем null при ошибке
         }
     },
 
@@ -120,21 +124,14 @@ export const useStoreTask = create<IStoreTask>((set, get) => ({
      * @returns {ITask | null} Найденная задача или null
      */
     getTaskById: (id) =>
-        get().tasks?.find((task) => `${task.id}` === `${id}`) ||
-        get().getTaskByIdAsync(id),
+        get().tasks?.find((task) => `${task.id}` === `${id}`) || null,
 
     /**
-     * Асинхронно получает задачу по ID с предварительной загрузкой
-     * @param {string | number} id - ID задачи для поиска
-     * @returns {ITask | null} Найденная задача или null если не найдена
+     * Сбрасывает сообщение об ошибке в хранилище
+     * @returns {void}
      *
-     * @description
-     * Функция выполняет два действия последовательно:
-     * 1. Инициирует загрузку задачи через fetchTask (асинхронно)
-     * 2. Немедленно возвращает текущую задачу из состояния
+     * @description Функция очищает текущее сообщение об ошибке, устанавливая значение error в null.
+     * Используется для сброса состояния ошибки после ее обработки или отображения пользователю.
      */
-    getTaskByIdAsync: (id) => {
-        get().fetchTask(id);
-        return get().task || null;
-    },
+    clearError: () => set({ error: null }),
 }));
