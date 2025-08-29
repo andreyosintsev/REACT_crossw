@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { Routes, Route } from "react-router-dom";
+import { FC, useCallback, useEffect, useState } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 import AppHeader from "../app-header/app-header";
 import AppWrapper from "../app-wrapper/app-wrapper";
@@ -12,50 +12,90 @@ import { SITE_NAME } from "../../declarations/constants";
 
 import Home from "../../pages/home/home";
 import Game from "../../pages/game/game";
+import ModalButton from "../modal-button/modal-button";
+import Modal from "../modal/modal";
+import Preloader from "../preloader/preloader";
+import { useStoreTask } from "../../services/useStoreTask/useStoreTask";
 
 /**
- * @component - основной роутер приложения
- * @returns {JSX.Element} - маршрутизатор приложения с основной структурой
- *
+ * @component Основной роутер приложения с обработкой состояний загрузки
+ * @returns {JSX.Element} Маршрутизатор приложения с обработкой ошибок
+ * 
  * @description
  * Компонент реализует:
- * - Базовую структуру приложения (шапка, контент, подвал)
- * - Маршрутизацию между страницами
- * - Распределение основного и бокового контента
- * - Передачу глобальных параметров (SITE_NAME)
- *
- * @structure
- * 1. AppHeader - шапка сайта
- * 2. AppWrapper - основной контейнер
- *   - Routes - система маршрутов
- *   - AppSidebar - боковая панель
- * 3. AppFooter - подвал сайта
- *
- * @routes
- * - '/' - Главная страница
- * - '/game/:taskNumber' - Страница игры
- *
- * @see AppHeader - компонент шапки
- * @see AppWrapper - основной контейнер
- * @see AppSidebar - боковая панель
- * @see AppFooter - компонент подвала
- * @see Routes - система маршрутизации
+ * - Маршрутизацию между страницами приложения
+ * - Обработку состояний загрузки и ошибок
+ * - Отображение прелоадера во время загрузки
+ * - Модальное окно для ошибок с возможностью перезагрузки
+ * - Основную структуру layout (header, content, sidebar, footer)
  */
 const AppRouter: FC = () => {
+    // Получаем состояние загрузки и ошибки из хранилища задач
+    const { isLoading, error, clearError, fetchTasks } = useStoreTask();
+
+    const navigate = useNavigate();
+
+    // Состояние видимости модального окна ошибки
+    const [isModalShow, setModalShow] = useState(false);
+
+    /**
+     * Обрабатывает закрытие модального окна с ошибкой
+     * @param {React.MouseEvent} e - Событие клика
+     * @returns {void}
+     * 
+     * @description
+     * Закрывает модальное окно и повторяет попытку загрузки задачи
+     * 
+     * @memorized Использует useCallback для оптимизации
+     */
+    const closeHandler = useCallback(
+        (e: React.MouseEvent) => {
+            e.preventDefault();
+            setModalShow(false);
+        },
+        []
+    );
+
+    /**
+     * Эффект управления отображением модального окна ошибки
+     * @dependency [error, setModalShow] - Зависит от наличия ошибки
+     * 
+     * @description
+     * Автоматически показывает модальное окно при возникновении ошибки
+     */
+    useEffect(() => {
+        setModalShow(!!error)
+    }, [setModalShow, error])
+
+
     return (
         <>
-            <AppHeader siteName={SITE_NAME} />
-            <AppWrapper>
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/game/:taskNumber" element={<Game />} />
-                </Routes>
+            {isLoading && <Preloader />}
+            <>
+                <AppHeader siteName={SITE_NAME} />
+                <AppWrapper>
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/game/:taskNumber" element={<Game />} />
+                    </Routes>
 
-                <AppSidebar>
-                    <PageAds />
-                </AppSidebar>
-            </AppWrapper>
-            <AppFooter siteName={SITE_NAME} />
+                    <AppSidebar>
+                        <PageAds />
+                    </AppSidebar>
+                </AppWrapper>
+                <AppFooter siteName={SITE_NAME} />
+            </>
+            {isModalShow && (
+                <Modal
+                    image="modal1.png"
+                    title='Ошибка загрузки кроссворда.'
+                    onClick={closeHandler}
+                >
+                    <ModalButton onClick={() => { navigate('/'); clearError(); }}>
+                        На главную
+                    </ModalButton>
+                </Modal>
+            )}
         </>
     );
 };
