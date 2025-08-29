@@ -1,5 +1,5 @@
 import { FC, useCallback, useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 import AppHeader from "../app-header/app-header";
 import AppWrapper from "../app-wrapper/app-wrapper";
@@ -32,6 +32,8 @@ import { useStoreTask } from "../../services/useStoreTask/useStoreTask";
 const AppRouter: FC = () => {
     // Получаем состояние загрузки и ошибки из хранилища задач
     const { isLoading, error } = useStoreTask();
+
+    const navigate = useNavigate();
 
     // Состояние видимости модального окна ошибки
     const [isModalShow, setModalShow] = useState(false);
@@ -88,11 +90,11 @@ const AppRouter: FC = () => {
             {isModalShow && (
                 <Modal
                     image="modal1.png"
-                    title="Ошибка загрузки кроссворда."
+                    title='Ошибка загрузки кроссворда.'
                     onClick={closeHandler}
                 >
-                    <ModalButton onClick={() => window.location.reload()}>
-                        Обновить страницу
+                    <ModalButton onClick={() => { navigate('/'); window.location.reload() }}>
+                        На главную
                     </ModalButton>
                 </Modal>
             )}

@@ -120,5 +120,21 @@ export const useStoreTask = create<IStoreTask>((set, get) => ({
      * @returns {ITask | null} Найденная задача или null
      */
     getTaskById: (id) =>
-        get().tasks?.find((task) => `${task.id}` === id.toString()) || null,
+        get().tasks?.find((task) => `${task.id}` === `${id}`) ||
+        get().getTaskByIdAsync(id),
+
+    /**
+     * Асинхронно получает задачу по ID с предварительной загрузкой
+     * @param {string | number} id - ID задачи для поиска
+     * @returns {ITask | null} Найденная задача или null если не найдена
+     *
+     * @description
+     * Функция выполняет два действия последовательно:
+     * 1. Инициирует загрузку задачи через fetchTask (асинхронно)
+     * 2. Немедленно возвращает текущую задачу из состояния
+     */
+    getTaskByIdAsync: (id) => {
+        get().fetchTask(id);
+        return get().task || null;
+    },
 }));

@@ -6,11 +6,9 @@ import AppRouter from "../app-router/app-router";
 import { useStoreTask } from "../../services/useStoreTask/useStoreTask";
 
 const App: FC = () => {
-    const { fetchTasks } = useStoreTask();
-
     useEffect(() => {
-        fetchTasks();
-    }, [fetchTasks])
+        useStoreTask.getState().fetchTasks();
+    }, [])
 
     return (
         <BrowserRouter>

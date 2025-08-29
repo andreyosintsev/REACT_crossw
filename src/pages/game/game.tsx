@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, FC } from "react";
+import { useState, useEffect, useCallback, FC, useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import AppStyles from "./game.module.scss";
@@ -66,7 +66,7 @@ const Game: FC = () => {
                 yCoord: 0,
                 position: null
             });
-            setTask(getTaskById(`${taskId}`));
+            setTask(getTaskById(taskId));
         },
         [getTaskById, taskId, setTask]
     );
@@ -84,7 +84,7 @@ const Game: FC = () => {
      * @memorized Использует useCallback для оптимизации
     */
     const helpHandler = useCallback(() => {
-        const data = getTaskById(`${taskId}`);
+        const data = getTaskById(taskId);
         if (!data) return
         let help: IHelp = {
             content: '',
@@ -119,8 +119,8 @@ const Game: FC = () => {
      * - Обрабатывает ошибки через глобальное состояние
      */
     useEffect(() => {
-        setTask(getTaskById(`${taskId}`));
-    }, [taskId, getTaskById, setTask, error]);
+        setTask(getTaskById(taskId));
+    }, [taskId, getTaskById, setTask, task]);
 
     return (
         <>

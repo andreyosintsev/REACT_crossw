@@ -21,7 +21,9 @@ interface IStoreTask {
     /** Функция установки списка задач */
     setTasks: (tasksData: ITask[] | null) => void;
     /** Функция поиска задачи по ID */
-    getTaskById: (id: string) => ITask | null;
+    getTaskById: (id: number) => ITask | null;
+    /** Асинхронно получает задачу по ID с предварительной загрузкой */
+    getTaskByIdAsync: (id: number) => ITask | null;
 }
 
 export default IStoreTask;
