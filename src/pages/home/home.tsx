@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from "react";
+import { FC, useEffect, } from "react";
 
 import PageBlock from "../../components/page-block/page-block";
 import PageSlider from "../../components/page-slider/page-slider";
@@ -7,95 +7,36 @@ import PageNews from "../../components/page-news/page-news";
 import IHome from "./home.interface";
 import styles from "./home.module.scss";
 
-import { apiGetTasks } from "../../utils/api/api";
-
 import { SITE_PROTOCOL, SITE_DOMAIN } from "../../declarations/constants";
 import { ITask } from "../../utils/api/api.interface";
+import { useStoreTask } from "../../services/useStoreTask/useStoreTask";
 
 /**
- * @component - Главная страница приложения с японскими кроссвордами
- * @returns {JSX.Element} Главная страница приложения
- *
+ * @component Компонент главной страницы приложения
+ * @returns {JSX.Element} Главная страница с описанием, слайдером и новостями
+ * 
  * @description
  * Компонент реализует главную страницу приложения с:
- * - Приветственным текстом
+ * - Приветственным текстом и описанием нонограмм
  * - Слайдером новых кроссвордов
- * - Секцией решенных кроссвордов
+ * - Секцией для решенных кроссвордов
  * - Блоком новостей сайта
- *
- * @state
- * @property {Object} tasksLoading - Состояние загрузки задач:
- *   @property {boolean} isLoading - Флаг процесса загрузки
- *   @property {boolean} hasError - Флаг ошибки загрузки
- *   @property {ITask[]} tasks - Массив загруженных задач
- *
- * @method getTasks - загружает задачи с сервера
- * @method tasksToImages - преобразует задачи в формат для слайдера
- *
- * @see PageBlock - компонент блока страницы
- * @see PageSlider - компонент слайдера
- * @see PageNews - компонент новостей
- **/
+ */
 const Home: FC<IHome> = () => {
-    const [tasksLoading, setTasksLoading] = useState<{
-        isLoading: boolean;
-        hasError: boolean;
-        tasks: ITask[];
-    }>({
-        isLoading: false,
-        hasError: false,
-        tasks: [],
-    });
+    // Получаем список задач из глобального хранилища
+    const { tasks } = useStoreTask();
 
     /**
-     * Загружает задачи с сервера
-     * @async
-     * @function
-     * @throws {Error} При ошибке API-запроса
-     **/
-    const getTasks = () => {
-        setTasksLoading({
-            isLoading: true,
-            hasError: false,
-            tasks: [],
-        });
-
-        try {
-            apiGetTasks()
-                .then((data) => {
-                    setTasksLoading({
-                        isLoading: false,
-                        hasError: false,
-                        tasks: data.tasks,
-                    });
-                })
-                .catch((error) => {
-                    console.error(`Ошибка Promise: ${error}`);
-                    setTasksLoading({
-                        isLoading: false,
-                        hasError: true,
-                        tasks: [],
-                    });
-                });
-        } catch (error) {
-            const errorMessage: string =
-                error instanceof Error ? error.message : "";
-            console.error(`Не удалось получить задачи от API: ${errorMessage}`);
-            setTasksLoading({
-                isLoading: false,
-                hasError: true,
-                tasks: [],
-            });
-        }
-    };
-
-    useEffect(() => getTasks, []);
-
-    /**
-     * Преобразует массив задач в формат для слайдера
-     * @param {ITask[]} tasks - Массив задач
-     * @returns {Array<{src: string, alt: string, link: string}>} Массив изображений для слайдера
-     **/
+     * Преобразует массив задач в формат для слайдера изображений
+     * @param {ITask[]} tasks - Массив задач кроссвордов
+     * @returns {Array<{src: string, alt: string, link: string}>} Массив объектов для слайдера
+     * 
+     * @description
+     * Создает массив объектов с данными для отображения в слайдере:
+     * - src: URL изображения превью кроссворда
+     * - alt: Описание для accessibility
+     * - link: Ссылка на страницу игры
+     */
     const tasksToImages = (tasks: ITask[]) => tasks.map((task) => {
         return {
             src: `${SITE_PROTOCOL}${SITE_DOMAIN}/tasks/${task.image_preview}`,
@@ -103,8 +44,6 @@ const Home: FC<IHome> = () => {
             link: `game/${task.id}`,
         };
     })
-
-
 
     return (
         <main className={styles.main}>
@@ -128,7 +67,7 @@ const Home: FC<IHome> = () => {
                 </p>
             </PageBlock>
             <PageBlock title={"Новые кроссворды"}>
-                <PageSlider images={tasksToImages(tasksLoading.tasks)} />
+                <PageSlider images={tasksToImages(tasks)} />
             </PageBlock>
             <PageBlock title={"Решённые кроссворды"}></PageBlock>
             <PageBlock title={"Новости сайта"}>
