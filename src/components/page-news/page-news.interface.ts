@@ -1,7 +1,7 @@
 import { INews } from "../../utils/api/api.interface";
 
-export interface INewsLoading {
-    isLoading: boolean;
-    hasError: boolean;
+interface INewsLoading {
     news: INews[];
 }
+
+export default INewsLoading;

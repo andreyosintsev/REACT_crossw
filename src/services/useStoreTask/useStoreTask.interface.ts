@@ -1,29 +1,25 @@
 import { ITask } from "../../utils/api/api.interface";
 
-/**
- * @interface Интерфейс хранилища задач
- */
 interface IStoreTask {
-    /** Текущая задача */
-    task: ITask | null;
-    /** Список всех задач */
+    /** Массив задач в хранилище
+     * @type {ITask[]}
+     * @memberof IStoreTask
+     */
     tasks: ITask[];
-    /** Флаг загрузки */
-    isLoading: boolean;
-    /** Сообщение об ошибке */
-    error: string | null;
-    /** Функция загрузки конкретной задачи */
-    fetchTask: (taskId: number) => Promise<ITask | null>;
-    /** Функция загрузки всех задач */
-    fetchTasks: () => Promise<ITask[] | null>;
-    /** Функция установки текущей задачи */
-    setTask: (taskData: ITask | null) => void;
-    /** Функция установки списка задач */
+
+    /** Устанавливает новый список задач в хранилище
+     * @param {ITask[] | null} tasksData - Новый список задач или null
+     * @returns {void}
+     * @memberof IStoreTask
+     */
     setTasks: (tasksData: ITask[] | null) => void;
-    /** Функция поиска задачи по ID */
+
+    /** Получает задачу по её ID
+     * @param {number} id - ID задачи для поиска
+     * @returns {ITask | null} Найденная задача или null, если задача не найдена
+     * @memberof IStoreTask
+     */
     getTaskById: (id: number) => ITask | null;
-    /** Функция очистки ошибки */
-    clearError: () => void;
 }
 
 export default IStoreTask;

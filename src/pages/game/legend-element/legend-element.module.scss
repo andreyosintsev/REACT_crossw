@@ -7,6 +7,10 @@
     background-color: #f7f7f7;
 }
 
+[class*="le_hover"] {
+    background-color: #aaa !important;
+}
+
 .border_right {
     border-right: 1px solid rgb(153, 153, 153);
 }

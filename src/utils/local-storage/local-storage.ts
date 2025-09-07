@@ -1,9 +1,11 @@
 import IBoardElement from "../../pages/game/board-element/board-element.interface";
+import { ICrosswBoard } from "../../services/userStoreTask/userStore.interface";
 import { ITask } from "../api/api.interface";
 import {
     BOARD_PREFIX,
     TASK_PREFIX,
     TASKS_KEY,
+    USER_BOARD_PREFIX,
 } from "./local-storage.constants";
 
 /** Сохраняет игровое поле в localStorage
@@ -64,4 +66,51 @@ export const clearTaskInLocalStorage = (taskId: number): void => {
  */
 export const saveTasksToLocalStorage = (board: ITask[]): void => {
     localStorage.setItem(`${TASKS_KEY}`, JSON.stringify(board));
+};
+
+/**
+ * @function Сохраняет состояние доски кроссворда в локальное хранилище
+ * @param {number} id - Уникальный идентификатор кроссворда
+ * @param {ICrosswBoard} data - Объект с данными доски для сохранения
+ */
+export const saveCrosswordBoardToLocalStorage = (
+    id: number,
+    data: ICrosswBoard
+): void => {
+    const serializedData = JSON.stringify(data);
+    localStorage.setItem(`${USER_BOARD_PREFIX}${id}`, serializedData);
+};
+
+/**
+ * @function Загружает состояние доски кроссворда из локального хранилища
+ * @param {number} id - Уникальный идентификатор кроссворда
+ * @returns {ICrosswBoard | null} Объект с данными доски или null если не найден
+ */
+export const loadCrosswordBoardFromLocalStorage = (
+    id: number
+): ICrosswBoard | null => {
+    const serializedData = localStorage.getItem(`${USER_BOARD_PREFIX}${id}`);
+    return serializedData ? JSON.parse(serializedData) : null;
+};
+
+/**
+ * @function Обновляет состояние доски кроссворда в локальном хранилище
+ * @param {number} id - Уникальный идентификатор кроссворда
+ * @param {ICrosswBoard} task - Обновленный объект с данными доски
+ * @returns {void}
+ */
+export const updateCrosswordBoardFromLocalStorage = (
+    id: number,
+    task: ICrosswBoard
+): void => {
+    localStorage.setItem(`${USER_BOARD_PREFIX}${id}`, JSON.stringify(task));
+};
+
+/**
+ * @function Удаляет состояние доски кроссворда из локального хранилища
+ * @param {number} id - Уникальный идентификатор кроссворда
+ * @returns {void}
+ */
+export const clearCrossBoardsInLocalStorage = (id: number): void => {
+    localStorage.removeItem(`${USER_BOARD_PREFIX}${id}`);
 };
