@@ -57,7 +57,6 @@ const App: FC = () => {
      * Ошибки обрабатываются в дочерних компонентах через хранилища
      */
     useEffect(() => {
-        setLoading(true)
         Promise.all([getNews(), fetchTasks()])
             .then(([news, tasks]) => {
                 setNews(news);

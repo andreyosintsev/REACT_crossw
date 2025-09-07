@@ -13,7 +13,6 @@ import { gameStoreControl } from "../../services/gameStoreControl/gameStoreContr
 import userStore from "../../services/userStoreTask/userStore";
 import { loadCrosswordBoardFromLocalStorage } from "../../utils/local-storage/local-storage";
 import apiStore from "../../services/apiStore/apiStore";
-import legendStore from "../../services/legendStore/legendStore";
 
 /**
  * Компонент страницы игры в японский кроссворд
@@ -77,7 +76,6 @@ const Game: FC = () => {
         // Инициализируем игровой процесс
         initializeGame()
     }, [getCrosswordBoardById, getTaskById, initializeGame, setTask, taskId]);
-
 
     return (
         <>

@@ -19,7 +19,7 @@ import { apiGetNews, apiGetTask, apiGetTasks } from "../../utils/api/api";
  * const { fetchTask, isLoading, error, clearError } = apiStore();
  */
 const apiStore = create<IApiStore>((set) => ({
-    isLoading: false,
+    isLoading: true,
     error: null,
 
     fetchTask: async (taskId: number) => {
