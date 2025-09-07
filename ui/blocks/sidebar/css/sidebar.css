@@ -1,0 +1,15 @@
+.sidebar {
+    max-width: 320px;
+
+    background-color: var(--white);
+
+    border-radius: var(--border-radius);
+
+    overflow: hidden;
+}
+
+@media screen and (max-width: 1440px) {
+    .sidebar {
+        display: none;
+    }
+}

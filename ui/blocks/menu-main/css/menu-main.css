@@ -1,0 +1,31 @@
+.menu-main {
+    color: var(--text-second);
+    font-family: var(--base-font-family);
+    font-size: 14px;
+}
+
+.menu-main__items {
+    display: flex;
+    padding-left: 66px;
+
+    list-style: none;
+}
+
+.menu-main__item {
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.menu-main__item:nth-last-child(1) {
+    margin-right: 0;
+}
+
+.menu-main__item:hover {
+    color: var(--link-hover);
+}
+
+@media screen and (max-width: 768px) {
+    .menu-main {
+        display: none;
+    }
+}

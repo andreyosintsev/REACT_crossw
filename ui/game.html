@@ -1,96 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0; maximum-scale=1.0; user-scalable=no">
-    <title>Кроссворд № 1 - Японские кроссворды | crossw.ru</title>
-    <link rel="stylesheet" type="text/css" href="css/normalize.css"></link>
-    <link rel="stylesheet" type="text/css" href="css/styles.css"></link>
 
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-	<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
-</head>
-    <header class="header">
-        <div class="header__wrapper">
-            <div class="header-title">
-                <a class="header-title__link" href="index.html" title="На главную">
-                    <img class="header-title__logo" src="images/logo.png">
-                    <div class="header-title__title">Японские кроссворды</div>
-                </a>
-            </div>
-            <div class="main-menu">
-                <ul class="main-menu__items">
-                    <il class="main-menu__item">
-                        О кроссвордах
-                    </il>
-                    <il class="main-menu__item">
-                        Наши рекордсмены
-                    </il>
-                    <il class="main-menu__item">
-                        Лучшие кроссворды
-                    </il>
-                </ul>
-            </div>
-        </div>
-    </header>
-    <div class="wrapper">
-        <aside class="sidebar">
-            <div class="ads">
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0; maximum-scale=1.0; user-scalable=no" />
+        <title>Кроссворд № 1 - Японские кроссворды | crossw.ru</title>
+        <link rel="stylesheet" type="text/css" href="css/common/normalize.css" />
+        <link rel="stylesheet" type="text/css" href="css/common/consts.css" />
 
+        <link rel="stylesheet" type="text/css" href="blocks/wrapper/css/wrapper.css" />
+        <link rel="stylesheet" type="text/css" href="blocks/sidebar/css/sidebar.css" />
+        <link rel="stylesheet" type="text/css" href="blocks/menu-main/css/menu-main.css" />
+        <link rel="stylesheet" type="text/css" href="blocks/block/css/block.css" />
+
+        <link rel="stylesheet" type="text/css" href="css/pages/game.css" />
+        <link rel="stylesheet" type="text/css" href="css/styles.css" />
+
+        <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+        <link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
+    </head>
+    <body>
+        <header class="header">
+            <div class="header__wrapper">
+                <div class="header-title">
+                    <a class="header-title__link" href="index.html" title="На главную">
+                        <img class="header-title__logo" src="images/logo.png" />
+                        <div class="header-title__title">Японские кроссворды</div>
+                    </a>
+                </div>
+                <div class="menu-main">
+                    <ul class="menu-main__items">
+                        <li class="menu-main__item">Все кроссворды</li>
+                        <li class="menu-main__item">Лучшие кроссворды</li>
+                        <li class="menu-main__item">Как решать кроссворды</li>
+                    </ul>
+                </div>
             </div>
-        </aside>
-        <main class="main">
-            <div class="block status-control">
-                <div class="status">
-                    <div class="status__entry crossword-name">
-                        <div class="status__entry-key status__entry-key_number">
-                            Кроссворд
+        </header>
+        <div class="wrapper">
+            <main class="main">
+                <div class="block status-control">
+                    <div class="status">
+                        <div class="status__entry crossword-name">
+                            <div class="status__entry-key status__entry-key_number">Кроссворд</div>
+                            <div class="status__entry-value">№ 1</div>
                         </div>
-                        <div class="status__entry-value">
-                            № 1
+                        <div class="status__entry crossword-date-add">
+                            <div class="status__entry-key">Время</div>
+                            <div class="status__entry-value">01:16</div>
                         </div>
                     </div>
-                    <div class="status__entry crossword-date-add">
-                        <div class="status__entry-key">
-                            Время
-                        </div>
-                        <div class="status__entry-value">
-                            01:16
-                        </div>
+                    <div class="control">
+                        <button class="button control__button control__button_size-up" type="button" data-title="Уменьшить клетки">
+                            <img class="control__button-image" src="images/buttons/size-up.svg" alt="Уменьшить клетки" />
+                        </button>
+                        <button class="button control__button control__button_size-down" type="button" data-title="Увеличить клетки">
+                            <img class="control__button-image" src="images/buttons/size-down.svg" alt="Увеличить клетки" />
+                        </button>
+                        <div class="control__line"></div>
+                        <button class="button control__button control__button_help" type="button" data-title="Взять подсказку">
+                            <img class="control__button-image" src="images/buttons/help.svg" alt="Подсказка" />
+                        </button>
+                        <div class="control__line"></div>
+                        <button class="button control__button control__button_restart" type="button" data-title="Начать заново">
+                            <img class="control__button-image" src="images/buttons/restart.svg" alt="Перезапуск" />
+                        </button>
                     </div>
                 </div>
-                <div class="control">
-                    <button class="button control__button control__button_size-up" type="button" data-title="Уменьшить клетки">
-                        <img class="control__button-image" src="images/buttons/size-up.svg" alt="Уменьшить клетки">
-                    </button>
-                    <button class="button control__button control__button_size-down" type="button" data-title="Увеличить клетки">
-                        <img class="control__button-image" src="images/buttons/size-down.svg" alt="Увеличить клетки">
-                    </button>
-                    <div class="control__line"></div>
-                    <button class="button control__button control__button_help" type="button" data-title="Взять подсказку">
-                        <img class="control__button-image" src="images/buttons/help.svg" alt="Подсказка">
-                    </button>
-                    <div class="control__line"></div>
-                    <button class="button control__button control__button_restart" type="button" data-title="Начать заново">
-                        <img class="control__button-image" src="images/buttons/restart.svg" alt="Перезапуск">
-                    </button>
+                <div class="block game-board">
+                    <div class="game">
+                        <img src="images/mockup-crossword.jpg" alt="Игровое поле" />
+                    </div>
                 </div>
-            </div>
-            <div class="block game-board">
-                <div class="game">
-                    <img src="images/mockup-crossword-large.jpg" alt="Игровое поле">
-                </div>
-            </div>
-        </main>
-    </div>
-    <footer class="footer">
-        <div class="ads-bottom">
-            <img src="images/banner-mobile.jpg">
+            </main>
+            <aside class="sidebar">
+                <div class="ads"></div>
+            </aside>
         </div>
-        <div class="footer__copy">
-            &copy; 2024 сrossw.ru - Японские кросворды
-        </div>
-    </footer>
-    <script src="scripts/init.js"></script>
-</body>
+        <footer class="footer">
+            <div class="ads-bottom">
+                <img src="images/banner-mobile.jpg" />
+            </div>
+            <div class="footer__copy">&copy; 2024 сrossw.ru - Японские кросворды</div>
+        </footer>
+        <script src="scripts/init.js"></script>
+    </body>
 </html>

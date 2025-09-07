@@ -1,4 +1,8 @@
 {
-  "tabWidth": 4,
-  "useTabs": false
+    "tabWidth": 4,
+    "useTabs": false,
+    "printWidth": 140,
+    "trailingSlash": "never",
+    "bracketSpacing": true,
+    "htmlWhitespaceSensitivity": "ignore"
 }

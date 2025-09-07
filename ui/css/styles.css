@@ -2,7 +2,7 @@
     ПРОЕКТ "CROSSW.RU - ЯПОНСКИЕ КРОССВОРДЫ"
     ФАЙЛ СТИЛЕЙ
 
-    Последняя версия: 23.08.2025
+    Последняя версия: 07.09.2025
 */
 
 @import url('./consts.css');
@@ -51,28 +51,6 @@ body::-moz-scrollbar-button,
 ::-webkit-scrollbar-button {
     display: none;
     width: 0px;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    margin: 0;
-}
-
-.h2 {
-    font-size: 20px;
-}
-
-.p {
-    margin: 0 0 20px 0;
-    padding: 0;
-}
-
-.p:last-child {
-    margin: 0;
 }
 
 .header {
@@ -126,37 +104,6 @@ h6 {
     text-transform: uppercase;
 }
 
-.main-menu {
-    font-size: 14px;
-    color: var(--text-second);
-}
-
-.main-menu__items {
-    display: flex;
-    padding-left: 66px;
-
-    list-style: none;
-}
-
-.main-menu__item {
-    margin-right: 20px;
-    cursor: pointer;
-}
-
-.main-menu__item:nth-last-child(1) {
-    margin-right: 0;
-}
-
-.main-menu__item:hover {
-    color: var(--link-hover);
-}
-
-.wrapper {
-    display: flex;
-    max-width: 1440px;
-    margin: 68px auto 0;
-}
-
 .wrapper_game {
     height: calc(100dvh - 116px);
     height: calc(var(--vh, 1vh) * 100 - 116px);
@@ -165,35 +112,8 @@ h6 {
     min-height: calc(var(--vh, 1vh) * 100 - 116px);
 }
 
-.sidebar {
-    max-width: 320px;
-    margin-right: 20px;
-    margin-bottom: 20px;
-
-    border-radius: var(--border-radius);
-    -webkit-border-radius: var(--border-radius);
-    -moz-border-radius: var(--border-radius);
-
-    background-color: var(--white);
-
-    overflow: hidden;
-}
-
 .main {
     width: calc(100% - 320px);
-}
-
-.block {
-    margin-bottom: 20px;
-    padding: 20px;
-
-    background-color: rgba(255, 255, 255, 0.9);
-
-    border-radius: var(--border-radius);
-    -webkit-border-radius: var(--border-radius);
-    -moz-border-radius: var(--border-radius);
-
-    box-shadow: 0px 6px 9px -3px rgba(0, 0, 0, 0.1);
 }
 
 .intermission {
@@ -494,10 +414,6 @@ h6 {
 }
 
 @media screen and (max-width: 1440px) {
-    .wrapper {
-        display: block;
-    }
-
     .main {
         width: 100%;
         margin: 0;
@@ -506,10 +422,6 @@ h6 {
 
     .intermission {
         display: block;
-    }
-
-    .sidebar {
-        display: none;
     }
 }
 
@@ -530,28 +442,10 @@ h6 {
         text-shadow: 1px 1px 3px var(--black, #000000), -1px -1px 3px var(--black, #000000);
     }
 
-    .main-menu {
-        display: none;
-    }
-
-    .wrapper {
-        margin-top: 100px;
-        margin-bottom: 50px;
-    }
-
     .main {
         width: 100%;
         margin: 0;
         padding: 0;
-    }
-
-    .block {
-        margin-bottom: 0;
-        padding: 10px;
-
-        font-size: 14px;
-
-        border-radius: 0;
     }
 
     .status-control {
