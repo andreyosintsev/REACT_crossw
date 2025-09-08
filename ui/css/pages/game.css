@@ -2,3 +2,13 @@
     margin-left: 20px;
     margin-bottom: 20px;
 }
+
+.block {
+    margin-bottom: 20px;
+}
+
+@media screen and (max-width: 768px) {
+    .block {
+        margin-bottom: 0;
+    }
+}

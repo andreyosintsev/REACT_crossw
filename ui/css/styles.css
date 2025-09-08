@@ -2,7 +2,7 @@
     ПРОЕКТ "CROSSW.RU - ЯПОНСКИЕ КРОССВОРДЫ"
     ФАЙЛ СТИЛЕЙ
 
-    Последняя версия: 07.09.2025
+    Последняя версия: 08.09.2025
 */
 
 @import url('./consts.css');
@@ -295,90 +295,6 @@ body::-moz-scrollbar-button,
     margin-right: 0;
 }
 
-.control {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: stretch;
-    gap: 5px;
-}
-
-.control__button {
-    position: relative;
-    flex: 1;
-    width: 30px;
-    height: 30px;
-    padding: 2px;
-
-    border: 2px solid var(--gray, #888888);
-
-    border-radius: var(--border-radius_button, 5px);
-    -webkit-border-radius: var(--border-radius_button, 5px);
-    -moz-border-radius: var(--border-radius_button, 5px);
-
-    cursor: pointer;
-}
-
-.control__button::after {
-    content: attr(data-title);
-    position: absolute;
-    bottom: 150%;
-    left: 20%;
-    padding: 4px 8px;
-
-    color: var(--white, #FFFFFF);
-
-    background: var(--gray, #666666);
-
-    border-radius: 4px;
-    border-color: 1px solid var(--gray, #888888);
-
-    pointer-events: none;
-    white-space: nowrap;
-
-    opacity: 0;
-
-    transform: translateX(-50%);
-    transition: opacity 0.3s ease 0.1s;
-
-    z-index: 500;
-}
-
-.control__button:hover {
-    background-color: var(--off-white, #DDDDDD);
-}
-
-.control__button:hover::after {
-    opacity: 1;
-}
-
-.control__button:active {
-    transform: scale(0.95);
-}
-
-.control__button:active::after {
-    opacity: 0;
-}
-
-.control__button_help {
-    padding: 3px;
-}
-
-.control__button_restart {
-    padding: 3px;
-}
-
-.control__line {
-    width: 2px;
-    margin: 0 3px;
-
-    background-color: var(--gray, #888888);
-}
-
-.control__button-image {
-    width: 100%;
-}
-
 .game-board {
     display: flex;
     justify-content: flex-start;
@@ -392,7 +308,6 @@ body::-moz-scrollbar-button,
 
     overflow: scroll;
 }
-
 
 .game-board::-webkit-scrollbar {
     width: 8px;
