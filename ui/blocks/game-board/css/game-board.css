@@ -1,0 +1,46 @@
+.game-board {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    height: calc(100dvh - 2042px);
+    height: calc(var(--vh, 1vh) * 100 - 204px);
+
+    min-height: calc(100vh - 204px);
+    min-height: calc(var(--vh, 1vh) * 100 - 204px);
+
+    overflow: scroll;
+}
+
+.game-board::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.game-board::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb);
+}
+
+.game-board::-webkit-scrollbar-track {
+    background-color: var(--scrollbar-track);
+}
+
+.game-board::-moz-scrollbar-button,
+::-webkit-scrollbar-button {
+    display: none;
+    width: 0px;
+}
+
+@media screen and (max-width: 768px) {
+    .game-board {
+        padding: 0;
+
+        height: calc(100dvh - 150px);
+        height: calc(var(--vh, 1vh) * 100 - 150px);
+
+        min-height: calc(100vh - 150px);
+        min-height: calc(var(--vh, 1vh) * 100 - 150px);
+
+        overflow: scroll;
+    }
+}
