@@ -12,7 +12,7 @@
 
     box-shadow: 0px 6px 9px -3px rgba(0, 0, 0, 0.1);
 
-    z-index: 100;
+    z-index: 200;
 }
 
 .header__wrapper {
@@ -49,6 +49,10 @@
     text-transform: uppercase;
 }
 
+.header__button-menu-mobile {
+    display: none;
+}
+
 @media screen and (max-width: 768px) {
     .header {
         margin-bottom: 0;
@@ -60,9 +64,17 @@
         background-attachment: fixed;
     }
 
+    .header__wrapper {
+        justify-content: space-between;
+    }
+
     .header__sitename {
         color: var(--white, #FFFFFF);
 
         text-shadow: 1px 1px 3px var(--black, #000000), -1px -1px 3px var(--black, #000000);
+    }
+
+    .header__button-menu-mobile {
+        display: block;
     }
 }

@@ -2,6 +2,6 @@
     font-family: 'PresentScript';
     font-style: normal;
     font-weight: 400;
-    src: url('../fonts/presentscript.ttf') format('truetype');
+    src: url('../../fonts/presentscript.ttf') format('truetype');
     font-display: swap;
 }

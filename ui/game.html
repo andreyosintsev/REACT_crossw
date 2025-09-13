@@ -12,10 +12,13 @@
         <link rel="stylesheet" type="text/css" href="blocks/wrapper/css/wrapper.css" />
         <link rel="stylesheet" type="text/css" href="blocks/sidebar/css/sidebar.css" />
         <link rel="stylesheet" type="text/css" href="blocks/menu-main/css/menu-main.css" />
+        <link rel="stylesheet" type="text/css" href="blocks/button-menu-mobile/css/button-menu-mobile.css" />
+        <link rel="stylesheet" type="text/css" href="blocks/menu-mobile/css/menu-mobile.css" />
         <link rel="stylesheet" type="text/css" href="blocks/block/css/block.css" />
         <link rel="stylesheet" type="text/css" href="blocks/status/css/status.css" />
         <link rel="stylesheet" type="text/css" href="blocks/controls/css/controls.css" />
         <link rel="stylesheet" type="text/css" href="blocks/board/css/board.css" />
+        <link rel="stylesheet" type="text/css" href="blocks/overlay/css/overlay.css" />
         <link rel="stylesheet" type="text/css" href="blocks/footer/css/footer.css" />
         <link rel="stylesheet" type="text/css" href="css/pages/game.css" />
 
@@ -38,9 +41,43 @@
                         <li class="menu-main__item">Как решать кроссворды</li>
                     </ul>
                 </div>
-                <div class="header__button-menu-mobile button-menu-mobile"></div>
+                <div class="button-menu-mobile header__button-menu-mobile">
+                    <svg
+                        class="button-menu-mobile__icon"
+                        width="26"
+                        height="26"
+                        viewBox="0 0 26 26"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        filter="url(#shadow)"
+                    >
+                        <defs>
+                            <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+                                <feDropShadow dx="2" dy="2" stdDeviation="2" flood-color="rgba(0, 0, 0, 1)" />
+                            </filter>
+                        </defs>
+
+                        <line class="button-menu-mobile__icon-line1" y1="2" x2="26" y2="2" stroke="currentColor" stroke-width="2" />
+                        <line class="button-menu-mobile__icon-line2" y1="12" x2="26" y2="12" stroke="currentColor" stroke-width="2" />
+                        <path class="button-menu-mobile__icon-line3" d="M0 23H30" stroke="currentColor" stroke-width="2" />
+                    </svg>
+                </div>
             </div>
         </header>
+        <div class="menu-mobile invisible">
+            <div class="menu-mobile__title">Японские кроссворды</div>
+            <ul class="menu-mobile__items">
+                <li class="menu-mobile__item">
+                    <a class="menu-mobile__link" href="#" title="Просмотреть все кроссворды">Все кроссворды</a>
+                </li>
+                <li class="menu-mobile__item">
+                    <a class="menu-mobile__link" href="#" title="Просмотреть лучщие кроссворды">Лучшие кроссворды</a>
+                </li>
+                <li class="menu-mobile__item">
+                    <a class="menu-mobile__link" href="#" title="Статья о кроссвордах">Как решать кроссворды</a>
+                </li>
+            </ul>
+        </div>
         <div class="wrapper">
             <main class="main">
                 <div class="block status-control">
@@ -89,6 +126,9 @@
             </div>
             <div class="footer__copy">&copy; 2024 сrossw.ru - Японские кросворды</div>
         </footer>
+        <div class="overlay hidden"></div>
+
         <script src="scripts/init.js"></script>
+        <script src="scripts/menu-mobile.js"></script>
     </body>
 </html>

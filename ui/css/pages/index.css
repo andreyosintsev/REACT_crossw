@@ -1,5 +1,3 @@
-@import url('./consts.css');
-
 body {
     margin: 0;
 
@@ -35,6 +33,14 @@ body::-moz-scrollbar-button,
 ::-webkit-scrollbar-button {
     display: none;
     width: 0px;
+}
+
+.noscroll {
+    overflow: hidden;
+}
+
+.hidden {
+    display: none !important;
 }
 
 .main {
