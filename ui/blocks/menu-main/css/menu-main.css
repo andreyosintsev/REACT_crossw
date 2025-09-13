@@ -6,7 +6,7 @@
 
 .menu-main__items {
     display: flex;
-    padding-left: 66px;
+    padding-left: clamp(16px, calc(-41.34px + 7.45vw), 66px);
 
     list-style: none;
 }

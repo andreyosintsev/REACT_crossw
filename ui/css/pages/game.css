@@ -10,7 +10,7 @@ body {
 
     background-color: var(--background-pink);
 
-    background: url(../../mages/background.jpg);
+    background: url(../../images/background.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
