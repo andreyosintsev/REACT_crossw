@@ -59,12 +59,46 @@ body::-moz-scrollbar-button,
     padding: 10px 20px;
 }
 
+.intermission {
+    display: none;
+}
+
+.ads {
+    width: 300px;
+}
+
+.ads-bottom {
+    display: none;
+}
+
 .footer {
     margin: 0 auto;
 }
 
+@media screen and (max-width: 1440px) {
+    .main {
+        width: 100%;
+        margin: 0;
+        padding: 0 16px;
+    }
+
+    .intermission {
+        display: block;
+    }
+}
+
 @media screen and (max-width: 768px) {
+    .main {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
     .block {
         margin-bottom: 0;
+    }
+
+    .ads-bottom {
+        display: block;
     }
 }
