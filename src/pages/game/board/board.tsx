@@ -1,122 +1,59 @@
-import { useState, useEffect, useCallback, FC } from "react";
+import { useEffect, FC } from "react";
 
-import {
-    saveBoardToLocalStorage,
-    loadBoardFromLocalStorage,
-} from "../../../utils/local-storage/local-storage";
-
-import { IGameBoardProps, IHelp } from "./board.interface";
+import { IGameBoardProps, } from "./board.interface";
 
 import BoardElement from "../board-element/board-element";
-import IBoardElement from "../board-element/board-element.interface";
 import DynamicGrid from "../../../components/dynamic-grid/dynamic-grid";
+import { gameStoreControl } from "../../../services/gameStoreControl/gameStoreControl";
+
+import styles from './board.module.scss';
 
 /**
- * @component Компонент игрового поля для японских кроссвордов
+ * Компонент игрового поля японского кроссворда
+ * 
+ * @component
  * @param {IGameBoardProps} props - Свойства компонента
- * @param {string} props.taskId - Уникальный идентификатор задачи/кроссворда
  * @param {number} props.width - Ширина игрового поля в клетках
  * @param {number} props.height - Высота игрового поля в клетках
- * @param {Function} props.checkWin - Функция проверки завершения кроссворда
- * @param {IHelp} [props.help] - Объект подсказки
- * @returns {JSX.Element} Интерактивное игровое поле
+ * @returns {JSX.Element} Игровое поле с клетками и обработкой взаимодействий
+ * 
+ * @description
+ * Компонент реализует основное игровое поле японского кроссворда с:
+ * - Динамической сеткой клеток заданного размера
+ * - Обработкой пользовательских взаимодействий
+ * - Автоматической проверкой условия победы
+ * - Блокировкой взаимодействия после завершения игры
+ * - Визуальным отображением состояния всех клеток
+ * 
+ * @example
+ * <Board width={15} height={15} />
  */
-const Board: FC<IGameBoardProps> = ({ taskId, width, height, checkWin, help }) => {
-    // Состояние игрового поля
-    const [board, setBoard] = useState<IBoardElement[]>([]);
+const Board: FC<IGameBoardProps> = ({ width, height }) => {
+    // Получаем состояние и методы из игрового хранилища
+    const { board, handleBoardClick, gameCompleted, checkWin } = gameStoreControl();
 
     /**
-     * Обработчик кликов по игровому полю
-     * @param {React.MouseEvent<HTMLDivElement>} e - Событие мыши
+     * Эффект проверки условия победы при изменении состояния поля
+     * @dependency [board, checkWin] - Зависит от состояния поля и функции проверки
+     * 
+     * @description
+     * Автоматически проверяет условие победы после каждого изменения
+     * состояния игрового поля:
+     * - Вызывается после каждого обновления массива board
+     * - Использует мемоизированную функцию checkWin из хранилища
+     * - Не вызывает лишних ререндеров благодаря оптимизации Zustand
+     * 
+     * @importance
+     * Критически важный эффект для игровой логики - определяет
+     * момент завершения игры и победы пользователя
      */
-    const boardClickHandler = (e: React.MouseEvent) => {
-        // Предотвращаем стандартное поведение браузера
-        e.preventDefault();
-
-        const target = e.target as HTMLElement;
-
-        // Проверяем наличие dataset свойств
-        if (!target.dataset.x || !target.dataset.y) {
-            return;
-        }
-
-        // Получаем координаты клетки
-        const x = +target.dataset.x;
-        const y = +target.dataset.y;
-        const cellIndex = y * width + x;
-
-        // Создаем копию текущего состояния поля
-        let newBoard = [...board]
-
-        // Обрабатываем разные типы кликов
-        switch (e.button) {
-            case 0: // Левая кнопка мыши - закрашивание
-                newBoard[cellIndex].content =
-                    board[cellIndex].content !== "1" ? "1" : "0";
-                break;
-            case 2: // Правая кнопка мыши - крестик
-                newBoard[cellIndex].content =
-                    board[cellIndex].content !== "X" ? "X" : "0";
-                break;
-            default: // Другие кнопки - ноль по умолчанию
-                newBoard[cellIndex].content =
-                    board[cellIndex].content !== "X" ? "X" : "0";
-        }
-
-        // Обновляем состояние и сохраняем в localStorage
-        setBoard(newBoard);
-        saveBoardToLocalStorage(taskId, newBoard);
-    };
-
-    /**
-     * Инициализация игрового поля
-     * @param {IHelp} help - Объект подсказки
-     */
-    const initBoard = useCallback(
-        (help: IHelp) => {
-            // Загружаем сохраненное состояние или создаем пустой массив
-            const newBoard: IBoardElement[] = loadBoardFromLocalStorage(taskId) || [];
-
-            // Если поле пустое - создаем новое
-            if (newBoard.length === 0) {
-                for (let y = 0; y < height; y++) {
-                    for (let x = 0; x < width; x++) {
-                        newBoard.push({
-                            xCoord: x,       // X-координата клетки
-                            yCoord: y,       // Y-координата клетки
-                            content: "0",    // Состояние: "0" - пусто, "1" - закрашено, "X" - крестик
-                        });
-                    }
-                }
-            }
-
-            // Если предоставлена position в подсказке - применяем подсказку
-            if (help.position) {
-                newBoard[help.position].xCoord = help.position % width;
-                newBoard[help.position].yCoord = Math.floor(help.position / width);
-                newBoard[help.position].content = "" + help.content;
-            }
-
-            // Устанавливаем состояние и сохраняем
-            setBoard(newBoard);
-            saveBoardToLocalStorage(taskId, newBoard);
-        },
-        [width, height, taskId] // Зависимости для useCallback
-    );
-
-    // Эффект для инициализации поля при монтировании и изменении подсказок
-    useEffect(() => {
-        initBoard(help);
-    }, [initBoard, help]);
-
-    // Эффект для проверки победы при изменении состояния поля
     useEffect(() => {
         checkWin(board);
-    }, [checkWin, board]);
+    }, [board, checkWin]);
 
     return (
         <>
-            <DynamicGrid columns={width} rows={height} onCellClick={boardClickHandler} onContextMenu={(e) => e.preventDefault()}>
+            <DynamicGrid columns={width} rows={height} onCellClick={handleBoardClick} onContextMenu={(e) => e.preventDefault()} className={`${gameCompleted ? styles.blocked : ''}`}>
                 {board.map((item, i) => {
                     return (
                         <BoardElement

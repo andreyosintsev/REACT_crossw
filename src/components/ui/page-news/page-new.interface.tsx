@@ -1,7 +1,7 @@
-import { INewsLoading } from "../../page-news/page-news.interface";
+import { INews } from "../../../utils/api/api.interface";
 
 interface IPageNewsUI {
-    newsLoading: INewsLoading;
+    news: INews[];
 }
 
 export default IPageNewsUI;

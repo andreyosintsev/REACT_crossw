@@ -7,41 +7,41 @@ import ILegendVertical from "./legend-vertical.interface";
 import DynamicGrid from "../../../components/dynamic-grid/dynamic-grid";
 
 /**
- * @component - Компонент вертикальной легенды игрового поля
- * @param {Array<string>} legend - Массив текстовых значений для легенды
- * @param {number} width - Количество элементов в столбце
- * @returns {JSX.Element} Вертикальная легенда с поддержкой переноса столбцов
- *
+ * Компонент вертикальной легенды для японского кроссворда
+ * 
+ * @component
+ * @param {ILegendVertical} props - Свойства компонента
+ * @param {(number | null)[]} props.legend - Массив числовых подсказок для вертикальной легенды
+ * @param {number} props.width - Количество столбцов в сетке легенды
+ * @param {number} props.height - Количество строк в сетке легенды
+ * @returns {JSX.Element} Вертикальная легенда с числовыми подсказками
+ * 
  * @description
- * Компонент отображает вертикальную легенду игрового поля с возможностями:
- * - Автоматический перенос столбцов согласно указанной высоте (width)
- * - Поддержка пустых значений в массиве legend
- * - Передача координат каждому элементу легенды
- * - Визуальное разделение столбцов
- *
- * @layoutBehavior
- * 1. Элементы располагаются сверху вниз
- * 2. Перенос на новый столбец каждые `width` элементов
- * 3. Между столбцами добавляется разделитель newLine
- *
- * @note
- * Параметр width фактически определяет высоту столбца,
- * так как элементы располагаются вертикально
- *
- * @see LegendElement Компонент элемента легенды
- * @see LegendHorizontal Горизонтальный вариант легенды
- * @see LegendVerticalStyles Стили компонента
- **/
+ * Компонент отображает вертикальную легенду (подсказки слева от игрового поля):
+ * - Преобразует плоский массив подсказок в двумерную сетку
+ * - Автоматически рассчитывает позиции элементов
+ * - Использует адаптивную сетку для правильного расположения
+ * - Поддерживает значения null для пустых ячеек
+ * 
+ * @example
+ * <LegendVertical 
+ *   legend={[1, 2, null, 3, 4, 5]} 
+ *   width={2} 
+ *   height={3} 
+ * />
+ */
 const LegendVertical: FC<ILegendVertical> = ({ legend, width, height }) => {
     return (
         <DynamicGrid rows={height} columns={width} className={styles.vertical_legend}>
             {legend.map((item, i) => {
+                const columnIndex = Math.floor(i / width)
                 return (
                     <LegendElement
                         key={`lv${i}`}
                         text={item}
                         xCoord={i % width}
                         yCoord={Math.floor(i / width)}
+                        dataAtridyt={`LegendVertical_${columnIndex}`}
                     />
                 );
             })}

@@ -7,36 +7,43 @@ import ILegendHorizontal from "./legend-horizontal.interface";
 import DynamicGrid from "../../../components/dynamic-grid/dynamic-grid";
 
 /**
- * @component - Компонент горизонтальной легенды игрового поля
- * @param {Array<string>} legend - Массив текстовых значений для легенды
- * @param {number} width - Ширина легенды (количество элементов в строке)
- * @returns {JSX.Element} Горизонтальная легенда с поддержкой переноса строк
- *
+ * Компонент горизонтальной легенды для японского кроссворда
+ * 
+ * @component
+ * @param {ILegendHorizontal} props - Свойства компонента
+ * @param {(number | null)[]} props.legend - Массив числовых подсказок для горизонтальной легенды
+ * @param {number} props.width - Количество столбцов в сетке легенды
+ * @param {number} props.height - Количество строк в сетке легенды
+ * @returns {JSX.Element} Горизонтальная легенда с числовыми подсказками
+ * 
  * @description
- * Компонент отображает горизонтальную легенду игрового поля с возможностями:
- * - Автоматический перенос строк согласно указанной ширине
- * - Поддержка пустых значений в массиве legend
- * - Передача координат каждому элементу легенды
- * - Визуальное разделение строк
- *
- * @layoutBehavior
- * 1. Элементы располагаются слева направо
- * 2. Перенос на новую строку каждые `width` элементов
- * 3. Между строками добавляется разделитель newLine
- *
- * @see LegendElement Компонент элемента легенды
- * @see styles Стили компонента
- **/
+ * Компонент отображает горизонтальную легенду (подсказки сверху от игрового поля):
+ * - Преобразует плоский массив подсказок в двумерную сетку
+ * - Автоматически рассчитывает позиции элементов
+ * - Использует адаптивную сетку для правильного расположения
+ * - Поддерживает значения null для пустых ячеек
+ * - Группирует элементы по столбцам для стилизации
+ * 
+ * @example
+ * <LegendHorizontal 
+ *   legend={[1, 2, null, 3, 4, 5]} 
+ *   width={3} 
+ *   height={2} 
+ * />
+ */
 const LegendHorizontal: FC<ILegendHorizontal> = ({ legend, width, height }) => {
     return (
         <DynamicGrid rows={height} columns={width} className={styles.horizontal_legend}>
             {legend.map((item, i) => {
+                const numberLegend = i % width
+                const data = `LegendHorizontal_${numberLegend}`;
                 return (
                     <LegendElement
                         key={`lh${i}`}
                         text={item}
                         xCoord={i % width}
                         yCoord={Math.floor(i / width)}
+                        dataAtridyt={data}
                     />
                 );
             })}

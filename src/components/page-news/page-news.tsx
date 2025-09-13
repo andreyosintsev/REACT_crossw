@@ -1,79 +1,36 @@
-import { FC, useState, useEffect } from "react";
+import { FC } from "react";
 
-import { apiGetNews } from "../../utils/api/api";
-import { INewsLoading } from "./page-news.interface";
 import PageNewsUI from "../ui/page-news/page-news";
+import newsStore from "../../services/newsStore/newsStores";
 
 /**
- * @component - Компонент блока новостей сайта
- * @returns {JSX.Element} Блок с лентой новостей и состоянием загрузки
- *
- * @property {Object} newsLoading - Состояние загрузки новостей:
- * @property {boolean} isLoading - Флаг процесса загрузки
- * @property {boolean} hasError - Флаг ошибки загрузки
- * @property {INews[]} news - Массив загруженных новостей
- *
- * @method getNews - Загружает новости с сервера
- *
- * @see apiGetNews API-метод для получения новостей
- * @see INews Интерфейс структуры новости
+ * Компонент-контейнер для блока новостей сайта
+ * 
+ * @component
+ * @returns {JSX.Element} Контейнер новостей с подключением к хранилищу
  * 
  * @description
- * Компонент отображает список новостей с возможностями:
- * - Автоматическая загрузка новостей при монтировании
- * - Отображение состояния загрузки
- * - Обработка ошибок при загрузке
- * - Форматированное отображение даты и текста новости
- **/
+ * Компонент выполняет роль контейнера (container component) для новостного блока:
+ * - Получает данные новостей из глобального хранилища Zustand
+ * - Передает данные в презентационный компонент PageNewsUI
+ * - Не содержит собственной логики отображения
+ * - Обеспечивает разделение ответственности между логикой и представлением
+ * 
+ * @pattern
+ * Использует паттерн "Container/Presenter" для разделения:
+ * - Container: работа с данными и состоянием
+ * - Presenter: чистое отображение (PageNewsUI)
+ * 
+ * @example
+ * // Использование в родительском компоненте
+ * <PageNews />
+ */
 const PageNews: FC = () => {
-    const [newsLoading, setNewsLoading] = useState<INewsLoading>({
-        isLoading: false,
-        hasError: false,
-        news: [],
-    });
-
-    const getNews = () => {
-        setNewsLoading({
-            isLoading: true,
-            hasError: false,
-            news: [],
-        });
-
-        try {
-            apiGetNews()
-                .then((data) => {
-                    setNewsLoading({
-                        isLoading: false,
-                        hasError: false,
-                        news: data.news,
-                    });
-                })
-                .catch((error) => {
-                    console.error(`Ошибка Promise: ${error}`);
-                    setNewsLoading({
-                        isLoading: false,
-                        hasError: true,
-                        news: [],
-                    });
-                });
-        } catch (error) {
-            const errorMessage: string =
-                error instanceof Error ? error.message : "";
-            console.error(
-                `Не удалось получить новости от API: ${errorMessage}`
-            );
-            setNewsLoading({
-                isLoading: false,
-                hasError: true,
-                news: [],
-            });
-        }
-    };
-
-    useEffect(() => getNews(), []);
+    // Получаем массив новостей из хранилища с помощью селектора
+    const news = newsStore(state => state.news)
 
     return (
-        <PageNewsUI newsLoading={newsLoading}></PageNewsUI>
+        <PageNewsUI news={news}></PageNewsUI>
     );
 };
 
