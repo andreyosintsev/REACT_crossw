@@ -1,4 +1,4 @@
-.game-board {
+.board {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
@@ -12,27 +12,27 @@
     overflow: scroll;
 }
 
-.game-board::-webkit-scrollbar {
+.board::-webkit-scrollbar {
     width: 8px;
     height: 8px;
 }
 
-.game-board::-webkit-scrollbar-thumb {
+.board::-webkit-scrollbar-thumb {
     background-color: var(--scrollbar-thumb);
 }
 
-.game-board::-webkit-scrollbar-track {
+.board::-webkit-scrollbar-track {
     background-color: var(--scrollbar-track);
 }
 
-.game-board::-moz-scrollbar-button,
+.board::-moz-scrollbar-button,
 ::-webkit-scrollbar-button {
     display: none;
     width: 0px;
 }
 
 @media screen and (max-width: 768px) {
-    .game-board {
+    .board {
         padding: 0;
 
         height: calc(100dvh - 150px);

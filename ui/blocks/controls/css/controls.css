@@ -1,4 +1,4 @@
-.control {
+.controls {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -6,7 +6,7 @@
     gap: 5px;
 }
 
-.control__button {
+.controls__button {
     position: relative;
     width: 30px;
     height: 30px;
@@ -19,7 +19,7 @@
     cursor: pointer;
 }
 
-.control__button::after {
+.controls__button::after {
     content: attr(data-title);
     position: absolute;
     bottom: 150%;
@@ -44,37 +44,37 @@
     z-index: 500;
 }
 
-.control__button:hover {
+.controls__button:hover {
     background-color: var(--off-white, #DDDDDD);
 }
 
-.control__button:hover::after {
+.controls__button:hover::after {
     opacity: 1;
 }
 
-.control__button:active {
+.controls__button:active {
     transform: scale(0.95);
 }
 
-.control__button:active::after {
+.controls__button:active::after {
     opacity: 0;
 }
 
-.control__button_help {
+.controls__button_help {
     padding: 3px;
 }
 
-.control__button_restart {
+.controls__button_restart {
     padding: 3px;
 }
 
-.control__line {
+.controls__line {
     width: 2px;
     margin: 0 3px;
 
     background-color: var(--gray, #888888);
 }
 
-.control__button-image {
+.controls__button-image {
     width: 100%;
 }

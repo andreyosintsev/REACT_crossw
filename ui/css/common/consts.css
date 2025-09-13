@@ -70,4 +70,12 @@
 */
     --link: var(--text-second);
     --link-hover: var(--blue-medium);
+
+    /*
+    Трансформациии
+*/
+
+    --button-hover: scale(1.05);
+    --button-active: scale(0.95);
+
 }
