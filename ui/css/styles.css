@@ -11,99 +11,6 @@
     Страница в целом
 */
 
-
-body {
-    margin: 0;
-
-    font-family: var(--base-font-family);
-    color: var(--text-main);
-
-    border-bottom: 1px solid var(--border);
-
-    background-color: var(--background-pink);
-
-    background: url(../images/background.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-
-    scroll-behavior: smooth;
-}
-
-body:has(.game-board) {
-    overflow: hidden;
-}
-
-body::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-body::-webkit-scrollbar-thumb {
-    background-color: var(--scrollbar-thumb);
-}
-
-body::-webkit-scrollbar-track {
-    background-color: var(--scrollbar-track);
-}
-
-body::-moz-scrollbar-button,
-::-webkit-scrollbar-button {
-    display: none;
-    width: 0px;
-}
-
-.header {
-    position: fixed;
-    display: flex;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 50px;
-    margin-bottom: 20px;
-    padding: 0 16px;
-
-    background-color: var(--background-white);
-
-    box-shadow: 0px 6px 9px -3px rgba(0, 0, 0, 0.1);
-
-    z-index: 100;
-}
-
-.header__wrapper {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    width: 100%;
-    max-width: 1440px;
-    margin: auto;
-}
-
-.header-title {
-    display: flex;
-    align-items: center;
-}
-
-.header-title__link {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    text-decoration: none;
-}
-
-.header-title__logo {
-    margin-right: 10px;
-}
-
-.header-title__title {
-    color: var(--text-main);
-    font-family: 'PresentScript', sans-serif;
-    font-size: 16px;
-    font-weight: bold;
-
-    text-transform: uppercase;
-}
-
 .wrapper_game {
     height: calc(100dvh - 116px);
     height: calc(var(--vh, 1vh) * 100 - 116px);
@@ -158,22 +65,6 @@ body::-moz-scrollbar-button,
 }
 
 @media screen and (max-width: 768px) {
-    .header {
-        margin-bottom: 0;
-        padding: 2px 10px;
-
-        background: url(../images/background-mobile.jpg);
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-attachment: fixed;
-    }
-
-    .header-title__title {
-        color: var(--white, #FFFFFF);
-
-        text-shadow: 1px 1px 3px var(--black, #000000), -1px -1px 3px var(--black, #000000);
-    }
-
     .main {
         width: 100%;
         margin: 0;
