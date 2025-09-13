@@ -9,7 +9,12 @@
 }
 
 .block__title {
-    font-size: 20px;
+    margin: 0 0 20px 0;
+
+    font-family: 'PresentScript', sans-serif;
+    font-size: 16px;
+
+    text-transform: uppercase;
 }
 
 .block__text p {
@@ -28,5 +33,9 @@
         font-size: 14px;
 
         border-radius: 0;
+    }
+
+    .block__title {
+        margin: 20px 0;
     }
 }

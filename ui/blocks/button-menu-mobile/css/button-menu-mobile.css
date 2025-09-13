@@ -3,6 +3,8 @@
     height: 26px;
 
     color: var(--white, #FFFFFF);
+
+    cursor: pointer;
 }
 
 .button-menu-mobile__icon {

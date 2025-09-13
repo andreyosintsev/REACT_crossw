@@ -58,8 +58,14 @@
 
 .menu-mobile__link {
     color: var(--text-main, #333333);
+
+    text-decoration: none;
 }
 
 .menu-mobile__link:visited {
     color: var(--text-main, #333333);
+}
+
+.menu-mobile__link:hover {
+    color: var(--link-hover, #DC6781);
 }

@@ -58,6 +58,8 @@ body::-moz-scrollbar-button,
 
 .ads {
     width: 300px;
+
+    box-shadow: 0px 6px 9px -3px rgba(0, 0, 0, 0.1);
 }
 
 .ads-bottom {
@@ -66,6 +68,10 @@ body::-moz-scrollbar-button,
 
 .block {
     margin-bottom: 20px;
+}
+
+.foreword {
+    line-height: 140%;
 }
 
 .footer {
@@ -93,6 +99,10 @@ body::-moz-scrollbar-button,
 
     .block {
         margin-bottom: 0;
+    }
+
+    .foreword {
+        padding-top: 20px;
     }
 
     .status-control {
