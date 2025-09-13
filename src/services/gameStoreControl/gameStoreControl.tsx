@@ -1,6 +1,13 @@
 import { create } from "zustand";
 import IGameStoreControl from "./gameStoreControl.interface";
-import { clearBoardInLocalStorage, clearCrossBoardsInLocalStorage, loadBoardFromLocalStorage, loadCrosswordBoardFromLocalStorage, saveBoardToLocalStorage, saveCrosswordBoardToLocalStorage } from "../../utils/local-storage/local-storage";
+import {
+    clearBoardInLocalStorage,
+    clearCrossBoardsInLocalStorage,
+    loadBoardFromLocalStorage,
+    loadCrosswordBoardFromLocalStorage,
+    saveBoardToLocalStorage,
+    saveCrosswordBoardToLocalStorage,
+} from "../../utils/local-storage/local-storage";
 import IBoardElement from "../../pages/game/board-element/board-element.interface";
 import { IHelp } from "../../pages/game/board/board.interface";
 
@@ -8,7 +15,7 @@ import { IHelp } from "../../pages/game/board/board.interface";
  * Хранилище Zustand для управления игровым процессом кроссворда
  * @function
  * @returns {IGameStoreControl} Объект хранилища с полным контролем игры
- * 
+ *
  * @description
  * Централизованное хранилище для управления всем игровым процессом:
  * - Состояние игры и задачи
@@ -16,7 +23,7 @@ import { IHelp } from "../../pages/game/board/board.interface";
  * - Обработка пользовательских действий
  * - Проверка победы
  * - Работа с локальным хранилищем
- * 
+ *
  * @example
  * // Использование в компоненте игры
  * const { task, board, handleBoardClick, initializeGame } = gameStoreControl();
@@ -27,18 +34,18 @@ export const gameStoreControl = create<IGameStoreControl>((set, get) => ({
     horizontalLegend: {
         legend: [null],
         width: 0,
-        height: 0
+        height: 0,
     },
     verticalLegend: {
         legend: [null],
         width: 0,
-        height: 0
+        height: 0,
     },
     help: {
         xCoord: -1,
         yCoord: -1,
-        content: '',
-        position: null
+        content: "",
+        position: null,
     },
     isWin: false,
     gameCompleted: false,
@@ -47,8 +54,12 @@ export const gameStoreControl = create<IGameStoreControl>((set, get) => ({
     setError: (state) => set({ errorTask: state }),
 
     setTask: (task, userTaskInfo) => {
-        if (!task) set({ errorTask: true })
-        set({ task: task, gameCompleted: userTaskInfo.gameCompleted, isWin: false });
+        if (!task) set({ errorTask: true });
+        set({
+            task: task,
+            gameCompleted: userTaskInfo.gameCompleted,
+            isWin: false,
+        });
     },
 
     initializeGame: () => {
@@ -62,15 +73,15 @@ export const gameStoreControl = create<IGameStoreControl>((set, get) => ({
     setHelp: (help) => set({ help: help }),
 
     handleHelp: () => {
-        const { task } = get()
+        const { task } = get();
         let help: IHelp = {
-            content: '',
+            content: "",
             xCoord: 0,
             yCoord: 0,
-            position: null
+            position: null,
         };
         let pos = 0;
-        if (!(task)) {
+        if (!task) {
             return;
         }
         while (true) {
@@ -83,12 +94,15 @@ export const gameStoreControl = create<IGameStoreControl>((set, get) => ({
         help.position = pos;
         help.xCoord = pos % 5;
 
-        const newBoard: IBoardElement[] = loadBoardFromLocalStorage(task.id) || [];
+        const newBoard: IBoardElement[] =
+            loadBoardFromLocalStorage(task.id) || [];
 
         // Если предоставлена position в подсказке - применяем подсказку
         if (help.position) {
             newBoard[help.position].xCoord = help.position % task.width;
-            newBoard[help.position].yCoord = Math.floor(help.position / task.width);
+            newBoard[help.position].yCoord = Math.floor(
+                help.position / task.width
+            );
             newBoard[help.position].content = "" + help.content;
         }
 
@@ -100,18 +114,19 @@ export const gameStoreControl = create<IGameStoreControl>((set, get) => ({
     initBoard: () => {
         const { task } = get();
 
-        if (!task) return
+        if (!task) return;
         // Загружаем сохраненное состояние или создаем пустой массив
-        const newBoard: IBoardElement[] = loadBoardFromLocalStorage(task.id) || [];
+        const newBoard: IBoardElement[] =
+            loadBoardFromLocalStorage(task.id) || [];
 
         // Если поле пустое - создаем новое
         if (newBoard.length === 0) {
             for (let y = 0; y < task.height; y++) {
                 for (let x = 0; x < task.width; x++) {
                     newBoard.push({
-                        xCoord: x,       // X-координата клетки
-                        yCoord: y,       // Y-координата клетки
-                        content: "0",    // Состояние: "0" - пусто, "1" - закрашено, "X" - крестик
+                        xCoord: x, // X-координата клетки
+                        yCoord: y, // Y-координата клетки
+                        content: "0", // Состояние: "0" - пусто, "1" - закрашено, "X" - крестик
                     });
                 }
             }
@@ -127,7 +142,7 @@ export const gameStoreControl = create<IGameStoreControl>((set, get) => ({
 
         set({
             verticalLegend: createVerticalLegend(task),
-            horizontalLegend: createHorizontalLegend(task)
+            horizontalLegend: createHorizontalLegend(task),
         });
     },
 
@@ -159,10 +174,10 @@ export const gameStoreControl = create<IGameStoreControl>((set, get) => ({
         }
 
         // Находим максимальное количество подсказок в строке
-        const max = Math.max(...legend.map(row => row.length), 0);
+        const max = Math.max(...legend.map((row) => row.length), 0);
 
         // Выравниваем все строки до максимальной длины
-        const equLegend: (number | null)[][] = legend.map(row => {
+        const equLegend: (number | null)[][] = legend.map((row) => {
             const missing = max - row.length;
             return missing > 0
                 ? [...Array(missing).fill(null), ...row]
@@ -215,7 +230,7 @@ export const gameStoreControl = create<IGameStoreControl>((set, get) => ({
         });
 
         // Выравниваем все столбцы до максимальной длины
-        let equLegend: (number | null)[][] = legend.map(col => [...col]);
+        let equLegend: (number | null)[][] = legend.map((col) => [...col]);
 
         legend.forEach((col, num) => {
             if (col.length < max) {
@@ -246,7 +261,7 @@ export const gameStoreControl = create<IGameStoreControl>((set, get) => ({
         // Предотвращаем стандартное поведение браузера
         e.preventDefault();
 
-        if (!task) return
+        if (!task) return;
 
         const target = e.target as HTMLElement;
 
@@ -261,7 +276,7 @@ export const gameStoreControl = create<IGameStoreControl>((set, get) => ({
         const cellIndex = y * task.width + x;
 
         // Создаем копию текущего состояния поля
-        let newBoard = [...board]
+        let newBoard = [...board];
 
         // Обрабатываем разные типы кликов
         switch (e.buttons) {
@@ -280,7 +295,7 @@ export const gameStoreControl = create<IGameStoreControl>((set, get) => ({
 
         // Обновляем состояние и сохраняем в localStorage
         set({ board: newBoard });
-        checkWin(newBoard)
+        checkWin(newBoard);
         saveBoardToLocalStorage(task.id, newBoard);
     },
 
@@ -289,22 +304,28 @@ export const gameStoreControl = create<IGameStoreControl>((set, get) => ({
         const { handleBoardClick } = get();
 
         // Обработка кликов
-        if ((event.buttons === 1 || event.buttons === 2) && event.type !== "mouseleave") {
-            const eve = event as unknown as React.MouseEvent<Element, MouseEvent>;
+        if (
+            (event.buttons === 1 || event.buttons === 2) &&
+            event.type !== "mouseleave"
+        ) {
+            const eve = event as unknown as React.MouseEvent<
+                Element,
+                MouseEvent
+            >;
             handleBoardClick(eve);
             return;
         }
     },
 
     handleRestart: (e) => {
-        const { task, initBoard } = get()
+        const { task, initBoard } = get();
         e.preventDefault();
-        if (!task) return
+        if (!task) return;
         clearBoardInLocalStorage(task.id);
-        clearCrossBoardsInLocalStorage(task.id)
-        initBoard()
+        clearCrossBoardsInLocalStorage(task.id);
+        initBoard();
         const loadCrosswordBoard = loadCrosswordBoardFromLocalStorage(task.id);
-        set({ gameCompleted: loadCrosswordBoard?.gameCompleted })
+        set({ gameCompleted: loadCrosswordBoard?.gameCompleted });
     },
 
     setWin: (status) => set({ isWin: status }),
@@ -316,33 +337,32 @@ export const gameStoreControl = create<IGameStoreControl>((set, get) => ({
             saveCrosswordBoardToLocalStorage(task.id, {
                 gameCompleted: status,
                 id: task.id,
-                time: '',
+                time: "",
                 star: 0,
-            })
+            });
     },
 
     checkWin: (board) => {
         const { task, isWin } = get();
-        if (!task || isWin) return false
+        if (!task || isWin) return false;
         if (board.length === 0) {
             return;
         }
 
         for (let i = 0; i < board.length; i++) {
-            const content =
-                board[i].content === "X" ? "0" : board[i].content;
+            const content = board[i].content === "X" ? "0" : board[i].content;
 
             if (content !== task.task[i]) {
                 return;
             }
         }
 
-        const cleanedBoard = board.map(element => ({
+        const cleanedBoard = board.map((element) => ({
             ...element,
-            content: element.content === "X" ? "0" : element.content
+            content: element.content === "X" ? "0" : element.content,
         }));
 
-        set({ board: cleanedBoard, isWin: true })
+        set({ board: cleanedBoard, isWin: true });
         saveBoardToLocalStorage(task.id, cleanedBoard);
     },
 }));

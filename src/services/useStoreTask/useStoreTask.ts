@@ -31,7 +31,8 @@ const useStoreTask = create<IStoreTask>((set, get) => ({
         }),
 
     getTaskById: (id) =>
-        get().tasks.find((task) => `${task.id}` === `${id}`) || null,
+        get().tasks.find((task) => task.id.toString() === id.toString()) ||
+        null,
 }));
 
 export default useStoreTask;

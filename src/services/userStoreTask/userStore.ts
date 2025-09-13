@@ -57,7 +57,7 @@ const userStore = create<IUserStore>((set, get) => ({
     getCrosswordBoardById: (id) => {
         const { crosswBoards } = get();
         return (
-            crosswBoards?.find((ele) => ele.id === id) || {
+            crosswBoards?.find((board) => board.id === id) || {
                 gameCompleted: false,
                 id: id,
                 time: "",

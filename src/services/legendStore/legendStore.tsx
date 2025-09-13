@@ -1,30 +1,28 @@
 import { create } from "zustand";
 import ILegendStore from "./legendStore.interface";
 
-// Глобальные массивы для хранения DOM-элементов легенд вне хранилища
-let legendHorizontalElements: HTMLDivElement[] = [];
-let legendVerticalElements: HTMLDivElement[] = [];
-
 /**
  * Хранилище Zustand для управления элементами легенд игрового поля
  * @function
  * @returns {ILegendStore} Объект хранилища с методами управления легендами
- * 
+ *
  * @description
  * Специализированное хранилище для координации визуального взаимодействия
  * между игровым полем и легендами. Использует глобальные переменные
  * для хранения DOM-элементов, что обеспечивает высокую производительность.
- * 
+ *
  * @note
  * Внимание: используется глобальное состояние (переменные вне хранилища)
  * для максимальной производительности при частых DOM-операциях
- * 
+ *
  * @example
  * // Использование в компоненте
  * const { highlightLegends, getLegendElement } = legendStore();
  */
 const legendStore = create<ILegendStore>((set, get) => ({
-
+    // Глобальные массивы для хранения DOM-элементов легенд вне хранилища
+    legendHorizontalElements: [],
+    legendVerticalElements: [],
 
     // Вспомогательная функция для подсветки легенд
     highlightLegends: (event) => {
@@ -34,30 +32,41 @@ const legendStore = create<ILegendStore>((set, get) => ({
         const y = Number(target.dataset.y);
 
         // Убираем предыдущие выделения
-        legendHorizontalElements.forEach(ele => ele.classList.remove('le_hover'));
-        legendVerticalElements.forEach(ele => ele.classList.remove('le_hover'));
+        get().legendHorizontalElements.forEach((ele) =>
+            ele.classList.remove("le_hover")
+        );
+        get().legendVerticalElements.forEach((ele) =>
+            ele.classList.remove("le_hover")
+        );
 
         // Находим и выделяем соответствующие элементы
-        legendHorizontalElements.forEach(ele =>
-            ele.dataset.type === `LegendHorizontal_${x}` && ele.classList.add('le_hover')
+        get().legendHorizontalElements.forEach(
+            (ele) =>
+                ele.dataset.type === `lh_${x}` && ele.classList.add("le_hover")
         );
-        legendVerticalElements.forEach(ele =>
-            ele.dataset.type === `LegendVertical_${y}` && ele.classList.add('le_hover')
+        get().legendVerticalElements.forEach(
+            (ele) =>
+                ele.dataset.type === `lv_${y}` && ele.classList.add("le_hover")
         );
     },
 
-    getLegendElement: (div) => {
-        if (div?.dataset.type?.includes("LegendHorizontal")) {
-            legendHorizontalElements.push(div);
+    addLegendElement: (div) => {
+        if (div?.dataset.type?.includes("lh")) {
+            set({
+                legendHorizontalElements:
+                    get().legendHorizontalElements.concat(div),
+            });
         } else {
-            legendVerticalElements.push(div);
+            set({
+                legendVerticalElements:
+                    get().legendVerticalElements.concat(div),
+            });
         }
     },
 
     clearLegend: () => {
-        legendVerticalElements = [];
-        legendHorizontalElements = [];
+        set({ legendVerticalElements: [], legendHorizontalElements: [] });
     },
-}))
+}));
 
 export default legendStore;
