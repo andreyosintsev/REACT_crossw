@@ -19,4 +19,11 @@
     .block {
         margin-bottom: 0;
     }
+
+    .status-control {
+        position: fixed;
+        top: 50px;
+        left: 0;
+        width: 100%;
+    }
 }
