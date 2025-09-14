@@ -1,5 +1,5 @@
 import IBoardElement from "../../pages/game/board-element/board-element.interface";
-import { ICrosswBoard } from "../../services/userStoreTask/userStore.interface";
+import { ICrosswBoard } from "../../store/storeUser/storeUser.interface";
 import { ITask } from "../api/api.interface";
 import {
     BOARD_PREFIX,

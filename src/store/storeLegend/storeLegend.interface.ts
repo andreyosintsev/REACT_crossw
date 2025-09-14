@@ -2,7 +2,10 @@
  * Интерфейс хранилища для управления легендами игрового поля
  * @interface
  */
-interface ILegendStore {
+interface IStoreLegend {
+    legendHorizontalElements: HTMLDivElement[];
+    legendVerticalElements: HTMLDivElement[];
+
     /**
      * Подсвечивает соответствующие легенды при взаимодействии с клеткой поля
      * @param {React.MouseEvent} event - Событие мыши (наведение/выход)
@@ -60,7 +63,7 @@ interface ILegendStore {
      *   }
      * }, []);
      */
-    getLegendElement: (div: HTMLDivElement) => void;
+    addLegendElement: (div: HTMLDivElement) => void;
 
     /**
      * Очищает глобальные массивы DOM-элементов легенд
@@ -83,4 +86,4 @@ interface ILegendStore {
     clearLegend: () => void;
 }
 
-export default ILegendStore;
+export default IStoreLegend;

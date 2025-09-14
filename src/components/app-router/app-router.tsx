@@ -15,16 +15,16 @@ import Game from "../../pages/game/game";
 import ModalButton from "../modal-button/modal-button";
 import Modal from "../modal/modal";
 import Preloader from "../preloader/preloader";
-import useStoreTask from "../../services/useStoreTask/useStoreTask";
-import apiStore from "../../services/apiStore/apiStore";
-import { gameStoreControl } from "../../services/gameStoreControl/gameStoreControl";
+import storeTasks from "../../store/storeTasks/storeTasks";
+import storeApi from "../../store/storeApi/storeApi";
+import { storeGame } from "../../store/storeGame/storeGame";
 
 /**
  * Основной роутер приложения с обработкой состояний загрузки и ошибок
- * 
+ *
  * @component
  * @returns {JSX.Element} Маршрутизатор приложения с полной структурой layout
- * 
+ *
  * @description
  * Компонент реализует главный роутер приложения с:
  * - Обработкой состояний загрузки и ошибок
@@ -32,7 +32,7 @@ import { gameStoreControl } from "../../services/gameStoreControl/gameStoreContr
  * - Модальным окном для ошибок с навигацией
  * - Основной структурой layout (header, content, sidebar, footer)
  * - Интеграцией со всеми необходимыми хранилищами Zustand
- * 
+ *
  * @example
  * // Использование в корневом компоненте
  * ReactDOM.render(
@@ -44,12 +44,12 @@ import { gameStoreControl } from "../../services/gameStoreControl/gameStoreContr
  */
 const AppRouter: FC = () => {
     // Получаем состояние загрузки из API хранилища
-    const isLoading = apiStore(state => state.isLoading)
+    const isLoading = storeApi((state) => state.isLoading);
     // Получаем состояние ошибки и метод установки ошибки из игрового хранилища
-    const error = gameStoreControl(state => state.errorTask)
-    const setError = gameStoreControl(state => state.setError)
+    const error = storeGame((state) => state.errorTask);
+    const setError = storeGame((state) => state.setError);
     // Получаем список задач из хранилища задач
-    const tasks = useStoreTask(state => state.tasks);
+    const tasks = storeTasks((state) => state.tasks);
     // Хук для программной навигации
     const navigate = useNavigate();
     // Состояние видимости модального окна ошибки
@@ -59,24 +59,21 @@ const AppRouter: FC = () => {
      * Обрабатывает закрытие модального окна с ошибкой
      * @param {React.MouseEvent} e - Событие клика
      * @returns {void}
-     * 
+     *
      * @description
      * Закрывает модальное окно с ошибкой без дополнительных действий
-     * 
+     *
      * @memorized Использует useCallback для оптимизации ререндеров
      */
-    const closeHandler = useCallback(
-        (e: React.MouseEvent) => {
-            e.preventDefault();
-            setModalShow(false);
-        },
-        []
-    );
+    const closeHandler = useCallback((e: React.MouseEvent) => {
+        e.preventDefault();
+        setModalShow(false);
+    }, []);
 
     /**
      * Эффект управления отображением модального окна ошибки
      * @dependency [error] - Зависит от наличия ошибки
-     * 
+     *
      * @description
      * Автоматически показывает модальное окно при возникновении ошибки:
      * - Преобразует булево значение error в состояние видимости модалки
@@ -84,7 +81,7 @@ const AppRouter: FC = () => {
      */
     useEffect(() => {
         setModalShow(!!error);
-    }, [error])
+    }, [error]);
 
     return (
         <>
@@ -95,7 +92,10 @@ const AppRouter: FC = () => {
                     <AppWrapper>
                         <Routes>
                             <Route path="/" element={<Home />} />
-                            <Route path="/game/:taskNumber" element={<Game />} />
+                            <Route
+                                path="/game/:taskNumber"
+                                element={<Game />}
+                            />
                         </Routes>
 
                         <AppSidebar>
@@ -108,10 +108,15 @@ const AppRouter: FC = () => {
             {isModalShow && (
                 <Modal
                     image="modal1.png"
-                    title='Ошибка загрузки кроссворда.'
+                    title="Ошибка загрузки кроссворда."
                     onClick={closeHandler}
                 >
-                    <ModalButton onClick={() => { navigate('/'); setError(false) }}>
+                    <ModalButton
+                        onClick={() => {
+                            navigate("/");
+                            setError(false);
+                        }}
+                    >
                         На главную
                     </ModalButton>
                 </Modal>

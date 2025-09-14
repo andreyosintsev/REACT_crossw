@@ -1,24 +1,24 @@
 import { create } from "zustand";
-import IApiStore from "./apiStore.interface";
+import IStoreApi from "./storeApi.interface";
 import { apiGetNews, apiGetTask, apiGetTasks } from "../../utils/api/api";
 
 /**
  * Хранилище Zustand для управления API-запросами приложения
  * @function
- * @returns {IApiStore} Объект хранилища с методами для работы с API
- * 
+ * @returns {IStoreApi} Объект хранилища с методами для работы с API
+ *
  * @description
  * Централизованное хранилище для управления всеми API-запросами:
  * - Управление состоянием загрузки
  * - Обработка и хранение ошибок
  * - Упрощение работы с асинхронными запросами
  * - Единая точка для всех API-взаимодействий
- * 
+ *
  * @example
  * // Использование в компоненте
  * const { fetchTask, isLoading, error, clearError } = apiStore();
  */
-const apiStore = create<IApiStore>((set) => ({
+const storeApi = create<IStoreApi>((set) => ({
     isLoading: true,
     error: null,
 
@@ -46,7 +46,7 @@ const apiStore = create<IApiStore>((set) => ({
         try {
             const tasksData = await apiGetTasks();
 
-            return tasksData.tasks
+            return tasksData.tasks;
         } catch (err) {
             const errorMessage =
                 err instanceof Error ? err.message : "Failed to fetch tasks";
@@ -54,23 +54,23 @@ const apiStore = create<IApiStore>((set) => ({
             set({
                 error: errorMessage,
             });
-            return null
+            return null;
         }
     },
 
     getNews: async () => {
         try {
-            const news = await apiGetNews()
+            const news = await apiGetNews();
 
-            return news.news || []
+            return news.news || [];
         } catch (err) {
             const errorMessage =
                 err instanceof Error ? err.message : "Failed to fetch news";
 
             set({
-                error: errorMessage
-            })
-            return []
+                error: errorMessage,
+            });
+            return [];
         }
     },
 
@@ -81,4 +81,4 @@ const apiStore = create<IApiStore>((set) => ({
     setLoading: (load) => set({ isLoading: load }),
 }));
 
-export default apiStore;
+export default storeApi;

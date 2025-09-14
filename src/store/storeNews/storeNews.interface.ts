@@ -4,7 +4,7 @@ import { INews } from "../../utils/api/api.interface";
  * Интерфейс хранилища новостей
  * @interface
  */
-interface INewsStore {
+interface IStoreNews {
     /** Массив новостей */
     news: INews[];
 
@@ -15,4 +15,4 @@ interface INewsStore {
     setNews: (news: INews[]) => void;
 }
 
-export default INewsStore;
+export default IStoreNews;
