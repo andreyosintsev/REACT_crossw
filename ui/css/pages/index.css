@@ -1,0 +1,118 @@
+body {
+    margin: 0;
+
+    font-family: var(--base-font-family);
+    color: var(--text-main);
+
+    border-bottom: 1px solid var(--border);
+
+    background-color: var(--background-pink);
+
+    background: url(../../images/background.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+
+    scroll-behavior: smooth;
+}
+
+body::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb);
+}
+
+body::-webkit-scrollbar-track {
+    background-color: var(--scrollbar-track);
+}
+
+body::-moz-scrollbar-button,
+::-webkit-scrollbar-button {
+    display: none;
+    width: 0px;
+}
+
+.noscroll {
+    overflow: hidden;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.main {
+    width: calc(100% - 320px);
+}
+
+.sidebar {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.intermission {
+    display: none;
+}
+
+.ads {
+    width: 300px;
+
+    box-shadow: 0px 6px 9px -3px rgba(0, 0, 0, 0.1);
+}
+
+.ads-bottom {
+    display: none;
+}
+
+.block {
+    margin-bottom: 20px;
+}
+
+.foreword {
+    line-height: 140%;
+}
+
+.footer {
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 1440px) {
+    .main {
+        width: 100%;
+        margin: 0;
+        padding: 0 16px;
+    }
+
+    .intermission {
+        display: block;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .main {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .block {
+        margin-bottom: 0;
+    }
+
+    .foreword {
+        padding-top: 20px;
+    }
+
+    .status-control {
+        position: fixed;
+        top: 50px;
+        left: 0;
+        width: 100%;
+    }
+
+    .ads-bottom {
+        display: block;
+    }
+}

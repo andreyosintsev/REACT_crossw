@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+Host: https://crossw.ru
+Sitemap: https://crossw.ru/sitemap.xml

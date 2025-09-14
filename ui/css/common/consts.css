@@ -1,0 +1,82 @@
+/*
+    ПРОЕКТ "CROSSW.RU - ЯПОНСКИЕ КРОССВОРДЫ"
+    ШРИФТОВЫЕ И ЦВЕТОВЫЕ КОНСТАНТЫ
+
+    Последняя версия: 13.09.2025
+
+    UPD: начальная версия
+*/
+
+@import url('./fonts.css');
+
+:root {
+    /*
+    Шрифты
+*/
+
+    --base-font-family: arial, sans-serif;
+
+    --text-main: #333333;
+    --text-second: #888888;
+
+
+    /*
+    Основная палитра
+*/
+    --pink-dark: #DC6781;
+    --pink-medium: #F18DAF;
+    --pink-light: #F4B6C5;
+    --pink-lighter: #F5CCD6;
+    --pink-offwhite: #F5E2E7;
+    --pink-bright: #f0dedd;
+    --blue-medium: #9ABCE9;
+    --white: #FFFFFF;
+    --off-white: #DDDDDD;
+    --gray-light: #AAAAAA;
+    --gray: #888888;
+    --gray-dark: #333333;
+    --black: #000000;
+
+
+    /*
+    Производное использование
+*/
+    --background-white: var(--white);
+    --background-pink: var(--pink-offwhite);
+
+
+    /*
+    Скроллбары
+*/
+
+    --scrollbar-thumb: var(--pink-medium);
+    --scrollbar-track: var(--pink-light);
+
+
+    /*
+    Рамки
+*/
+    --border: var(--pink-offwhite);
+    --border-radius: 6px;
+    --border-radius_button: 4px;
+
+
+    /*
+    Меню
+*/
+    --menu-item: var(--text-second);
+
+    /*
+    Ссылки
+*/
+    --link: var(--text-second);
+    --link-hover: var(--blue-medium);
+
+    /*
+    Трансформациии
+*/
+
+    --button-hover: scale(1.05);
+    --button-active: scale(0.95);
+
+}

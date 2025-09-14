@@ -1,0 +1,80 @@
+.controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 5px;
+}
+
+.controls__button {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    padding: 2px;
+
+    border: 2px solid var(--gray, #888888);
+
+    border-radius: var(--border-radius_button, 5px);
+
+    cursor: pointer;
+}
+
+.controls__button::after {
+    content: attr(data-title);
+    position: absolute;
+    bottom: 150%;
+    left: 20%;
+    padding: 4px 8px;
+
+    color: var(--white, #FFFFFF);
+
+    background: var(--gray, #666666);
+
+    border-radius: 4px;
+    border-color: 1px solid var(--gray, #888888);
+
+    pointer-events: none;
+    white-space: nowrap;
+
+    opacity: 0;
+
+    transform: translateX(-50%);
+    transition: opacity 0.3s ease 0.1s;
+
+    z-index: 500;
+}
+
+.controls__button:hover {
+    background-color: var(--off-white, #DDDDDD);
+}
+
+.controls__button:hover::after {
+    opacity: 1;
+}
+
+.controls__button:active {
+    transform: scale(0.95);
+}
+
+.controls__button:active::after {
+    opacity: 0;
+}
+
+.controls__button_help {
+    padding: 3px;
+}
+
+.controls__button_restart {
+    padding: 3px;
+}
+
+.controls__line {
+    width: 2px;
+    margin: 0 3px;
+
+    background-color: var(--gray, #888888);
+}
+
+.controls__button-image {
+    width: 100%;
+}

@@ -1,0 +1,9 @@
+button {
+  width: 100px;
+  height: 40px;
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+
+  border-radius: 5px;
+  cursor: pointer;
+}

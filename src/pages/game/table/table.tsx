@@ -35,14 +35,7 @@ const Table: FC<ITable> = ({ task }) => {
     // Состояние отображения модального окна
     const [modalShow, setModalShow] = useState(false);
     // Получаем состояние и методы из игрового хранилища
-    const {
-        horizontalLegend,
-        verticalLegend,
-        setWin,
-        isWin,
-        gameCompleted,
-        setGameCompleted,
-    } = storeGame();
+    const { horizontalLegend, verticalLegend, setWin, isWin, gameCompleted, setGameCompleted } = storeGame();
     // Получаем метод сохранения прогресса из пользовательского хранилища
     const { setCrosswordBoards } = storeUser();
 
@@ -83,54 +76,26 @@ const Table: FC<ITable> = ({ task }) => {
             setWin(false);
             setGameCompleted(true);
         }
-    }, [
-        isWin,
-        task.id,
-        setCrosswordBoards,
-        setWin,
-        gameCompleted,
-        setGameCompleted,
-    ]);
+    }, [isWin, task.id, setCrosswordBoards, setWin, gameCompleted, setGameCompleted]);
 
     return (
         horizontalLegend &&
         verticalLegend && (
             <>
-                <DynamicGrid
-                    columns={2}
-                    rows={2}
-                    cellSize={"auto"}
-                    className={styles.table}
-                >
+                <DynamicGrid columns={2} rows={2} cellSize={"auto"} className={styles.table}>
                     <DynamicGrid
                         key="boardZeroField"
                         columns={1}
                         rows={1}
-                        className={`${styles.zero_field} ${
-                            gameCompleted ? styles.win : ""
-                        }`}
+                        className={`${styles.zero_field} ${gameCompleted ? styles.win : ""}`}
                     />
-                    <LegendHorizontal
-                        legend={horizontalLegend.legend}
-                        width={horizontalLegend.width}
-                        height={horizontalLegend.height}
-                    />
-                    <LegendVertical
-                        legend={verticalLegend.legend}
-                        width={verticalLegend.width}
-                        height={verticalLegend.height}
-                    />
+                    <LegendHorizontal legend={horizontalLegend.legend} width={horizontalLegend.width} height={horizontalLegend.height} />
+                    <LegendVertical legend={verticalLegend.legend} width={verticalLegend.width} height={verticalLegend.height} />
                     <Board width={task.width} height={task.height} />
                 </DynamicGrid>
                 {modalShow && (
-                    <Modal
-                        image="modal1.png"
-                        title="Поздравляем, вы разгадали кроссворд!"
-                        onClick={closeHandler}
-                    >
-                        <ModalButton onClick={closeHandler}>
-                            Закрыть
-                        </ModalButton>
+                    <Modal image="modal1.png" title="Поздравляем, вы разгадали кроссворд!" onClick={closeHandler}>
+                        <ModalButton onClick={closeHandler}>Закрыть</ModalButton>
                     </Modal>
                 )}
             </>

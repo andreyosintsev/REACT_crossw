@@ -1,0 +1,29 @@
+.controls {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  gap: 20px
+}
+
+button {
+  width: 150px;
+  height: 30px;
+  font-size: 14px;
+  color: #000000;
+}
+
+.restart {
+  background-color: lightcoral;
+}
+
+.tip {
+  background-color: lightblue;
+}
+
+@media screen and (width < 800px) {
+
+}
+
+@media screen and (width < 576px) {
+
+}

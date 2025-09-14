@@ -1,205 +1,388 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Японские кроссворды | crossw.ru</title>
-    <link rel="stylesheet" type="text/css" href="css/normalize.css"></link>
-    <link rel="stylesheet" type="text/css" href="css/styles.css"></link>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Японские кроссворды | crossw.ru</title>
+        <link rel="stylesheet" type="text/css" href="css/common/normalize.css" />
+        <link rel="stylesheet" type="text/css" href="css/common/consts.css" />
+        <link rel="stylesheet" type="text/css" href="blocks/header/css/header.css" />
+        <link rel="stylesheet" type="text/css" href="blocks/wrapper/css/wrapper.css" />
+        <link rel="stylesheet" type="text/css" href="blocks/sidebar/css/sidebar.css" />
+        <link rel="stylesheet" type="text/css" href="blocks/menu-main/css/menu-main.css" />
+        <link rel="stylesheet" type="text/css" href="blocks/button-menu-mobile/css/button-menu-mobile.css" />
+        <link rel="stylesheet" type="text/css" href="blocks/menu-mobile/css/menu-mobile.css" />
+        <link rel="stylesheet" type="text/css" href="blocks/block/css/block.css" />
+        <link rel="stylesheet" type="text/css" href="blocks/slider/css/slider.css" />
+        <link rel="stylesheet" type="text/css" href="blocks/news/css/news.css" />
+        <link rel="stylesheet" type="text/css" href="blocks/overlay/css/overlay.css" />
+        <link rel="stylesheet" type="text/css" href="blocks/footer/css/footer.css" />
 
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-	<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
-</head>
-<body>
-    <header class="header">
-        <div class="header__wrapper">
-            <div class="header-title">
-                <a class="header-title__link" href="index.html" title="На главную">
-                    <img class="header-title__logo" src="images/logo.png">
-                    <div class="header-title__title">Японские кроссворды</div>
-                </a>
-            </div>
-            <div class="main-menu">
-                <ul class="main-menu__items">
-                    <li class="main-menu__item">
-                        О кроссвордах
-                    </li>
-                    <li class="main-menu__item">
-                        Наши рекордсмены
-                    </li>
-                    <li class="main-menu__item">
-                        Лучшие кроссворды
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </header>
-    <div class="wrapper">
-        <main class="main">
-            <div class="block foreword">
-                <p>Добро пожаловать на сайт японских кроссвордов.</p>
-                <p>Японский кроссворд (или нонограмма) - это головоломка, напоминающая привычный кроссворд, однако вместо слов в нём зашифровано изображение.</p>
-                <p>Нонограммы появились в Японии в конце XX века. </p>
-                <p>Нон Исида (яп. 石田 のん), иллюстратор и графический редактор, утверждавшая, что ещё в 1970 году она создавала нонограммы как средство общения между людьми и животными.
-                Нон Исида верила, что животные очень разумные существа, но из-за отсутствия средств коммуникации между людьми и животными человек недооценивает земные существа.
-                В результате её научной работы, по утверждению Исиды, родились нонограммы.</p>
-            </div>
-            <div class="block intermission">
-            
-            </div>
-            <div class="block featured">
-                <h2 class="block__title">Новые кроссворды</h2>
-                <div class="slider" id="slider-new">
-                    <div class="slider__button slider-button_left">
-                        <img class="slider-button__image" src="images/arrow_left.png" alt="Влево">
-                    </div>
-                    <ul class="slider__items">
-                        <li class="slider__item">
-                            <a class="slider__link" href="game.html" title="Разгадать кроссворд № 1">
-                                <img class="slider__image" src="images/mockup-crossword-preview.jpg" alt="">
-                            </a>
-                        </li>
-                        <li class="slider__item">
-                            <a class="slider__link" href="game.html" title="Разгадать кроссворд № 2">
-                                <img class="slider__image" src="images/mockup-crossword-preview.jpg" alt="">
-                            </a>                            
-                        </li>
-                        <li class="slider__item">
-                            <a class="slider__link" href="game.html" title="Разгадать кроссворд № 3">
-                                <img class="slider__image" src="images/mockup-crossword-preview.jpg" alt="">
-                            </a>                            
-                        </li>
-                        <li class="slider__item">
-                            <a class="slider__link" href="game.html" title="Разгадать кроссворд № 4">
-                                <img class="slider__image" src="images/mockup-crossword-preview.jpg" alt="">
-                            </a>                            
-                        </li>
-                        <li class="slider__item">
-                            <a class="slider__link" href="game.html" title="Разгадать кроссворд № 5">
-                                <img class="slider__image" src="images/mockup-crossword-preview.jpg" alt="">
-                            </a>                            
-                        </li>
-                        <li class="slider__item">
-                            <a class="slider__link" href="game.html" title="Разгадать кроссворд № 6">
-                                <img class="slider__image" src="images/mockup-crossword-preview.jpg" alt="">
-                            </a>                            
-                        </li>
-                        <li class="slider__item">
-                            <a class="slider__link" href="game.html" title="Разгадать кроссворд № 7">
-                                <img class="slider__image" src="images/mockup-crossword-preview.jpg" alt="">
-                            </a>                            
-                        </li>
-                        <li class="slider__item">
-                            <a class="slider__link" href="game.html" title="Разгадать кроссворд № 8">
-                                <img class="slider__image" src="images/mockup-crossword-preview.jpg" alt="">
-                            </a>                            
-                        </li>
-                        <li class="slider__item">
-                            <a class="slider__link" href="game.html" title="Разгадать кроссворд № 9">
-                                <img class="slider__image" src="images/mockup-crossword-preview.jpg" alt="">
-                            </a>                            
-                        </li>
+        <link rel="stylesheet" type="text/css" href="css/pages/index.css" />
+
+        <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+        <link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
+    </head>
+    <body>
+        <header class="header">
+            <div class="header__wrapper">
+                <div class="header__title">
+                    <a class="header__link" href="index.html" title="На главную">
+                        <img class="header__logo" src="images/logo.png" />
+                        <div class="header__sitename">Японские кроссворды</div>
+                    </a>
+                </div>
+                <div class="header__menu-main menu-main">
+                    <ul class="menu-main__items">
+                        <li class="menu-main__item">Все кроссворды</li>
+                        <li class="menu-main__item">Лучшие кроссворды</li>
+                        <li class="menu-main__item">Как решать кроссворды</li>
                     </ul>
-                    <div class="slider-button slider-button_right">
-                        <img class="slider-button__image" src="images/arrow_right.png" alt="Вправо">
-                    </div>
                 </div>
-            </div>
-            <div class="block solved">
-                <h2 class="block__title">Решённые кроссворды</h2>
-                <div class="slider" id="slider-solved">
-                    <div class="slider__button slider-button_left">
-                        <img class="slider-button__image" src="images/arrow_left.png" alt="Влево">
-                    </div>
-                    <ul class="slider__items">
-                        <li class="slider__item">
-                            <a class="slider__link" href="solved.html" title="Разгаданный кроссворд № 1">
-                                <img class="slider__image" src="" alt="">
-                                <p class="slider__name">Кошечка</p>
-                            </a>
-                        </li>
-                        <li class="slider__item">
-                            <a class="slider__link" href="solved.html" title="Разгаданный кроссворд № 2">
-                                <img class="slider__image" src="" alt="">
-                                <p class="slider__name">Собачка</p>
-                            </a>                            
-                        </li>
-                        <li class="slider__item">
-                            <a class="slider__link" href="solved.html" title="Разгаданный кроссворд № 3">
-                                <img class="slider__image" src="" alt="">
-                                <p class="slider__name">Логотип</p>
-                            </a>                            
-                        </li>
-                        <li class="slider__item">
-                            <a class="slider__link" href="solved.html" title="Разгаданный кроссворд № 4">
-                                <img class="slider__image" src="" alt="">
-                                <p class="slider__name">Дом с трубой</p>
-                            </a>                            
-                        </li>
-                        <li class="slider__item">
-                            <a class="slider__link" href="solved.html" title="Разгаданный кроссворд № 5">
-                                <img class="slider__image" src="" alt="">
-                                <p class="slider__name">Тигра и слонопотам</p>
-                            </a>                            
-                        </li>
-                        <li class="slider__item">
-                            <a class="slider__link" href="solved.html" title="Разгаданный кроссворд № 6">
-                                <img class="slider__image" src="" alt="">
-                                <p class="slider__name">Домик</p>
-                            </a>                            
-                        </li>
-                        <li class="slider__item">
-                            <a class="slider__link" href="solved.html" title="Разгаданный кроссворд № 7">
-                                <img class="slider__image" src="" alt="">
-                                <p class="slider__name">Троллейбус, который идёт на восток</p>
-                            </a>                            
-                        </li>
-                        <li class="slider__item">
-                            <a class="slider__link" href="solved.html" title="Разгаданный кроссворд № 8">
-                                <img class="slider__image" src="" alt="">
-                                <p class="slider__name">Восходящее солнце</p>
-                            </a>                            
-                        </li>
-                    </ul>                    
-                <div class="slider-button slider-button_right">
-                    <img class="slider-button__image" src="images/arrow_right.png" alt="Вправо">
-                </div>
-                </div>
-            </div>
-            <div class="block news">
-                <h2 class="block__title">Новости сайта</h2>
-                <ul class="news__items">
-                    <li class="news__entry entry">
-                        <div class="entry__date">
-                            21.03.2024
-                        </div>
-                        <div class="entry__content">
-                            Продолжилась разработка главной страницы сайта
-                        </div>
-                    </li>
-                    <li class="news__entry entry">
-                        <div class="entry__date">
-                            12.02.2024
-                        </div>
-                        <div class="entry__content">
-                            Началась разработку дизайна страницы сайта
-                        </div>
-                    </li>
-                </ul>                    
-            </div>
-        </main>
-        <aside class="sidebar">
-            <div class="ads">
-                <img src="images/banner-300x800.png">
-            </div>
-        </aside>
-    </div>    
-    <footer class="footer">
-        <div class="footer__copy">
-            &copy; 2024 сrossw.ru - Японские кросворды
-        </div>
-    </footer>
+                <div class="button-menu-mobile header__button-menu-mobile">
+                    <svg
+                        class="button-menu-mobile__icon"
+                        width="26"
+                        height="26"
+                        viewBox="0 0 26 26"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        filter="url(#shadow)"
+                    >
+                        <defs>
+                            <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+                                <feDropShadow dx="2" dy="2" stdDeviation="2" flood-color="rgba(0, 0, 0, 1)" />
+                            </filter>
+                        </defs>
 
-    <script src="js/slider.js"></script>
-</body>
+                        <line class="button-menu-mobile__icon-line1" y1="2" x2="26" y2="2" stroke="currentColor" stroke-width="2" />
+                        <line class="button-menu-mobile__icon-line2" y1="12" x2="26" y2="12" stroke="currentColor" stroke-width="2" />
+                        <path class="button-menu-mobile__icon-line3" d="M0 23H30" stroke="currentColor" stroke-width="2" />
+                    </svg>
+                </div>
+            </div>
+        </header>
+        <div class="menu-mobile invisible">
+            <div class="menu-mobile__title">Японские кроссворды</div>
+            <ul class="menu-mobile__items">
+                <li class="menu-mobile__item">
+                    <a class="menu-mobile__link" href="#" title="Просмотреть все кроссворды">Все кроссворды</a>
+                </li>
+                <li class="menu-mobile__item">
+                    <a class="menu-mobile__link" href="#" title="Просмотреть лучщие кроссворды">Лучшие кроссворды</a>
+                </li>
+                <li class="menu-mobile__item">
+                    <a class="menu-mobile__link" href="#" title="Статья о кроссвордах">Как решать кроссворды</a>
+                </li>
+            </ul>
+        </div>
+        <div class="wrapper">
+            <main class="main">
+                <div class="block foreword">
+                    <div class="block__text">
+                        <p><strong>Добро пожаловать на сайт японских кроссвордов.</strong></p>
+                        <p>
+                            Японский кроссворд (или нонограмма) - это головоломка, напоминающая привычный кроссворд, однако вместо слов в
+                            нём зашифровано изображение.
+                        </p>
+                        <p>Нонограммы появились в Японии в конце XX века.</p>
+                        <p>
+                            Нон Исида, иллюстратор и графический редактор, утверждавшая, что ещё в 1970 году она создавала нонограммы как
+                            средство общения между людьми и животными. Нон Исида верила, что животные очень разумные существа, но из-за
+                            отсутствия средств коммуникации между людьми и животными человек недооценивает земные существа. В результате её
+                            научной работы, по утверждению Исиды, родились нонограммы.
+                        </p>
+                    </div>
+                </div>
+                <div class="block intermission"></div>
+                <div class="block featured">
+                    <h2 class="block__title">Новые кроссворды</h2>
+                    <div class="slider" id="slider-new">
+                        <div class="slider__button slider__button_left">
+                            <svg
+                                class="slider__button-image"
+                                xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                                viewBox="0 0 100 100"
+                                width="100"
+                                height="100"
+                                fill="currentColor"
+                                aria-hidden="true"
+                            >
+                                <g>
+                                    <path
+                                        d="M39.292,51.5H68c1.104,0,2-0.896,2-2s-0.896-2-2-2H39.043l8.045-7.855c0.781-0.781,0.781-1.952,0-2.733
+      s-2.048-0.734-2.828,0.047l-11.335,11.36c-0.375,0.375-0.586,0.896-0.586,1.426s0.211,1.045,0.586,1.42l11.336,11.337
+      c0.391,0.391,0.902,0.587,1.414,0.587s1.024-0.194,1.415-0.585c0.781-0.781,0.781-2.237,0-3.018L39.292,51.5z"
+                                    />
+                                    <path
+                                        d="M84.446,49.756c0-18.448-15.009-33.457-33.457-33.457c-18.449,0-33.458,15.009-33.458,33.457
+      c0,18.449,15.009,33.458,33.458,33.458C69.438,83.214,84.446,68.205,84.446,49.756z M21.531,49.756
+      c0-16.242,13.215-29.457,29.458-29.457s29.457,13.215,29.457,29.457c0,16.243-13.214,29.458-29.457,29.458
+      S21.531,65.999,21.531,49.756z"
+                                    />
+                                </g>
+                            </svg>
+                        </div>
+                        <ul class="slider__items">
+                            <li class="slider__item">
+                                <div class="slider__content">
+                                    <img class="slider__image" src="images/slides/1_preview.jpg" alt="" />
+                                    <div class="slider__info">№ 1</div>
+                                </div>
+                                <a class="slider__link" href="game.html" title="Разгадать кроссворд № 1"></a>
+                            </li>
+                            <li class="slider__item">
+                                <div class="slider__content">
+                                    <img class="slider__image" src="images/slides/2_preview.jpg" alt="" />
+                                    <div class="slider__info">№ 2</div>
+                                </div>
+                                <a class="slider__link" href="game.html" title="Разгадать кроссворд № 1"></a>
+                            </li>
+                            <li class="slider__item">
+                                <div class="slider__content">
+                                    <img class="slider__image" src="images/slides/3_preview.jpg" alt="" />
+                                    <div class="slider__info">№ 3</div>
+                                </div>
+                                <a class="slider__link" href="game.html" title="Разгадать кроссворд № 1"></a>
+                            </li>
+                            <li class="slider__item">
+                                <div class="slider__content">
+                                    <img class="slider__image" src="images/slides/4_preview.jpg" alt="" />
+                                    <div class="slider__info">№ 4</div>
+                                </div>
+                                <a class="slider__link" href="game.html" title="Разгадать кроссворд № 1"></a>
+                            </li>
+                            <li class="slider__item">
+                                <div class="slider__content">
+                                    <img class="slider__image" src="images/slides/5_preview.jpg" alt="" />
+                                    <div class="slider__info">№ 5</div>
+                                </div>
+                                <a class="slider__link" href="game.html" title="Разгадать кроссворд № 1"></a>
+                            </li>
+                            <li class="slider__item">
+                                <div class="slider__content">
+                                    <img class="slider__image" src="images/slides/6_preview.jpg" alt="" />
+                                    <div class="slider__info">№ 6</div>
+                                </div>
+                                <a class="slider__link" href="game.html" title="Разгадать кроссворд № 1"></a>
+                            </li>
+                            <li class="slider__item">
+                                <div class="slider__content">
+                                    <img class="slider__image" src="images/slides/7_preview.jpg" alt="" />
+                                    <div class="slider__info">№ 7</div>
+                                </div>
+                                <a class="slider__link" href="game.html" title="Разгадать кроссворд № 1"></a>
+                            </li>
+                            <li class="slider__item">
+                                <div class="slider__content">
+                                    <img class="slider__image" src="images/slides/8_preview.jpg" alt="" />
+                                    <div class="slider__info">№ 8</div>
+                                </div>
+                                <a class="slider__link" href="game.html" title="Разгадать кроссворд № 1"></a>
+                            </li>
+                            <li class="slider__item">
+                                <div class="slider__content">
+                                    <img class="slider__image" src="images/slides/9_preview.jpg" alt="" />
+                                    <div class="slider__info">№ 9</div>
+                                </div>
+                                <a class="slider__link" href="game.html" title="Разгадать кроссворд № 1"></a>
+                            </li>
+                            <li class="slider__item">
+                                <div class="slider__content">
+                                    <img class="slider__image" src="images/slides/10_preview.jpg" alt="" />
+                                    <div class="slider__info">№ 10</div>
+                                </div>
+                                <a class="slider__link" href="game.html" title="Разгадать кроссворд № 1"></a>
+                            </li>
+                        </ul>
+                        <div class="slider__button slider__button_right">
+                            <svg
+                                class="slider__button-image"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 100 100"
+                                width="100"
+                                height="100"
+                                fill="currentColor"
+                                aria-hidden="true"
+                            >
+                                <g transform="scale(-1,1) translate(-100,0)">
+                                    <path
+                                        d="M39.292,51.5H68c1.104,0,2-0.896,2-2s-0.896-2-2-2H39.043l8.045-7.855c0.781-0.781,0.781-1.952,0-2.733
+      s-2.048-0.734-2.828,0.047l-11.335,11.36c-0.375,0.375-0.586,0.896-0.586,1.426s0.211,1.045,0.586,1.42l11.336,11.337
+      c0.391,0.391,0.902,0.587,1.414,0.587s1.024-0.194,1.415-0.585c0.781-0.781,0.781-2.237,0-3.018L39.292,51.5z"
+                                    />
+                                    <path
+                                        d="M84.446,49.756c0-18.448-15.009-33.457-33.457-33.457c-18.449,0-33.458,15.009-33.458,33.457
+      c0,18.449,15.009,33.458,33.458,33.458C69.438,83.214,84.446,68.205,84.446,49.756z M21.531,49.756
+      c0-16.242,13.215-29.457,29.458-29.457s29.457,13.215,29.457,29.457c0,16.243-13.214,29.458-29.457,29.458
+      S21.531,65.999,21.531,49.756z"
+                                    />
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="block solved">
+                    <h2 class="block__title">Решённые кроссворды</h2>
+                    <div class="slider" id="slider-solved">
+                        <div class="slider__button slider__button_left">
+                            <svg
+                                class="slider__button-image"
+                                xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                                viewBox="0 0 100 100"
+                                width="100"
+                                height="100"
+                                fill="currentColor"
+                                aria-hidden="true"
+                            >
+                                <g>
+                                    <path
+                                        d="M39.292,51.5H68c1.104,0,2-0.896,2-2s-0.896-2-2-2H39.043l8.045-7.855c0.781-0.781,0.781-1.952,0-2.733
+      s-2.048-0.734-2.828,0.047l-11.335,11.36c-0.375,0.375-0.586,0.896-0.586,1.426s0.211,1.045,0.586,1.42l11.336,11.337
+      c0.391,0.391,0.902,0.587,1.414,0.587s1.024-0.194,1.415-0.585c0.781-0.781,0.781-2.237,0-3.018L39.292,51.5z"
+                                    />
+                                    <path
+                                        d="M84.446,49.756c0-18.448-15.009-33.457-33.457-33.457c-18.449,0-33.458,15.009-33.458,33.457
+      c0,18.449,15.009,33.458,33.458,33.458C69.438,83.214,84.446,68.205,84.446,49.756z M21.531,49.756
+      c0-16.242,13.215-29.457,29.458-29.457s29.457,13.215,29.457,29.457c0,16.243-13.214,29.458-29.457,29.458
+      S21.531,65.999,21.531,49.756z"
+                                    />
+                                </g>
+                            </svg>
+                        </div>
+                        <ul class="slider__items">
+                            <li class="slider__item">
+                                <div class="slider__content">
+                                    <img class="slider__image" src="images/slides/1_solved.jpg" alt="" />
+                                    <div class="slider__info">№ 1 Домик</div>
+                                </div>
+                                <a class="slider__link" href="game.html" title="Разгадать кроссворд № 1"></a>
+                            </li>
+                            <li class="slider__item">
+                                <div class="slider__content">
+                                    <img class="slider__image" src="images/slides/2_solved.jpg" alt="" />
+                                    <div class="slider__info">№ 2 Солнышко</div>
+                                </div>
+                                <a class="slider__link" href="game.html" title="Разгадать кроссворд № 1"></a>
+                            </li>
+                            <li class="slider__item">
+                                <div class="slider__content">
+                                    <img class="slider__image" src="images/slides/3_solved.jpg" alt="" />
+                                    <div class="slider__info">№ 3 Панда</div>
+                                </div>
+                                <a class="slider__link" href="game.html" title="Разгадать кроссворд № 1"></a>
+                            </li>
+                            <li class="slider__item">
+                                <div class="slider__content">
+                                    <img class="slider__image" src="images/slides/4_solved.jpg" alt="" />
+                                    <div class="slider__info">№ 4 Кораблик</div>
+                                </div>
+                                <a class="slider__link" href="game.html" title="Разгадать кроссворд № 1"></a>
+                            </li>
+                            <li class="slider__item">
+                                <div class="slider__content">
+                                    <img class="slider__image" src="images/slides/5_solved.jpg" alt="" />
+                                    <div class="slider__info">№ 5 Песочные часы</div>
+                                </div>
+                                <a class="slider__link" href="game.html" title="Разгадать кроссворд № 1"></a>
+                            </li>
+                            <li class="slider__item">
+                                <div class="slider__content">
+                                    <img class="slider__image" src="images/slides/6_solved.jpg" alt="" />
+                                    <div class="slider__info">№ 6 Флаг</div>
+                                </div>
+                                <a class="slider__link" href="game.html" title="Разгадать кроссворд № 1"></a>
+                            </li>
+                            <li class="slider__item">
+                                <div class="slider__content">
+                                    <img class="slider__image" src="images/slides/7_solved.jpg" alt="" />
+                                    <div class="slider__info">№ 7 Фотоаппарат</div>
+                                </div>
+                                <a class="slider__link" href="game.html" title="Разгадать кроссворд № 1"></a>
+                            </li>
+                            <li class="slider__item">
+                                <div class="slider__content">
+                                    <img class="slider__image" src="images/slides/8_solved.jpg" alt="" />
+                                    <div class="slider__info">№ 8 Инь и Ян</div>
+                                </div>
+                                <a class="slider__link" href="game.html" title="Разгадать кроссворд № 1"></a>
+                            </li>
+                            <li class="slider__item">
+                                <div class="slider__content">
+                                    <img class="slider__image" src="images/slides/9_solved.jpg" alt="" />
+                                    <div class="slider__info">№ 9 Кошка</div>
+                                </div>
+                                <a class="slider__link" href="game.html" title="Разгадать кроссворд № 1"></a>
+                            </li>
+                            <li class="slider__item">
+                                <div class="slider__content">
+                                    <img class="slider__image" src="images/slides/10_solved.jpg" alt="" />
+                                    <div class="slider__info">№ 10 Бык</div>
+                                </div>
+                                <a class="slider__link" href="game.html" title="Разгадать кроссворд № 1"></a>
+                            </li>
+                        </ul>
+                        <div class="slider__button slider__button_right">
+                            <svg
+                                class="slider__button-image"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 100 100"
+                                width="100"
+                                height="100"
+                                fill="currentColor"
+                                aria-hidden="true"
+                            >
+                                <g transform="scale(-1,1) translate(-100,0)">
+                                    <path
+                                        d="M39.292,51.5H68c1.104,0,2-0.896,2-2s-0.896-2-2-2H39.043l8.045-7.855c0.781-0.781,0.781-1.952,0-2.733
+      s-2.048-0.734-2.828,0.047l-11.335,11.36c-0.375,0.375-0.586,0.896-0.586,1.426s0.211,1.045,0.586,1.42l11.336,11.337
+      c0.391,0.391,0.902,0.587,1.414,0.587s1.024-0.194,1.415-0.585c0.781-0.781,0.781-2.237,0-3.018L39.292,51.5z"
+                                    />
+                                    <path
+                                        d="M84.446,49.756c0-18.448-15.009-33.457-33.457-33.457c-18.449,0-33.458,15.009-33.458,33.457
+      c0,18.449,15.009,33.458,33.458,33.458C69.438,83.214,84.446,68.205,84.446,49.756z M21.531,49.756
+      c0-16.242,13.215-29.457,29.458-29.457s29.457,13.215,29.457,29.457c0,16.243-13.214,29.458-29.457,29.458
+      S21.531,65.999,21.531,49.756z"
+                                    />
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="block">
+                    <h2 class="block__title">Новости сайта</h2>
+                    <div class="news block__news">
+                        <ul class="news__items">
+                            <li class="news__item">
+                                <div class="news__date">21.03.2024</div>
+                                <div class="news__content">Продолжилась разработка главной страницы сайта</div>
+                            </li>
+                            <li class="news__item">
+                                <div class="news__date">12.02.2024</div>
+                                <div class="news__content">Началась разработку дизайна страницы сайта</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </main>
+            <aside class="sidebar">
+                <div class="ads">
+                    <img src="images/banner-300x800.png" />
+                </div>
+            </aside>
+        </div>
+        <footer class="footer">
+            <div class="ads-bottom">
+                <img src="images/banner-mobile.jpg" />
+            </div>
+            <div class="footer__copy">&copy; 2025 сrossw.ru - Японские кросворды</div>
+        </footer>
+
+        <div class="overlay hidden"></div>
+
+        <script src="scripts/slider.js"></script>
+        <script src="scripts/menu-mobile.js"></script>
+    </body>
 </html>

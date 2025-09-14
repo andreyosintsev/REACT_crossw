@@ -1,0 +1,14 @@
+.le {
+    float: left;
+    width: 24px;
+    height: 24px;
+    border-right: 1px solid #DDDDDD;
+    border-bottom: 1px solid #DDDDDD;
+    background-color: #F7F7F7;
+}
+.border_right {
+    border-right: 1px solid #999999;
+  }
+  .border_bottom {
+    border-bottom: 1px solid #999999;
+  }
