@@ -9,17 +9,17 @@ import ModalButton from "../../../components/modal-button/modal-button";
 import styles from "./table.module.scss";
 import { ITable } from "./table.interface";
 import DynamicGrid from "../../../components/dynamic-grid/dynamic-grid";
-import { gameStoreControl } from "../../../services/gameStoreControl/gameStoreControl";
-import userStore from "../../../services/userStoreTask/userStore";
+import { storeGame } from "../../../store/storeGame/storeGame";
+import storeUser from "../../../store/storeUser/storeUser";
 
 /**
  * Компонент таблицы игрового поля с легендами и модальными окнами
- * 
+ *
  * @component
  * @param {ITable} props - Свойства компонента
  * @param {ITask} props.task - Объект задачи кроссворда
  * @returns {JSX.Element} Игровое поле с легендами и управлением состоянием победы
- * 
+ *
  * @description
  * Компонент реализует основную игровую таблицу с:
  * - Динамической сеткой расположения элементов
@@ -27,7 +27,7 @@ import userStore from "../../../services/userStoreTask/userStore";
  * - Игровым полем
  * - Обработкой победы и отображением модального окна
  * - Интеграцией с пользовательским прогрессом
- * 
+ *
  * @example
  * <Table task={currentTask} />
  */
@@ -35,15 +35,22 @@ const Table: FC<ITable> = ({ task }) => {
     // Состояние отображения модального окна
     const [modalShow, setModalShow] = useState(false);
     // Получаем состояние и методы из игрового хранилища
-    const { horizontalLegend, verticalLegend, setWin, isWin, gameCompleted, setGameCompleted } = gameStoreControl();
+    const {
+        horizontalLegend,
+        verticalLegend,
+        setWin,
+        isWin,
+        gameCompleted,
+        setGameCompleted,
+    } = storeGame();
     // Получаем метод сохранения прогресса из пользовательского хранилища
-    const { setCrosswordBoards } = userStore();
+    const { setCrosswordBoards } = storeUser();
 
     /**
      * Обрабатывает закрытие модального окна
      * @param {React.MouseEvent} e - Событие клика
      * @returns {void}
-    */
+     */
     const closeHandler = (e: React.MouseEvent) => {
         e.preventDefault();
         setModalShow(false);
@@ -52,14 +59,14 @@ const Table: FC<ITable> = ({ task }) => {
     /**
      * Эффект обработки победы в игре
      * @dependency [isWin, task.id, gameCompleted] - Зависит от состояния победы и ID задачи
-     * 
+     *
      * @description
      * Автоматически срабатывает при изменении состояния победы:
      * - Показывает модальное окно победы
      * - Сохраняет информацию о завершении кроссворда
      * - Сбрасывает флаг победы
      * - Устанавливает статус завершения игры
-     * 
+     *
      * @logic
      * Срабатывает только при первой победе (!gameCompleted)
      * для предотвращения повторных сохранений
@@ -70,20 +77,39 @@ const Table: FC<ITable> = ({ task }) => {
             setCrosswordBoards({
                 gameCompleted: true,
                 id: task.id,
-                time: '',
-                star: 0
-            })
+                time: "",
+                star: 0,
+            });
             setWin(false);
-            setGameCompleted(true)
+            setGameCompleted(true);
         }
-    }, [isWin, task.id, setCrosswordBoards, setWin, gameCompleted, setGameCompleted]);
+    }, [
+        isWin,
+        task.id,
+        setCrosswordBoards,
+        setWin,
+        gameCompleted,
+        setGameCompleted,
+    ]);
 
     return (
         horizontalLegend &&
         verticalLegend && (
             <>
-                <DynamicGrid columns={2} rows={2} cellSize={'auto'} className={styles.table}>
-                    <DynamicGrid key="boardZeroField" columns={1} rows={1} className={`${styles.zero_field} ${gameCompleted ? styles.win : ''}`} />
+                <DynamicGrid
+                    columns={2}
+                    rows={2}
+                    cellSize={"auto"}
+                    className={styles.table}
+                >
+                    <DynamicGrid
+                        key="boardZeroField"
+                        columns={1}
+                        rows={1}
+                        className={`${styles.zero_field} ${
+                            gameCompleted ? styles.win : ""
+                        }`}
+                    />
                     <LegendHorizontal
                         legend={horizontalLegend.legend}
                         width={horizontalLegend.width}
@@ -94,10 +120,7 @@ const Table: FC<ITable> = ({ task }) => {
                         width={verticalLegend.width}
                         height={verticalLegend.height}
                     />
-                    <Board
-                        width={task.width}
-                        height={task.height}
-                    />
+                    <Board width={task.width} height={task.height} />
                 </DynamicGrid>
                 {modalShow && (
                     <Modal

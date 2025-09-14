@@ -1,10 +1,10 @@
 import { create } from "zustand";
-import ILegendStore from "./legendStore.interface";
+import IStoreLegend from "./storeLegend.interface";
 
 /**
  * Хранилище Zustand для управления элементами легенд игрового поля
  * @function
- * @returns {ILegendStore} Объект хранилища с методами управления легендами
+ * @returns {IStoreLegend} Объект хранилища с методами управления легендами
  *
  * @description
  * Специализированное хранилище для координации визуального взаимодействия
@@ -19,7 +19,7 @@ import ILegendStore from "./legendStore.interface";
  * // Использование в компоненте
  * const { highlightLegends, getLegendElement } = legendStore();
  */
-const legendStore = create<ILegendStore>((set, get) => ({
+const storeLegend = create<IStoreLegend>((set, get) => ({
     // Глобальные массивы для хранения DOM-элементов легенд вне хранилища
     legendHorizontalElements: [],
     legendVerticalElements: [],
@@ -64,9 +64,8 @@ const legendStore = create<ILegendStore>((set, get) => ({
         }
     },
 
-    clearLegend: () => {
-        set({ legendVerticalElements: [], legendHorizontalElements: [] });
-    },
+    clearLegend: () =>
+        set({ legendVerticalElements: [], legendHorizontalElements: [] }),
 }));
 
-export default legendStore;
+export default storeLegend;

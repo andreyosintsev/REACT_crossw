@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { IUserStore } from "./userStore.interface";
+import { IUserStore } from "./storeUser.interface";
 import { saveCrosswordBoardToLocalStorage } from "../../utils/local-storage/local-storage";
 
 /**
@@ -19,7 +19,7 @@ import { saveCrosswordBoardToLocalStorage } from "../../utils/local-storage/loca
  * // Использование в компоненте
  * const { name, rating, setRating } = userStore();
  */
-const userStore = create<IUserStore>((set, get) => ({
+const storeUser = create<IUserStore>((set, get) => ({
     name: "",
     email: "",
     dateOfBirth: "",
@@ -54,17 +54,13 @@ const userStore = create<IUserStore>((set, get) => ({
         }));
     },
 
-    getCrosswordBoardById: (id) => {
-        const { crosswBoards } = get();
-        return (
-            crosswBoards?.find((board) => board.id === id) || {
-                gameCompleted: false,
-                id: id,
-                time: "",
-                star: 0,
-            }
-        );
-    },
+    getCrosswordBoardById: (id) =>
+        get().crosswBoards?.find((board) => board.id === id) || {
+            gameCompleted: false,
+            id: id,
+            time: "",
+            star: 0,
+        },
 
     setRating: (rating) =>
         set((state) => ({
@@ -81,4 +77,4 @@ const userStore = create<IUserStore>((set, get) => ({
         }),
 }));
 
-export default userStore;
+export default storeUser;

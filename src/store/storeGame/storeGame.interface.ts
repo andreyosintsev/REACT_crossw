@@ -3,9 +3,9 @@ import { IHelp } from "../../pages/game/board/board.interface";
 import ILegendHorizontal from "../../pages/game/legend-horizontal/legend-horizontal.interface";
 import { IVerticalLegend } from "../../pages/game/table/table.interface";
 import { ITask } from "../../utils/api/api.interface";
-import { ICrosswBoard } from "../userStoreTask/userStore.interface";
+import { ICrosswBoard } from "../storeUser/storeUser.interface";
 
-interface IGameStoreControl {
+interface IStoreGame {
     /** Текущая задача кроссворда */
     task: ITask | null;
     /** Состояние игрового поля */
@@ -170,4 +170,4 @@ interface IGameStoreControl {
     checkWin: (borad: IBoardElement[]) => void;
 }
 
-export default IGameStoreControl;
+export default IStoreGame;

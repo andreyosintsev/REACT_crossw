@@ -1,6 +1,6 @@
 import { IApiTask, INews, ITask } from "../../utils/api/api.interface";
 
-interface IApiStore {
+interface IStoreApi {
     /** Флаг процесса загрузки */
     isLoading: boolean;
     /** Сообщение об ошибке */
@@ -100,4 +100,4 @@ interface IApiStore {
     setLoading: (load: boolean) => void;
 }
 
-export default IApiStore;
+export default IStoreApi;

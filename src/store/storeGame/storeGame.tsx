@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import IGameStoreControl from "./gameStoreControl.interface";
+import IStoreGame from "./storeGame.interface";
 import {
     clearBoardInLocalStorage,
     clearCrossBoardsInLocalStorage,
@@ -14,7 +14,7 @@ import { IHelp } from "../../pages/game/board/board.interface";
 /**
  * Хранилище Zustand для управления игровым процессом кроссворда
  * @function
- * @returns {IGameStoreControl} Объект хранилища с полным контролем игры
+ * @returns {IStoreGame} Объект хранилища с полным контролем игры
  *
  * @description
  * Централизованное хранилище для управления всем игровым процессом:
@@ -28,7 +28,7 @@ import { IHelp } from "../../pages/game/board/board.interface";
  * // Использование в компоненте игры
  * const { task, board, handleBoardClick, initializeGame } = gameStoreControl();
  */
-export const gameStoreControl = create<IGameStoreControl>((set, get) => ({
+export const storeGame = create<IStoreGame>((set, get) => ({
     task: null,
     board: [],
     horizontalLegend: {
@@ -73,23 +73,26 @@ export const gameStoreControl = create<IGameStoreControl>((set, get) => ({
     setHelp: (help) => set({ help: help }),
 
     handleHelp: () => {
-        const { task } = get();
+        //@todo надо полностью переработать этот метод и избавиться от IHelp - он не нужен
+        const task = get().task;
+        if (!task) return;
+
         let help: IHelp = {
             content: "",
             xCoord: 0,
             yCoord: 0,
             position: null,
         };
+
         let pos = 0;
-        if (!task) {
-            return;
-        }
+
         while (true) {
             pos = Math.floor(Math.random() * task.task.length);
             if (task.task[pos] === "1") {
                 break;
             }
         }
+
         help.content = task.task[pos];
         help.position = pos;
         help.xCoord = pos % 5;
@@ -112,7 +115,7 @@ export const gameStoreControl = create<IGameStoreControl>((set, get) => ({
     },
 
     initBoard: () => {
-        const { task } = get();
+        const task = get().task;
 
         if (!task) return;
         // Загружаем сохраненное состояние или создаем пустой массив
@@ -301,7 +304,7 @@ export const gameStoreControl = create<IGameStoreControl>((set, get) => ({
 
     // Основная функция обработки событий
     handleBoardInteraction: (event: MouseEvent) => {
-        const { handleBoardClick } = get();
+        const handleBoardClick = get().handleBoardClick;
 
         // Обработка кликов
         if (
@@ -331,7 +334,8 @@ export const gameStoreControl = create<IGameStoreControl>((set, get) => ({
     setWin: (status) => set({ isWin: status }),
 
     setGameCompleted: (status) => {
-        const { task } = get();
+        //@todo - надо проверить логику, что если !task - нужно ли устанавливать статус. А если нет, то set можно и не выполнять?
+        const task = get().task;
         set({ gameCompleted: status });
         if (task)
             saveCrosswordBoardToLocalStorage(task.id, {

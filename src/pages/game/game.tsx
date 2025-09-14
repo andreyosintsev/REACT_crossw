@@ -8,12 +8,12 @@ import Table from "./table/table";
 import Controls from "./controls/controls";
 
 import Tasks from "./tasks/tasks";
-import useStoreTask from "../../services/useStoreTask/useStoreTask";
-import { gameStoreControl } from "../../services/gameStoreControl/gameStoreControl";
-import userStore from "../../services/userStoreTask/userStore";
+import storeTasks from "../../store/storeTasks/storeTasks";
+import { storeGame } from "../../store/storeGame/storeGame";
+import storeUser from "../../store/storeUser/storeUser";
 import { loadCrosswordBoardFromLocalStorage } from "../../utils/local-storage/local-storage";
-import apiStore from "../../services/apiStore/apiStore";
-import legendStore from "../../services/legendStore/legendStore";
+import storeApi from "../../store/storeApi/storeApi";
+import storeLegend from "../../store/storeLegend/storeLegend";
 
 /**
  * Компонент страницы игры в японский кроссворд
@@ -33,25 +33,25 @@ const Game: FC = () => {
     // Получаем методы и состояние из различных хранилищ Zustand
 
     /** Функция получения задачи по ID из хранилища задач */
-    const getTaskById = useStoreTask((state) => state.getTaskById);
+    const getTaskById = storeTasks((state) => state.getTaskById);
     /** Текущая активная задача из игрового хранилища */
-    const task = gameStoreControl((state) => state.task);
+    const task = storeGame((state) => state.task);
     /** Функция установки текущей задачи */
-    const setTask = gameStoreControl((state) => state.setTask);
+    const setTask = storeGame((state) => state.setTask);
     /** Функция обработки перезапуска игры */
-    const handleRestart = gameStoreControl((state) => state.handleRestart);
+    const handleRestart = storeGame((state) => state.handleRestart);
     /** Функция обработки подсказки */
-    const handleHelp = gameStoreControl((state) => state.handleHelp);
+    const handleHelp = storeGame((state) => state.handleHelp);
     /** Функция инициализации игрового процесса */
-    const initializeGame = gameStoreControl((state) => state.initializeGame);
+    const initializeGame = storeGame((state) => state.initializeGame);
     /** Сообщение об ошибке из API хранилища */
-    const error = apiStore((state) => state.error);
+    const error = storeApi((state) => state.error);
     /** Функция получения информации о кроссворде пользователя */
-    const getCrosswordBoardById = userStore(
+    const getCrosswordBoardById = storeUser(
         (state) => state.getCrosswordBoardById
     );
     /** Функция очистки легенд из хранилища легенд */
-    const clearLegend = legendStore((state) => state.clearLegend);
+    const clearLegend = storeLegend((state) => state.clearLegend);
 
     // Получаем номер задачи из параметров URL
     const { taskNumber } = useParams();

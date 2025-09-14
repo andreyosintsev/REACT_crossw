@@ -2,7 +2,8 @@ import { FC, useEffect, useRef } from "react";
 
 import styles from "./legend-element.module.scss";
 import ILegendElement from "./legend-element.interface";
-import legendStore from "../../../services/legendStore/legendStore";
+
+import storeLegend from "../../../store/storeLegend/storeLegend";
 
 /**
  * Компонент элемента легенды для японского кроссворда
@@ -32,7 +33,7 @@ import legendStore from "../../../services/legendStore/legendStore";
  */
 const LegendElement: FC<ILegendElement> = ({ text, xCoord, yCoord, type }) => {
     // Получаем функцию регистрации элемента из хранилища легенд
-    const { addLegendElement } = legendStore();
+    const { addLegendElement } = storeLegend();
     // Ref для доступа к DOM-элементу
     const ref = useRef<HTMLDivElement | null>(null);
 

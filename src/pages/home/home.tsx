@@ -9,7 +9,7 @@ import styles from "./home.module.scss";
 
 import { SITE_PROTOCOL, SITE_DOMAIN } from "../../declarations/constants";
 import { ITask } from "../../utils/api/api.interface";
-import useStoreTask from "../../services/useStoreTask/useStoreTask";
+import storeTasks from "../../store/storeTasks/storeTasks";
 
 /**
  * Компонент главной страницы приложения с японскими кроссвордами
@@ -31,7 +31,7 @@ import useStoreTask from "../../services/useStoreTask/useStoreTask";
  */
 const Home: FC<IHome> = () => {
     // Получаем список задач из глобального хранилища
-    const { tasks } = useStoreTask();
+    const { tasks } = storeTasks();
 
     /**
      * Преобразует массив задач в формат для слайдера изображений

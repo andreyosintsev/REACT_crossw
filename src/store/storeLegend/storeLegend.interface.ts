@@ -2,7 +2,7 @@
  * Интерфейс хранилища для управления легендами игрового поля
  * @interface
  */
-interface ILegendStore {
+interface IStoreLegend {
     legendHorizontalElements: HTMLDivElement[];
     legendVerticalElements: HTMLDivElement[];
 
@@ -86,4 +86,4 @@ interface ILegendStore {
     clearLegend: () => void;
 }
 
-export default ILegendStore;
+export default IStoreLegend;

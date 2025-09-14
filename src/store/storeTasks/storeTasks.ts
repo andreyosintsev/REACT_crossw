@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import IStoreTask from "./useStoreTask.interface";
+import IStoreTask from "./storeTasks.interface";
 
 /**
  * Хранилище Zustand для управления задачами
@@ -22,7 +22,7 @@ import IStoreTask from "./useStoreTask.interface";
  * // Поиск задачи
  * const task = getTaskById(5);
  */
-const useStoreTask = create<IStoreTask>((set, get) => ({
+const storeTasks = create<IStoreTask>((set, get) => ({
     tasks: [],
 
     setTasks: (tasksData) =>
@@ -35,4 +35,4 @@ const useStoreTask = create<IStoreTask>((set, get) => ({
         null,
 }));
 
-export default useStoreTask;
+export default storeTasks;
