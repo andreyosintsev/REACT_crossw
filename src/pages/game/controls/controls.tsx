@@ -58,7 +58,7 @@ const Controls: FC<IControls> = ({ onRestart, onHelp }) => {
      * Вызывает переданную функцию запроса подсказки
      * Заблокирован после завершения игры
      */
-    const tipHandler = (e: React.MouseEvent) => {
+    const helpHandler = (e: React.MouseEvent) => {
         e.preventDefault();
         onHelp();
     };
@@ -116,27 +116,14 @@ const Controls: FC<IControls> = ({ onRestart, onHelp }) => {
                 <button className={styles.restart} onClick={restartHandler}>
                     Начать заново
                 </button>
-                <button
-                    className={`${styles.tip} ${
-                        gameCompleted && styles.blocked
-                    }`}
-                    onClick={tipHandler}
-                >
+                <button className={`${styles.tip} ${gameCompleted && styles.blocked}`} onClick={helpHandler}>
                     Подсказка
                 </button>
             </div>
             {modalShow && (
-                <Modal
-                    image="modal1.png"
-                    title="Вы хотите начать заново?"
-                    onClick={closeHandler}
-                >
-                    <ModalButton onClick={dialogRestartHandler}>
-                        Начать заново
-                    </ModalButton>
-                    <ModalButton onClick={dialogCancelHandler}>
-                        Отменить
-                    </ModalButton>
+                <Modal image="modal1.png" title="Вы хотите начать заново?" onClick={closeHandler}>
+                    <ModalButton onClick={dialogRestartHandler}>Начать заново</ModalButton>
+                    <ModalButton onClick={dialogCancelHandler}>Отменить</ModalButton>
                 </Modal>
             )}
         </>

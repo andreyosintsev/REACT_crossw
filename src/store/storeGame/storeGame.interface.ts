@@ -14,8 +14,6 @@ interface IStoreGame {
     horizontalLegend: ILegendHorizontal;
     /** Вертикальная легенда (подсказки слева) */
     verticalLegend: IVerticalLegend;
-    /** Текущая активная подсказка */
-    help: IHelp;
     /** Флаг победы в игре */
     isWin: boolean;
     /** Флаг пройденной игры */
@@ -46,12 +44,6 @@ interface IStoreGame {
      * - Инициализирует игровое поле
      */
     initializeGame: () => void;
-
-    /**
-     * Устанавливает активную подсказку
-     * @param {IHelp} help - Объект подсказки
-     */
-    setHelp: (help: IHelp) => void;
 
     /**
      * Генерирует и применяет случайную подсказку
