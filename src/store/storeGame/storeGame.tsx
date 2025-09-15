@@ -41,12 +41,6 @@ export const storeGame = create<IStoreGame>((set, get) => ({
         width: 0,
         height: 0,
     },
-    help: {
-        xCoord: -1,
-        yCoord: -1,
-        content: "",
-        position: null,
-    },
     isWin: false,
     gameCompleted: false,
     errorTask: false,
@@ -70,47 +64,40 @@ export const storeGame = create<IStoreGame>((set, get) => ({
         initBoard();
     },
 
-    setHelp: (help) => set({ help: help }),
-
     handleHelp: () => {
-        //@todo надо полностью переработать этот метод и избавиться от IHelp - он не нужен
-        const task = get().task;
-        if (!task) return;
+        //1. Получить текущую задачу
+        //2. Получить текущее состояние поля
+        //3. Создать новый массив help несовпадающих элементов
+        //4. Пробегаем элементы массив задачи и сравниваем с текущим состоянием поля
+        //5. Если клетка в задаче и в текущем состоянии не совпадают, то
+        //6. Добавляем в массив координату несоответствующей клетки
+        //7. Рандомом выбираем один из элементов получившегося массива
+        //8. Закрашиваем клетку текущего состояния этим элементом.
 
-        let help: IHelp = {
-            content: "",
-            xCoord: 0,
-            yCoord: 0,
-            position: null,
-        };
+        const { task, board } = get();
+        if (!task || board.length === 0) return;
 
-        let pos = 0;
+        const help: {
+            pos: number;
+            content: string;
+        }[] = [];
 
-        while (true) {
-            pos = Math.floor(Math.random() * task.task.length);
-            if (task.task[pos] === "1") {
-                break;
-            }
+        const n = Math.min(task.task.length, board.length);
+        for (let i = 0; i < n; i++) {
+            if (
+                (task.task[i] === "0" && board[i]?.content === "1") ||
+                (task.task[i] === "1" && (board[i]?.content === "0" || board[i]?.content === "X"))
+            )
+                help.push({ pos: i, content: task.task[i] });
         }
 
-        help.content = task.task[pos];
-        help.position = pos;
-        help.xCoord = pos % 5;
+        if (help.length === 0) return;
 
-        const newBoard: IBoardElement[] =
-            loadBoardFromLocalStorage(task.id) || [];
-
-        // Если предоставлена position в подсказке - применяем подсказку
-        if (help.position) {
-            newBoard[help.position].xCoord = help.position % task.width;
-            newBoard[help.position].yCoord = Math.floor(
-                help.position / task.width
-            );
-            newBoard[help.position].content = "" + help.content;
-        }
+        const index = Math.floor(Math.random() * help.length);
+        const newBoard = board.map((cell, idx) => (idx === help[index].pos ? { ...cell, content: help[index].content } : cell));
 
         // Устанавливаем состояние и сохраняем
-        set({ board: newBoard });
+        set((state) => ({ board: newBoard }));
         saveBoardToLocalStorage(task.id, newBoard);
     },
 
@@ -119,8 +106,7 @@ export const storeGame = create<IStoreGame>((set, get) => ({
 
         if (!task) return;
         // Загружаем сохраненное состояние или создаем пустой массив
-        const newBoard: IBoardElement[] =
-            loadBoardFromLocalStorage(task.id) || [];
+        const newBoard: IBoardElement[] = loadBoardFromLocalStorage(task.id) || [];
 
         // Если поле пустое - создаем новое
         if (newBoard.length === 0) {
@@ -182,9 +168,7 @@ export const storeGame = create<IStoreGame>((set, get) => ({
         // Выравниваем все строки до максимальной длины
         const equLegend: (number | null)[][] = legend.map((row) => {
             const missing = max - row.length;
-            return missing > 0
-                ? [...Array(missing).fill(null), ...row]
-                : [...row];
+            return missing > 0 ? [...Array(missing).fill(null), ...row] : [...row];
         });
 
         // Преобразуем в плоский массив для отображения
@@ -284,16 +268,13 @@ export const storeGame = create<IStoreGame>((set, get) => ({
         // Обрабатываем разные типы кликов
         switch (e.buttons) {
             case 1: // Левая кнопка мыши - закрашивание
-                newBoard[cellIndex].content =
-                    board[cellIndex].content !== "1" ? "1" : "0";
+                newBoard[cellIndex].content = board[cellIndex].content !== "1" ? "1" : "0";
                 break;
             case 2: // Правая кнопка мыши - крестик
-                newBoard[cellIndex].content =
-                    board[cellIndex].content !== "X" ? "X" : "0";
+                newBoard[cellIndex].content = board[cellIndex].content !== "X" ? "X" : "0";
                 break;
             default: // Другие кнопки - ноль по умолчанию
-                newBoard[cellIndex].content =
-                    board[cellIndex].content !== "X" ? "X" : "0";
+                newBoard[cellIndex].content = board[cellIndex].content !== "X" ? "X" : "0";
         }
 
         // Обновляем состояние и сохраняем в localStorage
@@ -307,14 +288,8 @@ export const storeGame = create<IStoreGame>((set, get) => ({
         const handleBoardClick = get().handleBoardClick;
 
         // Обработка кликов
-        if (
-            (event.buttons === 1 || event.buttons === 2) &&
-            event.type !== "mouseleave"
-        ) {
-            const eve = event as unknown as React.MouseEvent<
-                Element,
-                MouseEvent
-            >;
+        if ((event.buttons === 1 || event.buttons === 2) && event.type !== "mouseleave") {
+            const eve = event as unknown as React.MouseEvent<Element, MouseEvent>;
             handleBoardClick(eve);
             return;
         }
