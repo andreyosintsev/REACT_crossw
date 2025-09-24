@@ -114,8 +114,8 @@ export interface ICrosswBoard {
     gameCompleted: boolean;
     /** ID поля */
     id: number;
-    /** Время прохождения игры */
-    time: string;
+    /** Время, затраченное на решение задачи в секундах */
+    time: number;
     /** Количество звезд за прохождение */
     star: number;
 }

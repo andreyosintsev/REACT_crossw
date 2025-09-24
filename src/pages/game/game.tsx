@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, FC } from "react";
+import { useRef, useEffect, useLayoutEffect, FC } from "react";
 import { useParams } from "react-router-dom";
 
 import AppStyles from "./game.module.scss";
@@ -11,7 +11,7 @@ import Tasks from "./tasks/tasks";
 import storeTasks from "../../store/storeTasks/storeTasks";
 import { storeGame } from "../../store/storeGame/storeGame";
 import storeUser from "../../store/storeUser/storeUser";
-import { loadCrosswordBoardFromLocalStorage } from "../../utils/local-storage/local-storage";
+import { loadCrosswordBoardFromLocalStorage, saveCrosswordBoardToLocalStorage } from "../../utils/local-storage/local-storage";
 import storeApi from "../../store/storeApi/storeApi";
 import storeLegend from "../../store/storeLegend/storeLegend";
 
@@ -30,6 +30,8 @@ import storeLegend from "../../store/storeLegend/storeLegend";
  *
  */
 const Game: FC = () => {
+    const timerRef = useRef<number | null>(null);
+
     // Получаем методы и состояние из различных хранилищ Zustand
 
     /** Функция получения задачи по ID из хранилища задач */
@@ -47,11 +49,14 @@ const Game: FC = () => {
     /** Сообщение об ошибке из API хранилища */
     const error = storeApi((state) => state.error);
     /** Функция получения информации о кроссворде пользователя */
-    const getCrosswordBoardById = storeUser(
-        (state) => state.getCrosswordBoardById
-    );
+    const getCrosswordBoardById = storeUser((state) => state.getCrosswordBoardById);
     /** Функция очистки легенд из хранилища легенд */
     const clearLegend = storeLegend((state) => state.clearLegend);
+    /** Текущее время отгадывания из хранилища игры */
+    const getCurrentTime = storeGame((state) => state.getCurrentTime);
+    const setCurrentTime = storeGame((state) => state.setCurrentTime);
+
+    const gameCompleted = storeGame((state) => state.gameCompleted);
 
     // Получаем номер задачи из параметров URL
     const { taskNumber } = useParams();
@@ -75,13 +80,33 @@ const Game: FC = () => {
      */
     useEffect(() => {
         // Загружаем информацию о выполнении задачи (из localStorage или хранилища пользователя)
-        const userTaskInfo =
-            loadCrosswordBoardFromLocalStorage(taskId) ||
-            getCrosswordBoardById(taskId);
+        const userTaskInfo = loadCrosswordBoardFromLocalStorage(taskId) || getCrosswordBoardById(taskId);
         // Устанавливаем задачу и информацию о выполнении
         setTask(getTaskById(taskId), userTaskInfo);
         // Инициализируем игровой процесс
         initializeGame();
+
+        console.log("gameCompleted: ", gameCompleted);
+
+        if (!gameCompleted) {
+            console.log("Запускаем таймер");
+
+            timerRef.current = window.setInterval(() => {
+                setCurrentTime(getCurrentTime() + 1);
+                const newBoard = getCrosswordBoardById(taskId);
+                saveCrosswordBoardToLocalStorage(taskId, {
+                    ...newBoard,
+                    time: getCurrentTime() + 1,
+                });
+            }, 1000);
+        } else {
+            console.log("Останавливаем таймер");
+            if (timerRef.current) clearInterval(timerRef.current);
+        }
+
+        return () => {
+            if (timerRef.current) clearInterval(timerRef.current);
+        };
     }, [getCrosswordBoardById, getTaskById, initializeGame, setTask, taskId]);
 
     useLayoutEffect(() => {
@@ -97,10 +122,7 @@ const Game: FC = () => {
                 {!error && task && (
                     <PageBlock title={"Кроссворд № " + taskId}>
                         <Table task={task} />
-                        <Controls
-                            onRestart={handleRestart}
-                            onHelp={handleHelp}
-                        />
+                        <Controls onRestart={handleRestart} onHelp={handleHelp} />
                     </PageBlock>
                 )}
             </main>

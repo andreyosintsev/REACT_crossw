@@ -35,6 +35,8 @@ const Controls: FC<IControls> = ({ onRestart, onHelp }) => {
     // Получаем состояние и методы из игрового хранилища
     const { gameCompleted, setGameCompleted, setWin } = storeGame();
 
+    const currentTime = storeGame((store) => store.currentTime);
+
     /**
      * Обработчик клика по кнопке "Начать заново"
      * @param {React.MouseEvent} e - Событие клика
@@ -110,6 +112,37 @@ const Controls: FC<IControls> = ({ onRestart, onHelp }) => {
         setModalShow(false);
     };
 
+    /**
+     * Функция-хелпер, переводящая секунды в строчку времени
+     * @param {number} seconds - количество секунд
+     * @returns {ISOString} строка времени
+     *
+     * @description
+     * Закрывает модальное окно при клике на затемненный фон
+     * Аналогично отмене перезапуска
+     */
+    function secondsToTime(timeInSeconds: number) {
+        const days = Math.floor(timeInSeconds / 86400);
+        const hours = Math.floor((timeInSeconds % 86400) / 3600);
+        const minutes = Math.floor((timeInSeconds % 3600) / 60);
+        const seconds = timeInSeconds % 60;
+
+        const mm = String(minutes);
+        const ss = String(seconds).padStart(2, "0");
+
+        let result = "";
+
+        if (days > 0) {
+            result += `${days} дней `;
+        }
+        if (hours > 0 || days > 0) {
+            result += `${hours}:`;
+        }
+
+        result += `${mm}:${ss}`;
+        return result.trim();
+    }
+
     return (
         <>
             <div className={styles.controls}>
@@ -119,6 +152,7 @@ const Controls: FC<IControls> = ({ onRestart, onHelp }) => {
                 <button className={`${styles.tip} ${gameCompleted && styles.blocked}`} onClick={helpHandler}>
                     Подсказка
                 </button>
+                <div className={styles.timer}>{`${secondsToTime(currentTime)}`}</div>
             </div>
             {modalShow && (
                 <Modal image="modal1.png" title="Вы хотите начать заново?" onClick={closeHandler}>

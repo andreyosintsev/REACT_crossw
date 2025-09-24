@@ -44,6 +44,7 @@ export const storeGame = create<IStoreGame>((set, get) => ({
     isWin: false,
     gameCompleted: false,
     errorTask: false,
+    currentTime: 0,
 
     setError: (state) => set({ errorTask: state }),
 
@@ -53,6 +54,7 @@ export const storeGame = create<IStoreGame>((set, get) => ({
             task: task,
             gameCompleted: userTaskInfo.gameCompleted,
             isWin: false,
+            currentTime: userTaskInfo.time ? userTaskInfo.time : 0,
         });
     },
 
@@ -296,14 +298,16 @@ export const storeGame = create<IStoreGame>((set, get) => ({
     },
 
     handleRestart: (e) => {
-        const { task, initBoard } = get();
         e.preventDefault();
+
+        const { task, initBoard } = get();
         if (!task) return;
+
         clearBoardInLocalStorage(task.id);
         clearCrossBoardsInLocalStorage(task.id);
         initBoard();
         const loadCrosswordBoard = loadCrosswordBoardFromLocalStorage(task.id);
-        set({ gameCompleted: loadCrosswordBoard?.gameCompleted });
+        set({ gameCompleted: loadCrosswordBoard?.gameCompleted, currentTime: 0 });
     },
 
     setWin: (status) => set({ isWin: status }),
@@ -311,12 +315,13 @@ export const storeGame = create<IStoreGame>((set, get) => ({
     setGameCompleted: (status) => {
         //@todo - надо проверить логику, что если !task - нужно ли устанавливать статус. А если нет, то set можно и не выполнять?
         const task = get().task;
+        const currentTime = get().currentTime;
         set({ gameCompleted: status });
         if (task)
             saveCrosswordBoardToLocalStorage(task.id, {
                 gameCompleted: status,
                 id: task.id,
-                time: "",
+                time: currentTime,
                 star: 0,
             });
     },
@@ -344,4 +349,7 @@ export const storeGame = create<IStoreGame>((set, get) => ({
         set({ board: cleanedBoard, isWin: true });
         saveBoardToLocalStorage(task.id, cleanedBoard);
     },
+
+    getCurrentTime: () => get().currentTime,
+    setCurrentTime: (time) => set({ currentTime: time }),
 }));

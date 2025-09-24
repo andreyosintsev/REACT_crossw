@@ -20,6 +20,8 @@ interface IStoreGame {
     gameCompleted: boolean;
     /** Флаг ошибки загрузки задачи */
     errorTask: boolean;
+    /** Количество секунд времени, затраченное на решение задачи */
+    currentTime: number;
 
     /**
      * Устанавливает флаг ошибки задачи
@@ -160,6 +162,18 @@ interface IStoreGame {
      * - Очищает поле от крестиков при победе
      */
     checkWin: (borad: IBoardElement[]) => void;
+
+    getCurrentTime: () => number;
+
+    /**
+     * Обновляет текущее время разгадывания задачи
+     * @param {number} time - Текущее время разгадывания в секундах
+     * @returns {void}
+     *
+     * @description
+     * Присваивает соответствующее значение времени разгадывания
+     */
+    setCurrentTime: (time: number) => void;
 }
 
 export default IStoreGame;

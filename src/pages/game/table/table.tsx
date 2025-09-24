@@ -37,7 +37,8 @@ const Table: FC<ITable> = ({ task }) => {
     // Получаем состояние и методы из игрового хранилища
     const { horizontalLegend, verticalLegend, setWin, isWin, gameCompleted, setGameCompleted } = storeGame();
     // Получаем метод сохранения прогресса из пользовательского хранилища
-    const { setCrosswordBoards } = storeUser();
+    const setCrosswordBoards = storeUser((store) => store.setCrosswordBoards);
+    const currentTime = storeGame((store) => store.currentTime);
 
     /**
      * Обрабатывает закрытие модального окна
@@ -70,7 +71,7 @@ const Table: FC<ITable> = ({ task }) => {
             setCrosswordBoards({
                 gameCompleted: true,
                 id: task.id,
-                time: "",
+                time: currentTime,
                 star: 0,
             });
             setWin(false);
