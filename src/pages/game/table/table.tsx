@@ -35,7 +35,7 @@ const Table: FC<ITable> = ({ task }) => {
     // Состояние отображения модального окна
     const [modalShow, setModalShow] = useState(false);
     // Получаем состояние и методы из игрового хранилища
-    const { horizontalLegend, verticalLegend, setWin, isWin, gameCompleted, setGameCompleted } = storeGame();
+    const { horizontalLegend, verticalLegend, gameCompleted } = storeGame();
     // Получаем метод сохранения прогресса из пользовательского хранилища
     const setCrosswordBoards = storeUser((store) => store.setCrosswordBoards);
     const currentTime = storeGame((store) => store.currentTime);
@@ -52,7 +52,7 @@ const Table: FC<ITable> = ({ task }) => {
 
     /**
      * Эффект обработки победы в игре
-     * @dependency [isWin, task.id, gameCompleted] - Зависит от состояния победы и ID задачи
+     * @dependency [task.id, gameCompleted] - Зависит от состояния победы и ID задачи
      *
      * @description
      * Автоматически срабатывает при изменении состояния победы:
@@ -66,7 +66,7 @@ const Table: FC<ITable> = ({ task }) => {
      * для предотвращения повторных сохранений
      */
     useEffect(() => {
-        if (isWin && !gameCompleted) {
+        if (gameCompleted) {
             setModalShow(true);
             setCrosswordBoards({
                 gameCompleted: true,
@@ -74,10 +74,8 @@ const Table: FC<ITable> = ({ task }) => {
                 time: currentTime,
                 star: 0,
             });
-            setWin(false);
-            setGameCompleted(true);
         }
-    }, [isWin, task.id, setCrosswordBoards, setWin, gameCompleted, setGameCompleted]);
+    }, [task.id, setCrosswordBoards, gameCompleted]);
 
     return (
         horizontalLegend &&

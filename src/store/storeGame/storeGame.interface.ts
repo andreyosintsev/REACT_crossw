@@ -14,8 +14,6 @@ interface IStoreGame {
     horizontalLegend: ILegendHorizontal;
     /** Вертикальная легенда (подсказки слева) */
     verticalLegend: IVerticalLegend;
-    /** Флаг победы в игре */
-    isWin: boolean;
     /** Флаг пройденной игры */
     gameCompleted: boolean;
     /** Флаг ошибки загрузки задачи */
@@ -139,12 +137,6 @@ interface IStoreGame {
     handleRestart: (e: React.MouseEvent) => void;
 
     /**
-     * Устанавливает статус победы
-     * @param {boolean} status - Статус победы
-     */
-    setWin: (status: boolean) => void;
-
-    /**
      * Устанавливает статус пройденной игры
      * @param {boolean} status - Статус завершения
      */
@@ -161,7 +153,7 @@ interface IStoreGame {
      * - Устанавливает флаг победы при полном совпадении
      * - Очищает поле от крестиков при победе
      */
-    checkWin: (borad: IBoardElement[]) => void;
+    checkWin: (board: IBoardElement[]) => void;
 
     getCurrentTime: () => number;
 

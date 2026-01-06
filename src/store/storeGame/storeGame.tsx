@@ -41,7 +41,6 @@ export const storeGame = create<IStoreGame>((set, get) => ({
         width: 0,
         height: 0,
     },
-    isWin: false,
     gameCompleted: false,
     errorTask: false,
     currentTime: 0,
@@ -53,7 +52,6 @@ export const storeGame = create<IStoreGame>((set, get) => ({
         set({
             task: task,
             gameCompleted: userTaskInfo.gameCompleted,
-            isWin: false,
             currentTime: userTaskInfo.time ? userTaskInfo.time : 0,
         });
     },
@@ -291,8 +289,8 @@ export const storeGame = create<IStoreGame>((set, get) => ({
 
         // Обработка кликов
         if ((event.buttons === 1 || event.buttons === 2) && event.type !== "mouseleave") {
-            const eve = event as unknown as React.MouseEvent<Element, MouseEvent>;
-            handleBoardClick(eve);
+            const e = event as unknown as React.MouseEvent<Element, MouseEvent>;
+            handleBoardClick(e);
             return;
         }
     },
@@ -310,8 +308,6 @@ export const storeGame = create<IStoreGame>((set, get) => ({
         set({ gameCompleted: loadCrosswordBoard?.gameCompleted, currentTime: 0 });
     },
 
-    setWin: (status) => set({ isWin: status }),
-
     setGameCompleted: (status) => {
         //@todo - надо проверить логику, что если !task - нужно ли устанавливать статус. А если нет, то set можно и не выполнять?
         const task = get().task;
@@ -327,8 +323,8 @@ export const storeGame = create<IStoreGame>((set, get) => ({
     },
 
     checkWin: (board) => {
-        const { task, isWin } = get();
-        if (!task || isWin) return false;
+        const { task, gameCompleted } = get();
+        if (!task || gameCompleted) return false;
         if (board.length === 0) {
             return;
         }
@@ -346,7 +342,7 @@ export const storeGame = create<IStoreGame>((set, get) => ({
             content: element.content === "X" ? "0" : element.content,
         }));
 
-        set({ board: cleanedBoard, isWin: true });
+        set({ board: cleanedBoard, gameCompleted: true });
         saveBoardToLocalStorage(task.id, cleanedBoard);
     },
 

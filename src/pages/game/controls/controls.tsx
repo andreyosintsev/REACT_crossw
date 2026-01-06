@@ -33,7 +33,7 @@ const Controls: FC<IControls> = ({ onRestart, onHelp }) => {
     // Состояние видимости модального окна подтверждения
     const [modalShow, setModalShow] = useState(false);
     // Получаем состояние и методы из игрового хранилища
-    const { gameCompleted, setGameCompleted, setWin } = storeGame();
+    const { gameCompleted, setGameCompleted } = storeGame();
 
     const currentTime = storeGame((store) => store.currentTime);
 
@@ -81,7 +81,6 @@ const Controls: FC<IControls> = ({ onRestart, onHelp }) => {
         setModalShow(false);
         onRestart(e);
         setGameCompleted(false);
-        setWin(false);
     };
 
     /**

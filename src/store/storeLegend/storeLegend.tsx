@@ -32,40 +32,27 @@ const storeLegend = create<IStoreLegend>((set, get) => ({
         const y = Number(target.dataset.y);
 
         // Убираем предыдущие выделения
-        get().legendHorizontalElements.forEach((ele) =>
-            ele.classList.remove("le_hover")
-        );
-        get().legendVerticalElements.forEach((ele) =>
-            ele.classList.remove("le_hover")
-        );
+        get().legendHorizontalElements.forEach((element) => element.classList.remove("le_hover"));
+        get().legendVerticalElements.forEach((element) => element.classList.remove("le_hover"));
 
         // Находим и выделяем соответствующие элементы
-        get().legendHorizontalElements.forEach(
-            (ele) =>
-                ele.dataset.type === `lh_${x}` && ele.classList.add("le_hover")
-        );
-        get().legendVerticalElements.forEach(
-            (ele) =>
-                ele.dataset.type === `lv_${y}` && ele.classList.add("le_hover")
-        );
+        get().legendHorizontalElements.forEach((element) => element.dataset.type === `lh_${x}` && element.classList.add("le_hover"));
+        get().legendVerticalElements.forEach((element) => element.dataset.type === `lv_${y}` && element.classList.add("le_hover"));
     },
 
     addLegendElement: (div) => {
         if (div?.dataset.type?.includes("lh")) {
             set({
-                legendHorizontalElements:
-                    get().legendHorizontalElements.concat(div),
+                legendHorizontalElements: get().legendHorizontalElements.concat(div),
             });
         } else {
             set({
-                legendVerticalElements:
-                    get().legendVerticalElements.concat(div),
+                legendVerticalElements: get().legendVerticalElements.concat(div),
             });
         }
     },
 
-    clearLegend: () =>
-        set({ legendVerticalElements: [], legendHorizontalElements: [] }),
+    clearLegend: () => set({ legendVerticalElements: [], legendHorizontalElements: [] }),
 }));
 
 export default storeLegend;

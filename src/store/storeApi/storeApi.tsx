@@ -23,13 +23,17 @@ const storeApi = create<IStoreApi>((set) => ({
     error: null,
 
     fetchTask: async (taskId: number) => {
+        set({
+            isLoading: true,
+            error: null,
+        });
+
         try {
             const taskData = await apiGetTask(taskId);
 
             return taskData;
         } catch (err) {
-            const errorMessage =
-                err instanceof Error ? err.message : "Failed to fetch task";
+            const errorMessage = err instanceof Error ? err.message : "Failed to fetch task";
 
             set({
                 error: errorMessage,
@@ -43,13 +47,17 @@ const storeApi = create<IStoreApi>((set) => ({
     },
 
     fetchTasks: async () => {
+        set({
+            isLoading: true,
+            error: null,
+        });
+
         try {
             const tasksData = await apiGetTasks();
 
             return tasksData.tasks;
         } catch (err) {
-            const errorMessage =
-                err instanceof Error ? err.message : "Failed to fetch tasks";
+            const errorMessage = err instanceof Error ? err.message : "Failed to fetch tasks";
 
             set({
                 error: errorMessage,
@@ -59,13 +67,17 @@ const storeApi = create<IStoreApi>((set) => ({
     },
 
     getNews: async () => {
+        set({
+            isLoading: true,
+            error: null,
+        });
+
         try {
             const news = await apiGetNews();
 
             return news.news || [];
         } catch (err) {
-            const errorMessage =
-                err instanceof Error ? err.message : "Failed to fetch news";
+            const errorMessage = err instanceof Error ? err.message : "Failed to fetch news";
 
             set({
                 error: errorMessage,
