@@ -3,9 +3,10 @@ import { FC, useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
 
 import AppRouter from "../app-router/app-router";
-import storeApi from "../../store/storeApi/storeApi";
+import storeApp from "../../store/storeApp/storeApp";
 import storeNews from "../../store/storeNews/storeNews";
 import storeTasks from "../../store/storeTasks/storeTasks";
+import { fetchNews, fetchTasks } from "../../utils/api/apiService";
 
 /**
  * Корневой компонент приложения
@@ -30,13 +31,11 @@ import storeTasks from "../../store/storeTasks/storeTasks";
  * ReactDOM.render(<App />, document.getElementById('root'));
  */
 const App: FC = () => {
-    // Получаем методы API для загрузки данных
-    const { fetchTasks, getNews } = storeApi();
-
     // Получаем методы установки данных в хранилища
     const setNews = storeNews((state) => state.setNews);
     const setTasks = storeTasks((state) => state.setTasks);
-    const setLoading = storeApi((state) => state.setLoading);
+    const setLoading = storeApp((state) => state.setLoading);
+    const setError = storeApp((state) => state.setError);
 
     /**
      * Эффект инициализации приложения
@@ -57,13 +56,26 @@ const App: FC = () => {
      * Ошибки обрабатываются в дочерних компонентах через хранилища
      */
     useEffect(() => {
-        Promise.all([getNews(), fetchTasks()])
-            .then(([news, tasks]) => {
+        const loadData = async () => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const [news, tasks] = await Promise.all([fetchNews(), fetchTasks()]);
+
                 setNews(news);
                 setTasks(tasks);
-            })
-            .then(() => setLoading(false));
-    }, []);
+            } catch (error: unknown) {
+                const message = error instanceof Error ? error.message : "Failed to initialize application";
+
+                setError(message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        loadData();
+    }, [setNews, setTasks, setLoading, setError]);
 
     return (
         <BrowserRouter>

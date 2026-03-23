@@ -12,7 +12,7 @@ import storeTasks from "../../store/storeTasks/storeTasks";
 import { storeGame } from "../../store/storeGame/storeGame";
 import storeUser from "../../store/storeUser/storeUser";
 import { loadCrosswordBoardFromLocalStorage } from "../../utils/local-storage/local-storage";
-import storeApi from "../../store/storeApi/storeApi";
+import storeApp from "../../store/storeApp/storeApp";
 import storeLegend from "../../store/storeLegend/storeLegend";
 
 /**
@@ -45,7 +45,7 @@ const Game: FC = () => {
     /** Функция инициализации игрового процесса */
     const initializeGame = storeGame((state) => state.initializeGame);
     /** Сообщение об ошибке из API хранилища */
-    const error = storeApi((state) => state.error);
+    const error = storeApp((state) => state.error);
     /** Функция получения информации о кроссворде пользователя */
     const getCrosswordBoardById = storeUser(
         (state) => state.getCrosswordBoardById

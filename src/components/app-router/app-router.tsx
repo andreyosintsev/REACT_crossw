@@ -16,8 +16,7 @@ import ModalButton from "../modal-button/modal-button";
 import Modal from "../modal/modal";
 import Preloader from "../preloader/preloader";
 import storeTasks from "../../store/storeTasks/storeTasks";
-import storeApi from "../../store/storeApi/storeApi";
-import { storeGame } from "../../store/storeGame/storeGame";
+import storeApp from "../../store/storeApp/storeApp";
 
 /**
  * Основной роутер приложения с обработкой состояний загрузки и ошибок
@@ -43,11 +42,11 @@ import { storeGame } from "../../store/storeGame/storeGame";
  * );
  */
 const AppRouter: FC = () => {
-    // Получаем состояние загрузки из API хранилища
-    const isLoading = storeApi((state) => state.isLoading);
+    // Получаем состояние загрузки из хранилища
+    const isLoading = storeApp((state) => state.isLoading);
     // Получаем состояние ошибки и метод установки ошибки из игрового хранилища
-    const error = storeGame((state) => state.errorTask);
-    const setError = storeGame((state) => state.setError);
+    const error = storeApp((state) => state.error);
+    const clearError = storeApp((state) => state.clearError);
     // Получаем список задач из хранилища задач
     const tasks = storeTasks((state) => state.tasks);
     // Хук для программной навигации
@@ -114,7 +113,7 @@ const AppRouter: FC = () => {
                     <ModalButton
                         onClick={() => {
                             navigate("/");
-                            setError(false);
+                            clearError();
                         }}
                     >
                         На главную
