@@ -19,7 +19,7 @@ import { apiGetNews, apiGetTask, apiGetTasks } from "../../utils/api/api";
  * const { fetchTask, isLoading, error, clearError } = apiStore();
  */
 const storeApi = create<IStoreApi>((set) => ({
-    isLoading: true,
+    isLoading: false,
     error: null,
 
     fetchTask: async (taskId: number) => {
@@ -63,10 +63,14 @@ const storeApi = create<IStoreApi>((set) => ({
                 error: errorMessage,
             });
             return null;
+        } finally {
+            set({
+                isLoading: false,
+            });
         }
     },
 
-    getNews: async () => {
+    fetchNews: async () => {
         set({
             isLoading: true,
             error: null,
@@ -83,6 +87,10 @@ const storeApi = create<IStoreApi>((set) => ({
                 error: errorMessage,
             });
             return [];
+        } finally {
+            set({
+                isLoading: false,
+            });
         }
     },
 

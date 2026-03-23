@@ -52,7 +52,7 @@ const storeLegend = create<IStoreLegend>((set, get) => ({
         }
     },
 
-    clearLegend: () => set({ legendVerticalElements: [], legendHorizontalElements: [] }),
+    clearLegends: () => set({ legendVerticalElements: [], legendHorizontalElements: [] }),
 }));
 
 export default storeLegend;

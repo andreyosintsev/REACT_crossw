@@ -25,10 +25,7 @@ interface IStoreApi {
      *   console.log('Задача загружена:', task);
      * }
      */
-    fetchTask: (
-        task: number,
-        options?: RequestInit
-    ) => Promise<IApiTask | null>;
+    fetchTask: (task: number, options?: RequestInit) => Promise<IApiTask | null>;
 
     /**
      * Загружает список всех задач через API
@@ -64,7 +61,7 @@ interface IStoreApi {
      * const news = await getNews();
      * news.forEach(item => console.log(item.title));
      */
-    getNews: () => Promise<INews[]>;
+    fetchNews: () => Promise<INews[]>;
 
     /**
      * Очищает сообщение об ошибке

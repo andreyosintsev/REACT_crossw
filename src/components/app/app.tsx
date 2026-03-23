@@ -31,7 +31,7 @@ import storeTasks from "../../store/storeTasks/storeTasks";
  */
 const App: FC = () => {
     // Получаем методы API для загрузки данных
-    const { fetchTasks, getNews } = storeApi();
+    const { fetchTasks, fetchNews } = storeApi();
 
     // Получаем методы установки данных в хранилища
     const setNews = storeNews((state) => state.setNews);
@@ -57,7 +57,8 @@ const App: FC = () => {
      * Ошибки обрабатываются в дочерних компонентах через хранилища
      */
     useEffect(() => {
-        Promise.all([getNews(), fetchTasks()])
+        setLoading(true);
+        Promise.all([fetchNews(), fetchTasks()])
             .then(([news, tasks]) => {
                 setNews(news);
                 setTasks(tasks);

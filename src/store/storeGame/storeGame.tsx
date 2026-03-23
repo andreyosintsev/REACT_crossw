@@ -2,7 +2,7 @@ import { create } from "zustand";
 import IStoreGame from "./storeGame.interface";
 import {
     clearBoardInLocalStorage,
-    clearCrossBoardsInLocalStorage,
+    clearCrossBoardInLocalStorage,
     loadBoardFromLocalStorage,
     loadCrosswordBoardFromLocalStorage,
     saveBoardToLocalStorage,
@@ -57,10 +57,10 @@ export const storeGame = create<IStoreGame>((set, get) => ({
     },
 
     initializeGame: () => {
-        const { task, createLegend, initBoard } = get();
+        const { task, createLegends, initBoard } = get();
         if (!task) return;
 
-        createLegend();
+        createLegends();
         initBoard();
     },
 
@@ -97,7 +97,7 @@ export const storeGame = create<IStoreGame>((set, get) => ({
         const newBoard = board.map((cell, idx) => (idx === help[index].pos ? { ...cell, content: help[index].content } : cell));
 
         // Устанавливаем состояние и сохраняем
-        set((state) => ({ board: newBoard }));
+        set({ board: newBoard });
         saveBoardToLocalStorage(task.id, newBoard);
     },
 
@@ -125,7 +125,7 @@ export const storeGame = create<IStoreGame>((set, get) => ({
         saveBoardToLocalStorage(task.id, newBoard);
     },
 
-    createLegend: () => {
+    createLegends: () => {
         const { task, createVerticalLegend, createHorizontalLegend } = get();
         if (!task) return;
 
@@ -302,10 +302,13 @@ export const storeGame = create<IStoreGame>((set, get) => ({
         if (!task) return;
 
         clearBoardInLocalStorage(task.id);
-        clearCrossBoardsInLocalStorage(task.id);
+        clearCrossBoardInLocalStorage(task.id);
         initBoard();
         const loadCrosswordBoard = loadCrosswordBoardFromLocalStorage(task.id);
-        set({ gameCompleted: loadCrosswordBoard?.gameCompleted, currentTime: 0 });
+        const gameCompleted = loadCrosswordBoard?.gameCompleted;
+        console.log("handleRestart - gameCompleted:", !!gameCompleted);
+
+        set({ gameCompleted: gameCompleted, currentTime: 0 });
     },
 
     setGameCompleted: (status) => {
@@ -323,7 +326,7 @@ export const storeGame = create<IStoreGame>((set, get) => ({
     },
 
     checkWin: (board) => {
-        const { task, gameCompleted } = get();
+        const { task, gameCompleted, setGameCompleted } = get();
         if (!task || gameCompleted) return false;
         if (board.length === 0) {
             return;
@@ -342,7 +345,9 @@ export const storeGame = create<IStoreGame>((set, get) => ({
             content: element.content === "X" ? "0" : element.content,
         }));
 
-        set({ board: cleanedBoard, gameCompleted: true });
+        console.log("checkWin - setting gameCompleted to true");
+        set({ board: cleanedBoard });
+        setGameCompleted(true);
         saveBoardToLocalStorage(task.id, cleanedBoard);
     },
 

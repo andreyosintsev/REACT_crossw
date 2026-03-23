@@ -83,7 +83,7 @@ interface IStoreLegend {
      * // При размонтировании компонента или смене задачи
      * clearLegend();
      */
-    clearLegend: () => void;
+    clearLegends: () => void;
 }
 
 export default IStoreLegend;

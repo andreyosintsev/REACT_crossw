@@ -8,6 +8,15 @@ import {
     USER_BOARD_PREFIX,
 } from "./local-storage.constants";
 
+import {
+    saveToLocalStorage,
+    loadFromLocalStorage,
+    removeFromLocalStorage,
+} from "./storage-utils";
+
+
+const key = (prefix: string, id?: number) => (id !== undefined ? `${prefix}${id}` : prefix);
+
 /** Сохраняет игровое поле в localStorage
  * @param boardId идентификатор поля
  * @param board данные игрового поля
@@ -15,9 +24,8 @@ import {
 export const saveBoardToLocalStorage = (
     boardId: number,
     board: IBoardElement[]
-): void => {
-    localStorage.setItem(`${BOARD_PREFIX}${boardId}`, JSON.stringify(board));
-};
+): void => saveToLocalStorage(key(BOARD_PREFIX, boardId), board);
+
 
 /** Загружает игровое поле из localStorage
  * @param boardId идентификатор поля
@@ -25,48 +33,45 @@ export const saveBoardToLocalStorage = (
  */
 export const loadBoardFromLocalStorage = (
     boardId: number
-): IBoardElement[] | null => {
-    const board = localStorage.getItem(`${BOARD_PREFIX}${boardId}`);
-    return board ? JSON.parse(board) : null;
-};
+): IBoardElement[] | null => loadFromLocalStorage(key(BOARD_PREFIX, boardId));
 
 /** Очищает игровое поле в localStorage
  * @param boardId идентификатор поля
  */
-export const clearBoardInLocalStorage = (boardId: number): void => {
-    localStorage.removeItem(`${BOARD_PREFIX}${boardId}`);
-};
+export const clearBoardInLocalStorage = (
+    boardId: number
+): void => removeFromLocalStorage(key(BOARD_PREFIX, boardId));
 
 /** Сохраняет задание в localStorage
  * @param id идентификатор задания
  * @param task данные задания
  */
-export const saveTaskToLocalStorage = (taskId: number, task: ITask): void => {
-    localStorage.setItem(`${TASK_PREFIX}${taskId}`, JSON.stringify(task));
-};
+export const saveTaskToLocalStorage = (
+    taskId: number,
+    task: ITask
+): void => saveToLocalStorage(key(TASK_PREFIX, taskId), task);
 
 /** Загружает задание из localStorage
  * @param id идентификатор задания
  * @returns загруженное задание или null если не найдено
  */
-export const loadTaskFromLocalStorage = (taskId: number): ITask | null => {
-    const task = localStorage.getItem(`${TASK_PREFIX}${taskId}`);
-    return task ? JSON.parse(task) : null;
-};
+export const loadTaskFromLocalStorage = (
+    taskId: number
+): ITask | null => loadFromLocalStorage(key(TASK_PREFIX, taskId));
 
 /** Удаляет задание из localStorage
  * @param taskId идентификатор задания
  */
-export const clearTaskInLocalStorage = (taskId: number): void => {
-    localStorage.removeItem(`${TASK_PREFIX}${taskId}`);
-};
+export const clearTaskInLocalStorage = (
+    taskId: number
+): void => removeFromLocalStorage(key(TASK_PREFIX, taskId));
 
 /** Сохраняет список заданий в localStorage
  * @param board массив заданий
  */
-export const saveTasksToLocalStorage = (board: ITask[]): void => {
-    localStorage.setItem(`${TASKS_KEY}`, JSON.stringify(board));
-};
+export const saveTasksToLocalStorage = (
+    board: ITask[]
+): void => saveToLocalStorage(key(TASKS_KEY), board);
 
 /**
  * @function Сохраняет состояние доски кроссворда в локальное хранилище
@@ -76,10 +81,7 @@ export const saveTasksToLocalStorage = (board: ITask[]): void => {
 export const saveCrosswordBoardToLocalStorage = (
     id: number,
     data: ICrosswBoard
-): void => {
-    const serializedData = JSON.stringify(data);
-    localStorage.setItem(`${USER_BOARD_PREFIX}${id}`, serializedData);
-};
+): void => saveToLocalStorage(key(USER_BOARD_PREFIX, id), data);
 
 /**
  * @function Загружает состояние доски кроссворда из локального хранилища
@@ -88,29 +90,13 @@ export const saveCrosswordBoardToLocalStorage = (
  */
 export const loadCrosswordBoardFromLocalStorage = (
     id: number
-): ICrosswBoard | null => {
-    const serializedData = localStorage.getItem(`${USER_BOARD_PREFIX}${id}`);
-    return serializedData ? JSON.parse(serializedData) : null;
-};
-
-/**
- * @function Обновляет состояние доски кроссворда в локальном хранилище
- * @param {number} id - Уникальный идентификатор кроссворда
- * @param {ICrosswBoard} task - Обновленный объект с данными доски
- * @returns {void}
- */
-export const updateCrosswordBoardFromLocalStorage = (
-    id: number,
-    task: ICrosswBoard
-): void => {
-    localStorage.setItem(`${USER_BOARD_PREFIX}${id}`, JSON.stringify(task));
-};
+): ICrosswBoard | null => loadFromLocalStorage(key(USER_BOARD_PREFIX, id));
 
 /**
  * @function Удаляет состояние доски кроссворда из локального хранилища
  * @param {number} id - Уникальный идентификатор кроссворда
  * @returns {void}
  */
-export const clearCrossBoardsInLocalStorage = (id: number): void => {
-    localStorage.removeItem(`${USER_BOARD_PREFIX}${id}`);
-};
+export const clearCrossBoardInLocalStorage = (
+    id: number
+): void => removeFromLocalStorage(key(USER_BOARD_PREFIX, id));

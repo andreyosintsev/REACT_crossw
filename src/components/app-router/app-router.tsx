@@ -92,10 +92,7 @@ const AppRouter: FC = () => {
                     <AppWrapper>
                         <Routes>
                             <Route path="/" element={<Home />} />
-                            <Route
-                                path="/game/:taskNumber"
-                                element={<Game />}
-                            />
+                            <Route path="/game/:taskNumber" element={<Game />} />
                         </Routes>
 
                         <AppSidebar>
@@ -106,11 +103,7 @@ const AppRouter: FC = () => {
                 </>
             )}
             {isModalShow && (
-                <Modal
-                    image="modal1.png"
-                    title="Ошибка загрузки кроссворда."
-                    onClick={closeHandler}
-                >
+                <Modal image="modal1.png" title="Ошибка загрузки кроссворда." onClick={closeHandler}>
                     <ModalButton
                         onClick={() => {
                             navigate("/");

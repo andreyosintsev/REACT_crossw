@@ -51,7 +51,7 @@ const Game: FC = () => {
     /** Функция получения информации о кроссворде пользователя */
     const getCrosswordBoardById = storeUser((state) => state.getCrosswordBoardById);
     /** Функция очистки легенд из хранилища легенд */
-    const clearLegend = storeLegend((state) => state.clearLegend);
+    const clearLegends = storeLegend((state) => state.clearLegends);
     /** Текущее время отгадывания из хранилища игры */
     const getCurrentTime = storeGame((state) => state.getCurrentTime);
     const setCurrentTime = storeGame((state) => state.setCurrentTime);
@@ -61,6 +61,7 @@ const Game: FC = () => {
     // Получаем номер задачи из параметров URL
     const { taskNumber } = useParams();
     const taskId = taskNumber ? parseInt(taskNumber, 10) : 0;
+    console.log("Game.tsx - taskId: ", taskId);
 
     /**
      * Эффект загрузки и инициализации игры при монтировании компонента
@@ -78,18 +79,21 @@ const Game: FC = () => {
      * - Автоматический запуск при изменении taskId
      * - Интеграция со всеми необходимыми хранилищами
      */
-    useEffect(() => {
-        // Загружаем информацию о выполнении задачи (из localStorage или хранилища пользователя)
-        const userTaskInfo = loadCrosswordBoardFromLocalStorage(taskId) || getCrosswordBoardById(taskId);
-        // Устанавливаем задачу и информацию о выполнении
-        setTask(getTaskById(taskId), userTaskInfo);
-        // Инициализируем игровой процесс
-        initializeGame();
 
-        console.log("gameCompleted: ", gameCompleted);
+    useEffect(() => {
+        console.log("UseEffect on taskId");
+        const userTaskInfo = loadCrosswordBoardFromLocalStorage(taskId) || getCrosswordBoardById(taskId);
+
+        setTask(getTaskById(taskId), userTaskInfo);
+        initializeGame();
+    }, [taskId]);
+
+    useEffect(() => {
+        console.log("UseEffect on taskId or GameCompleted");
+        console.log("Game.tsx - useEffect - gameCompleted: ", gameCompleted);
 
         if (!gameCompleted) {
-            console.log("Запускаем таймер");
+            console.log("Game.tsx - useEffect - Запускаем таймер");
 
             timerRef.current = window.setInterval(() => {
                 setCurrentTime(getCurrentTime() + 1);
@@ -100,23 +104,23 @@ const Game: FC = () => {
                 });
             }, 1000);
         } else {
-            console.log("Останавливаем таймер");
+            console.log("Game.tsx - useEffect - Останавливаем таймер");
             if (timerRef.current) clearInterval(timerRef.current);
         }
 
         return () => {
             if (timerRef.current) clearInterval(timerRef.current);
         };
-    }, [getCrosswordBoardById, getTaskById, initializeGame, setTask, taskId]);
+    }, [gameCompleted, taskId]);
 
     useLayoutEffect(() => {
-        clearLegend();
-    }, [taskId, clearLegend]);
+        clearLegends();
+    }, [taskId, clearLegends]);
 
     return (
         <>
             <aside>
-                <Tasks /> {/* Здеся будет ваша реклама */}
+                <Tasks /> {/* Здесь будет ваша реклама */}
             </aside>
             <main className={`${AppStyles.main}`}>
                 {!error && task && (
