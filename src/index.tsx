@@ -1,7 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-import "./index.scss";
+import "./scss/normalize.scss";
+import "./scss/fonts.scss";
+import "./scss/constants.scss";
 
 import App from "./components/app/app";
 
@@ -15,7 +17,7 @@ if (rootElement) {
     root.render(
         <React.StrictMode>
             <App />
-        </React.StrictMode>
+        </React.StrictMode>,
     );
 }
 

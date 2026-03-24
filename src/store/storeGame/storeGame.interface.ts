@@ -1,5 +1,4 @@
 import IBoardElement from "../../pages/game/board-element/board-element.interface";
-import { IHelp } from "../../pages/game/board/board.interface";
 import ILegendHorizontal from "../../pages/game/legend-horizontal/legend-horizontal.interface";
 import { IVerticalLegend } from "../../pages/game/table/table.interface";
 import { ITask } from "../../utils/api/api.interface";
