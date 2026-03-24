@@ -1,7 +1,9 @@
+import { TBoardElementContent } from "../../../utils/api/api.interface";
+
 interface IBoardElement {
     xCoord: number;
     yCoord: number;
-    content: string; //@todo - уточнить тип до '0' | '1' | 'X'
+    content: TBoardElementContent;
 }
 
 export default IBoardElement;

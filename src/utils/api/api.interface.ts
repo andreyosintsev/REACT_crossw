@@ -1,3 +1,7 @@
+import { BOARD_ELEMENT_CONTENT_VALUES } from "../../declarations/constants";
+
+export type TBoardElementContent = (typeof BOARD_ELEMENT_CONTENT_VALUES)[number];
+
 export interface INews {
     date: string;
     text: string;
@@ -6,7 +10,7 @@ export interface INews {
 export interface ITask {
     id: number;
     name: string;
-    task: string[]; //@todo - уточнить тип до '0' | '1' | 'X'
+    task: TBoardElementContent[];
     width: number;
     height: number;
     image_preview: string;

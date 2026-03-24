@@ -9,7 +9,7 @@ import {
     saveCrosswordBoardToLocalStorage,
 } from "../../utils/local-storage/local-storage";
 import IBoardElement from "../../pages/game/board-element/board-element.interface";
-import { IHelp } from "../../pages/game/board/board.interface";
+import { TBoardElementContent } from "../../utils/api/api.interface";
 
 /**
  * Хранилище Zustand для управления игровым процессом кроссворда
@@ -79,7 +79,7 @@ export const storeGame = create<IStoreGame>((set, get) => ({
 
         const help: {
             pos: number;
-            content: string;
+            content: TBoardElementContent;
         }[] = [];
 
         const n = Math.min(task.task.length, board.length);
@@ -97,7 +97,7 @@ export const storeGame = create<IStoreGame>((set, get) => ({
         const newBoard = board.map((cell, idx) => (idx === help[index].pos ? { ...cell, content: help[index].content } : cell));
 
         // Устанавливаем состояние и сохраняем
-        set((state) => ({ board: newBoard }));
+        set({ board: newBoard });
         saveBoardToLocalStorage(task.id, newBoard);
     },
 

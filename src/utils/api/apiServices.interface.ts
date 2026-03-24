@@ -1,11 +1,13 @@
-import { ITask, INews } from "../api/api.interface";
+import { ITask, INews, TBoardElementContent } from "../api/api.interface";
 
-export type NormalizeTask = (task: unknown) => ITask;
+export type TisBoardElementContent = (value: unknown) => value is TBoardElementContent;
 
-export type NormalizeNews = (news: unknown) => INews;
+export type TNormalizeTask = (task: unknown) => ITask;
 
-export type FetchTask = (taskId: number) => Promise<ITask>;
+export type TNormalizeNews = (news: unknown) => INews;
 
-export type FetchTasks = () => Promise<ITask[]>;
+export type TFetchTask = (taskId: number) => Promise<ITask>;
 
-export type FetchNews = () => Promise<INews[]>;
+export type TFetchTasks = () => Promise<ITask[]>;
+
+export type TFetchNews = () => Promise<INews[]>;

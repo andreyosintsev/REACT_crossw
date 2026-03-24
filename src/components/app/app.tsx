@@ -66,7 +66,7 @@ const App: FC = () => {
                 setNews(news);
                 setTasks(tasks);
             } catch (error: unknown) {
-                const message = error instanceof Error ? error.message : "Failed to initialize application";
+                const message = error instanceof Error ? error.message : "App.tsx: Failed to initialize application";
 
                 setError(message);
             } finally {
