@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, FC } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import AppStyles from "./game.module.scss";
 
@@ -47,15 +47,16 @@ const Game: FC = () => {
     /** Сообщение об ошибке из API хранилища */
     const error = storeApp((state) => state.error);
     /** Функция получения информации о кроссворде пользователя */
-    const getCrosswordBoardById = storeUser(
-        (state) => state.getCrosswordBoardById
-    );
+    const getCrosswordBoardById = storeUser((state) => state.getCrosswordBoardById);
     /** Функция очистки легенд из хранилища легенд */
     const clearLegend = storeLegend((state) => state.clearLegend);
 
+    // Получаем метод навигации
+    const navigate = useNavigate();
+
     // Получаем номер задачи из параметров URL
-    const { taskNumber } = useParams();
-    const taskId = taskNumber ? parseInt(taskNumber, 10) : 0;
+    const { taskNumber } = useParams<{ taskNumber: string }>();
+    const taskId = Number(taskNumber);
 
     /**
      * Эффект загрузки и инициализации игры при монтировании компонента
@@ -74,19 +75,36 @@ const Game: FC = () => {
      * - Интеграция со всеми необходимыми хранилищами
      */
     useEffect(() => {
+        // Если в адресной строке неверный номер задачи
+        if (Number.isNaN(taskId)) {
+            console.error("game.tsx: taskId is NaN");
+            navigate("/");
+            return;
+        }
+
+        const currentTask = getTaskById(taskId);
+
+        if (!currentTask) {
+            console.error(`game.tsx: task with id=${taskId} not found`);
+            navigate("/");
+            return;
+        }
+
         // Загружаем информацию о выполнении задачи (из localStorage или хранилища пользователя)
-        const userTaskInfo =
-            loadCrosswordBoardFromLocalStorage(taskId) ||
-            getCrosswordBoardById(taskId);
+        const userTaskInfo = loadCrosswordBoardFromLocalStorage(taskId) || getCrosswordBoardById(taskId);
         // Устанавливаем задачу и информацию о выполнении
         setTask(getTaskById(taskId), userTaskInfo);
         // Инициализируем игровой процесс
         initializeGame();
-    }, [getCrosswordBoardById, getTaskById, initializeGame, setTask, taskId]);
+    }, [getCrosswordBoardById, getTaskById, initializeGame, setTask, taskId, navigate]);
 
     useLayoutEffect(() => {
         clearLegend();
     }, [taskId, clearLegend]);
+
+    if (Number.isNaN(taskId)) {
+        return null;
+    }
 
     return (
         <>
@@ -97,10 +115,7 @@ const Game: FC = () => {
                 {!error && task && (
                     <PageBlock title={"Кроссворд № " + taskId}>
                         <Table task={task} />
-                        <Controls
-                            onRestart={handleRestart}
-                            onHelp={handleHelp}
-                        />
+                        <Controls onRestart={handleRestart} onHelp={handleHelp} />
                     </PageBlock>
                 )}
             </main>

@@ -27,12 +27,10 @@ const storeTasks = create<IStoreTask>((set, get) => ({
 
     setTasks: (tasksData) =>
         set({
-            tasks: tasksData || [],
+            tasks: tasksData ?? [],
         }),
 
-    getTaskById: (id) =>
-        get().tasks.find((task) => task.id.toString() === id.toString()) ||
-        null,
+    getTaskById: (id) => get().tasks.find((task) => task.id === id) ?? null,
 }));
 
 export default storeTasks;

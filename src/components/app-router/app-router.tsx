@@ -44,8 +44,9 @@ import storeApp from "../../store/storeApp/storeApp";
 const AppRouter: FC = () => {
     // Получаем состояние загрузки из хранилища
     const isLoading = storeApp((state) => state.isLoading);
-    // Получаем состояние ошибки и метод установки ошибки из игрового хранилища
+    // Получаем состояние ошибки из хранилища
     const error = storeApp((state) => state.error);
+    // Получаем метод сброса ошибки из хранилища
     const clearError = storeApp((state) => state.clearError);
     // Получаем список задач из хранилища задач
     const tasks = storeTasks((state) => state.tasks);
@@ -91,10 +92,7 @@ const AppRouter: FC = () => {
                     <AppWrapper>
                         <Routes>
                             <Route path="/" element={<Home />} />
-                            <Route
-                                path="/game/:taskNumber"
-                                element={<Game />}
-                            />
+                            <Route path="/game/:taskNumber" element={<Game />} />
                         </Routes>
 
                         <AppSidebar>
@@ -107,7 +105,7 @@ const AppRouter: FC = () => {
             {isModalShow && (
                 <Modal
                     image="modal1.png"
-                    title="Ошибка загрузки кроссворда."
+                    title={error ? `Ошибка загрузки кроссворда: ${error}` : "Ошибка загрузки кроссворда"}
                     onClick={closeHandler}
                 >
                     <ModalButton
