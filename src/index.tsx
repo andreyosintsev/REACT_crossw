@@ -4,6 +4,7 @@ import ReactDOM from "react-dom/client";
 import "./scss/normalize.scss";
 import "./scss/fonts.scss";
 import "./scss/constants.scss";
+import "./index.module.scss";
 
 import App from "./components/app/app";
 
