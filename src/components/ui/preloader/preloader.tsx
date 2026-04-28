@@ -14,7 +14,7 @@ import styles from "./preloader.module.scss";
 const PreloaderUI: FC = () => {
     return (
         <div className={styles.preloader}>
-            <img src={`/imgs/preloader.gif`} alt="Загрузка" />
+            <img src={`/images/preloader.gif`} alt="Загрузка" />
         </div>
     );
 };

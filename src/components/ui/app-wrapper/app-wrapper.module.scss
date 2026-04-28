@@ -1,12 +1,36 @@
+@import "../../../scss/breakpoints.scss";
+
 .wrapper {
     display: flex;
     max-width: 1440px;
-    height: 100%;
-    margin: 0 auto;
+    margin: 68px auto 0;
+
+    @include media-max(desktop) {
+        display: block;
+    }
+
+    @include media-max(laptop) {
+        display: block;
+    }
+
+    @include media-max(tablet) {
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
 }
 
-@media screen and (max-width: 1200px) {
-    .wrapper {
-        display: block;
+.main {
+    width: calc(100% - 320px);
+
+    @include media-max(desktop) {
+        width: 100%;
+        margin: 0;
+        padding: 0 16px;
+    }
+
+    @include media-max(tablet) {
+        width: 100%;
+        margin: 0;
+        padding: 0;
     }
 }

@@ -1,30 +1,53 @@
+@import "../../../scss/breakpoints.scss";
+
 .header {
+    position: fixed;
     display: flex;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 48px;
+    height: 50px;
     margin-bottom: 20px;
-    padding: 0 20px;
+    padding: 0 16px;
 
     background-color: var(--background-white);
-}
 
-.header__wrapper {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    width: 100%;
-    max-width: 1440px;
-    margin: auto;
-}
+    box-shadow: 0px 6px 9px -3px rgba(0, 0, 0, 0.1);
 
-.headertitle {
-    display: flex;
-    align-items: center;
-}
+    z-index: 200;
 
-.headertitle__link {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    text-decoration: none;
+    &__wrapper {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+        max-width: 1440px;
+        margin: auto;
+    }
+
+    &__title {
+        display: flex;
+        align-items: center;
+    }
+
+    &__link {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        text-decoration: none;
+    }
+
+    @include media-max(tablet) {
+        margin-bottom: 0;
+        padding: 2px 10px;
+
+        background: url("../../../assets/images/background-mobile.jpg");
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-attachment: fixed;
+
+        &__wrapper {
+            justify-content: space-between;
+        }
+    }
 }

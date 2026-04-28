@@ -1,17 +1,19 @@
-.sidebar {
-    width: 340px;
-    margin-bottom: 20px;
-    padding: 20px;
+@use "../../../scss/breakpoints.scss" as *;
 
-    border-radius: var(--border-radius);
-    -webkit-border-radius: var(--border-radius);
-    -moz-border-radius: var(--border-radius);
+.sidebar {
+    max-width: 320px;
 
     background-color: var(--white);
-}
 
-@media screen and (max-width: 1200px) {
-    .sidebar {
+    border-radius: var(--border-radius);
+
+    overflow: hidden;
+
+    &__ads {
+        width: 300px;
+    }
+
+    @include media-max(desktop) {
         display: none;
     }
 }

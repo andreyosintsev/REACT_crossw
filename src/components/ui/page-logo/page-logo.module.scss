@@ -1,11 +1,22 @@
+@import "../../../scss/breakpoints.scss";
+
 .logo {
     margin-right: 10px;
 }
 
 .title {
     color: var(--text-main);
+    font-family: "PresentScript", sans-serif;
     font-size: 16px;
     font-weight: bold;
 
     text-transform: uppercase;
+
+    @include media-max(tablet) {
+        color: var(--white, #ffffff);
+
+        text-shadow:
+            1px 1px 3px var(--black, #000000),
+            -1px -1px 3px var(--black, #000000);
+    }
 }

@@ -1,3 +1,5 @@
+@use "../../../scss/breakpoints.scss" as *;
+
 .block {
     padding: 20px;
 
@@ -24,10 +26,8 @@
     &__text p:last-child {
         margin: 0;
     }
-}
 
-@media screen and (max-width: 768px) {
-    .block {
+    @include media-max(tablet) {
         padding: 10px;
 
         font-size: 14px;

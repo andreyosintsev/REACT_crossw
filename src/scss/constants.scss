@@ -1,74 +1,55 @@
-/*
-    ПРОЕКТ "CROSSW.RU - ЯПОНСКИЕ КРОССВОРДЫ"
-    ШРИФТОВЫЕ И ЦВЕТОВЫЕ КОНСТАНТЫ
+$colors: (
+    text-main: #333333,
+    text-second: #888888,
 
-    Последняя версия: 13.09.2025
+    pink-dark: #dc6781,
+    pink-medium: #f18daf,
+    pink-light: #f4b6c5,
+    pink-lighter: #f5ccd6,
+    pink-offwhite: #f5e2e7,
+    pink-bright: #f0dedd,
 
-    UPD: начальная версия
-*/
+    blue-medium: #9abce9,
+
+    white: #ffffff,
+    off-white: #dddddd,
+    gray-light: #aaaaaa,
+    gray: #888888,
+    gray-dark: #333333,
+    black: #000000,
+);
 
 :root {
-    /*
-    Шрифты
-*/
-
+    // Шрифты
     --base-font-family: arial, sans-serif;
 
-    --text-main: #333333;
-    --text-second: #888888;
+    // Основная палитра
+    @each $name, $value in $colors {
+        --#{$name}: #{$value};
+    }
 
-    /*
-    Основная палитра
-*/
-    --pink-dark: #dc6781;
-    --pink-medium: #f18daf;
-    --pink-light: #f4b6c5;
-    --pink-lighter: #f5ccd6;
-    --pink-offwhite: #f5e2e7;
-    --pink-bright: #f0dedd;
-    --blue-medium: #9abce9;
-    --white: #ffffff;
-    --off-white: #dddddd;
-    --gray-light: #aaaaaa;
-    --gray: #888888;
-    --gray-dark: #333333;
-    --black: #000000;
-
-    /*
-    Производное использование
-*/
+    // Производное использование
     --background-white: var(--white);
     --background-pink: var(--pink-offwhite);
 
-    /*
-    Скроллбары
-*/
+    // Скроллбары
 
     --scrollbar-thumb: var(--pink-medium);
     --scrollbar-track: var(--pink-light);
 
-    /*
-    Рамки
-*/
+    // Рамки
     --border: var(--pink-offwhite);
     --border-radius: 6px;
-    --border-radius_button: 4px;
+    --border-radius-button: 4px;
 
-    /*
-    Меню
-*/
+    // Меню
     --menu-item: var(--text-second);
 
-    /*
-    Ссылки
-*/
+    // Ссылки
     --link: var(--text-second);
     --link-hover: var(--blue-medium);
 
-    /*
-    Трансформациии
-*/
-
+    // Трансформации
     --button-hover: scale(1.05);
     --button-active: scale(0.95);
 }
