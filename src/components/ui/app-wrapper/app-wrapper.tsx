@@ -15,11 +15,7 @@ import IAppWrapper from "../../app-wrapper/app-wrapper.interface";
  * для всего содержимого приложения, обеспечивая базовую структуру макета
  */
 const AppWrapperUI: FC<IAppWrapper> = ({ children }) => {
-    return (
-        <div className={styles.wrapper}>
-            <main className={styles.main}>{children}</main>
-        </div>
-    );
+    return <div className={styles.wrapper}>{children}</div>;
 };
 
 export default AppWrapperUI;

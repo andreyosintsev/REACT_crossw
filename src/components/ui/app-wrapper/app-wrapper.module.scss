@@ -18,19 +18,3 @@
         margin-bottom: 50px;
     }
 }
-
-.main {
-    width: calc(100% - 320px);
-
-    @include media-max(desktop) {
-        width: 100%;
-        margin: 0;
-        padding: 0 16px;
-    }
-
-    @include media-max(tablet) {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-    }
-}
