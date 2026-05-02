@@ -1,8 +1,7 @@
 import { createPortal } from "react-dom";
 
-import ModalUI from "./modalUI";
-
 import IModal from "./modal.interface";
+import ModalUI from "./modalUI";
 
 /**
  * @component Функциональный компонент модального окна
@@ -18,13 +17,13 @@ import IModal from "./modal.interface";
  * @description Компонент отвечает за отображение модальных окон в приложении.
  * Использует React Portals для корректного позиционирования модальных окон
  */
-const Modal = ({ title, image, onClick, children }: IModal) => {
+const Modal = ({ title, image, children }: IModal) => {
     const modalRoot = document.getElementById("modals");
 
     if (!modalRoot) return null;
 
     return createPortal(
-        <ModalUI title={title} image={image} onClick={onClick}>
+        <ModalUI title={title} image={image}>
             {children}
         </ModalUI>,
         modalRoot,

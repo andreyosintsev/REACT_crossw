@@ -22,23 +22,22 @@ export interface IMenuMobileUI extends IMenuMobile {
 }
 
 const MenuMobileUI = ({ menuItems, title, isOpen, onClick }: IMenuMobileUI) => {
-    return (
-        <>
-            <Backdrop onClick={onClick} />
-            <div className={styles.menuMobile} onClick={onClick}>
-                {title && <div className={styles.menuMobile__title}>{title}</div>}
+    const style = isOpen ? styles.menuMobile : styles.menuMobile + " " + styles.menuMobile_hidden;
 
-                <ul className={styles.menuMobile__items}>
-                    {menuItems.map((menuItem, index) => (
-                        <li key={index} className={styles.menuMobile__item}>
-                            <a className={styles.menuMobile__link} href={menuItem.link} title={menuItem.title}>
-                                {menuItem.title}
-                            </a>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </>
+    return (
+        <div className={style} onClick={onClick}>
+            {title && <div className={styles.menuMobile__title}>{title}</div>}
+
+            <ul className={styles.menuMobile__items}>
+                {menuItems.map((menuItem, index) => (
+                    <li key={index} className={styles.menuMobile__item}>
+                        <a className={styles.menuMobile__link} href={menuItem.link} title={menuItem.title}>
+                            {menuItem.title}
+                        </a>
+                    </li>
+                ))}
+            </ul>
+        </div>
     );
 };
 

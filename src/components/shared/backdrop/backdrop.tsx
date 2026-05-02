@@ -1,5 +1,6 @@
 import BackdropUI from "./backdropUI";
-import IBackdrop from "./backdrop.interface";
+
+import storeApp from "../../../store/storeApp/storeApp";
 
 /**
  * @component Функциональный компонент подложки модального окна
@@ -12,8 +13,14 @@ import IBackdrop from "./backdrop.interface";
  * @description Компонент представляет собой затемняющую подложку, которая отображается
  * при открытии модального окна и обеспечивает закрытие модального окна при клике
  */
-const ModalBackdrop = ({ onClick }: IBackdrop) => {
-    return <BackdropUI onClick={onClick} />;
+const Backdrop = () => {
+    const isMenuMobileOpen = storeApp((state) => state.isMenuMobileOpen);
+    const isModalOpen = storeApp((state) => state.isModalOpen);
+    const closeAll = storeApp((state) => state.closeAllOverlays);
+
+    const isVisible = isMenuMobileOpen || isModalOpen;
+
+    return <BackdropUI visible={isVisible} onClick={closeAll} />;
 };
 
-export default ModalBackdrop;
+export default Backdrop;

@@ -1,14 +1,13 @@
 import { useEffect } from "react";
-
 import { BrowserRouter } from "react-router-dom";
+
+import { fetchNews, fetchTasks } from "../../utils/api/apiService";
 
 import Router from "../router/router";
 
 import storeApp from "../../store/storeApp/storeApp";
 import storeNews from "../../store/storeNews/storeNews";
 import storeTasks from "../../store/storeTasks/storeTasks";
-
-import { fetchNews, fetchTasks } from "../../utils/api/apiService";
 
 /**
  * Корневой компонент приложения
@@ -38,6 +37,8 @@ const App = () => {
     const setTasks = storeTasks((state) => state.setTasks);
     const setLoading = storeApp((state) => state.setLoading);
     const setError = storeApp((state) => state.setError);
+
+    const isMenuMobileOpen = storeApp((state) => state.isMenuMobileOpen);
 
     /**
      * Эффект инициализации приложения
@@ -78,6 +79,19 @@ const App = () => {
 
         loadData();
     }, [setNews, setTasks, setLoading, setError]);
+
+    //Отключение скроллинга при открытии меню
+    useEffect(() => {
+        if (isMenuMobileOpen) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "auto";
+        }
+
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, [isMenuMobileOpen]);
 
     return (
         <BrowserRouter>

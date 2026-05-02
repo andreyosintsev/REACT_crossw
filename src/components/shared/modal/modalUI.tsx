@@ -16,9 +16,8 @@ import styles from "./modalUI.module.scss";
  *
  * @returns {JSX.Element} Визуализированный компонент модального окна
  */
-const ModalUI = ({ title, image, onClick, children }: IModal) => (
+const ModalUI = ({ title, image, children }: IModal) => (
     <>
-        <Backdrop onClick={onClick} />
         <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
             <img className={styles.modal__image} src={`/images/${image}`} alt="" />
             <p>{title}</p>

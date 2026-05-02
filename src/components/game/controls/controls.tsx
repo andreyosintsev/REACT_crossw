@@ -123,7 +123,7 @@ const Controls = ({ onRestart, onHelp }: IControls) => {
                 </button>
             </div>
             {modalShow && (
-                <Modal image="modal1.png" title="Вы хотите начать заново?" onClick={closeHandler}>
+                <Modal image="modal1.png" title="Вы хотите начать заново?">
                     <ModalButton onClick={dialogRestartHandler}>Начать заново</ModalButton>
                     <ModalButton onClick={dialogCancelHandler}>Отменить</ModalButton>
                 </Modal>

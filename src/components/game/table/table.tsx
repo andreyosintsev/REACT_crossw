@@ -96,7 +96,7 @@ const Table: FC<ITable> = ({ task }) => {
                     <Board width={task.width} height={task.height} />
                 </DynamicGrid>
                 {modalShow && (
-                    <Modal image="modal1.png" title="Поздравляем, вы разгадали кроссворд!" onClick={closeHandler}>
+                    <Modal image="modal1.png" title="Поздравляем, вы разгадали кроссворд!">
                         <ModalButton onClick={closeHandler}>Закрыть</ModalButton>
                     </Modal>
                 )}

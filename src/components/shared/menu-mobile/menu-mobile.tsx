@@ -25,7 +25,7 @@ const MenuMobile = ({ menuItems, title }: IMenuMobile) => {
     const isOpen = storeApp((state) => state.isMenuMobileOpen);
     const setMenu = storeApp((state) => state.setMenuMobile);
 
-    return isOpen ? <MenuMobileUI menuItems={menuItems} title={title} isOpen={isOpen} onClick={() => setMenu(false)} /> : null;
+    return <MenuMobileUI menuItems={menuItems} title={title} isOpen={isOpen} onClick={() => setMenu(false)} />;
 };
 
 export default MenuMobile;

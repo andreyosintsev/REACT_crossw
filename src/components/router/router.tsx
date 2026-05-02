@@ -15,6 +15,7 @@ import Game from "../../pages/game/game";
 import Modal from "../shared/modal/modal";
 import ModalButton from "../shared/button/button";
 import Preloader from "../shared/preloader/preloader";
+import Backdrop from "../shared/backdrop/backdrop";
 
 import storeTasks from "../../store/storeTasks/storeTasks";
 import storeApp from "../../store/storeApp/storeApp";
@@ -107,11 +108,7 @@ const Router: FC = () => {
                 </>
             )}
             {isModalShow && (
-                <Modal
-                    image="modal1.png"
-                    title={error ? `Ошибка загрузки кроссворда: ${error}` : "Ошибка загрузки кроссворда"}
-                    onClick={closeHandler}
-                >
+                <Modal image="modal1.png" title={error ? `Ошибка загрузки кроссворда: ${error}` : "Ошибка загрузки кроссворда"}>
                     <ModalButton
                         onClick={() => {
                             navigate("/");
@@ -122,6 +119,7 @@ const Router: FC = () => {
                     </ModalButton>
                 </Modal>
             )}
+            <Backdrop />
         </>
     );
 };

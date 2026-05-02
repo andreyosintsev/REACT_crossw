@@ -21,8 +21,14 @@ const storeApp = create<IStoreApp>((set) => ({
     clearError: () => set({ error: null }),
 
     isMenuMobileOpen: false,
+    isModalOpen: false,
     setMenuMobile: (isOpen) => set({ isMenuMobileOpen: isOpen }),
-    toggleMenuMobile: () => set((state) => ({ isMenuMobileOpen: !state.isMenuMobileOpen })),
+    setModal: (isOpen) => set({ isModalOpen: isOpen }),
+
+    closeAllOverlays: () => {
+        set({ isMenuMobileOpen: false });
+        set({ isModalOpen: false });
+    },
 }));
 
 export default storeApp;

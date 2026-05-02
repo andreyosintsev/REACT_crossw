@@ -38,9 +38,13 @@ interface IStoreApp {
     clearError: () => void;
 
     isMenuMobileOpen: boolean;
+    isModalOpen: boolean;
 
     setMenuMobile: (isOpen: boolean) => void;
-    toggleMenuMobile: () => void;
+    setModal: (isOpen: boolean) => void;
+
+    //Закрытие всех оверлеев
+    closeAllOverlays: () => void;
 }
 
 export default IStoreApp;

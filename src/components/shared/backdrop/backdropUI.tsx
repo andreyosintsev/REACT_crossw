@@ -1,5 +1,3 @@
-import IBackdrop from "./backdrop.interface";
-
 import styles from "./backdropUI.module.scss";
 
 /**
@@ -14,6 +12,16 @@ import styles from "./backdropUI.module.scss";
  * которая появляется при открытии модального окна и обеспечивает его закрытие
  * при клике вне содержимого
  */
-const BackdropUI = ({ onClick }: IBackdrop) => <div className={styles.backdrop} onClick={onClick}></div>;
+
+interface IBackdrop {
+    visible: boolean;
+    onClick: (e: React.MouseEvent) => void;
+}
+
+const BackdropUI = ({ visible, onClick }: IBackdrop) => {
+    const style = visible ? styles.backdrop : styles.backdrop + " " + styles.backdrop__hidden;
+
+    return <div className={style} onClick={onClick}></div>;
+};
 
 export default BackdropUI;
