@@ -1,11 +1,13 @@
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
 
 import { BrowserRouter } from "react-router-dom";
 
-import AppRouter from "../app-router/app-router";
+import Router from "../router/router";
+
 import storeApp from "../../store/storeApp/storeApp";
 import storeNews from "../../store/storeNews/storeNews";
 import storeTasks from "../../store/storeTasks/storeTasks";
+
 import { fetchNews, fetchTasks } from "../../utils/api/apiService";
 
 /**
@@ -30,7 +32,7 @@ import { fetchNews, fetchTasks } from "../../utils/api/apiService";
  * // Точка входа в приложение
  * ReactDOM.render(<App />, document.getElementById('root'));
  */
-const App: FC = () => {
+const App = () => {
     // Получаем методы установки данных в хранилища
     const setNews = storeNews((state) => state.setNews);
     const setTasks = storeTasks((state) => state.setTasks);
@@ -79,7 +81,7 @@ const App: FC = () => {
 
     return (
         <BrowserRouter>
-            <AppRouter />
+            <Router />
         </BrowserRouter>
     );
 };

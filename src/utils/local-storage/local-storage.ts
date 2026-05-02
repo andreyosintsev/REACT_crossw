@@ -1,21 +1,14 @@
-import IBoardElement from "../../pages/game/board-element/board-element.interface";
+import IBoardElement from "../../components/game/board-element/board-element.interface";
+
 import { ICrosswBoard } from "../../store/storeUser/storeUser.interface";
 import { ITask } from "../api/api.interface";
-import {
-    BOARD_PREFIX,
-    TASK_PREFIX,
-    TASKS_KEY,
-    USER_BOARD_PREFIX,
-} from "./local-storage.constants";
+import { BOARD_PREFIX, TASK_PREFIX, TASKS_KEY, USER_BOARD_PREFIX } from "./local-storage.constants";
 
 /** Сохраняет игровое поле в localStorage
  * @param boardId идентификатор поля
  * @param board данные игрового поля
  */
-export const saveBoardToLocalStorage = (
-    boardId: number,
-    board: IBoardElement[]
-): void => {
+export const saveBoardToLocalStorage = (boardId: number, board: IBoardElement[]): void => {
     localStorage.setItem(`${BOARD_PREFIX}${boardId}`, JSON.stringify(board));
 };
 
@@ -23,9 +16,7 @@ export const saveBoardToLocalStorage = (
  * @param boardId идентификатор поля
  * @returns загруженное поле или null если не найдено
  */
-export const loadBoardFromLocalStorage = (
-    boardId: number
-): IBoardElement[] | null => {
+export const loadBoardFromLocalStorage = (boardId: number): IBoardElement[] | null => {
     const board = localStorage.getItem(`${BOARD_PREFIX}${boardId}`);
     return board ? JSON.parse(board) : null;
 };
@@ -73,10 +64,7 @@ export const saveTasksToLocalStorage = (board: ITask[]): void => {
  * @param {number} id - Уникальный идентификатор кроссворда
  * @param {ICrosswBoard} data - Объект с данными доски для сохранения
  */
-export const saveCrosswordBoardToLocalStorage = (
-    id: number,
-    data: ICrosswBoard
-): void => {
+export const saveCrosswordBoardToLocalStorage = (id: number, data: ICrosswBoard): void => {
     const serializedData = JSON.stringify(data);
     localStorage.setItem(`${USER_BOARD_PREFIX}${id}`, serializedData);
 };
@@ -86,9 +74,7 @@ export const saveCrosswordBoardToLocalStorage = (
  * @param {number} id - Уникальный идентификатор кроссворда
  * @returns {ICrosswBoard | null} Объект с данными доски или null если не найден
  */
-export const loadCrosswordBoardFromLocalStorage = (
-    id: number
-): ICrosswBoard | null => {
+export const loadCrosswordBoardFromLocalStorage = (id: number): ICrosswBoard | null => {
     const serializedData = localStorage.getItem(`${USER_BOARD_PREFIX}${id}`);
     return serializedData ? JSON.parse(serializedData) : null;
 };
@@ -99,10 +85,7 @@ export const loadCrosswordBoardFromLocalStorage = (
  * @param {ICrosswBoard} task - Обновленный объект с данными доски
  * @returns {void}
  */
-export const updateCrosswordBoardFromLocalStorage = (
-    id: number,
-    task: ICrosswBoard
-): void => {
+export const updateCrosswordBoardFromLocalStorage = (id: number, task: ICrosswBoard): void => {
     localStorage.setItem(`${USER_BOARD_PREFIX}${id}`, JSON.stringify(task));
 };
 

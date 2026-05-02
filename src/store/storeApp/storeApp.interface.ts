@@ -37,7 +37,10 @@ interface IStoreApp {
      */
     clearError: () => void;
 
+    isMenuMobileOpen: boolean;
 
+    setMenuMobile: (isOpen: boolean) => void;
+    toggleMenuMobile: () => void;
 }
 
 export default IStoreApp;

@@ -8,7 +8,8 @@ import {
     saveBoardToLocalStorage,
     saveCrosswordBoardToLocalStorage,
 } from "../../utils/local-storage/local-storage";
-import IBoardElement from "../../pages/game/board-element/board-element.interface";
+
+import IBoardElement from "../../components/game/board-element/board-element.interface";
 import { TBoardElementContent } from "../../utils/api/api.interface";
 
 /**
@@ -28,7 +29,7 @@ import { TBoardElementContent } from "../../utils/api/api.interface";
  * // Использование в компоненте игры
  * const { task, board, handleBoardClick, initializeGame } = gameStoreControl();
  */
-export const storeGame = create<IStoreGame>((set, get) => ({
+const storeGame = create<IStoreGame>((set, get) => ({
     task: null,
     board: [],
     horizontalLegend: {
@@ -345,3 +346,5 @@ export const storeGame = create<IStoreGame>((set, get) => ({
         saveBoardToLocalStorage(task.id, cleanedBoard);
     },
 }));
+
+export default storeGame;

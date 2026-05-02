@@ -1,8 +1,8 @@
 import { FC } from "react";
 
-import PageBlock from "../../components/page-block/page-block";
-import PageSlider from "../../components/page-slider/page-slider";
-import PageNews from "../../components/page-news/page-news";
+import PageBlock from "../../components/shared/block/block";
+import PageSlider from "../../components/home/slider/slider";
+import PageNews from "../../components/home/news/news";
 
 import IHome from "./home.interface";
 import styles from "./home.module.scss";

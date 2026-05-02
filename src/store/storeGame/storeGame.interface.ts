@@ -1,6 +1,7 @@
-import IBoardElement from "../../pages/game/board-element/board-element.interface";
-import ILegendHorizontal from "../../pages/game/legend-horizontal/legend-horizontal.interface";
-import { IVerticalLegend } from "../../pages/game/table/table.interface";
+import IBoardElement from "../../components/game/board-element/board-element.interface";
+import ILegendHorizontal from "../../components/game/legend-horizontal/legend-horizontal.interface";
+import ILegendVertical from "../../components/game/legend-vertical/legend-vertical.interface";
+
 import { ITask } from "../../utils/api/api.interface";
 import { ICrosswBoard } from "../storeUser/storeUser.interface";
 
@@ -12,7 +13,7 @@ interface IStoreGame {
     /** Горизонтальная легенда (подсказки сверху) */
     horizontalLegend: ILegendHorizontal;
     /** Вертикальная легенда (подсказки слева) */
-    verticalLegend: IVerticalLegend;
+    verticalLegend: ILegendVertical;
     /** Флаг победы в игре */
     isWin: boolean;
     /** Флаг пройденной игры */
@@ -87,7 +88,7 @@ interface IStoreGame {
      * @description
      * Анализирует решение по строкам и создает числовые подсказки
      */
-    createVerticalLegend: (task: ITask) => IVerticalLegend;
+    createVerticalLegend: (task: ITask) => ILegendVertical;
 
     /**
      * Создает горизонтальную легенду (подсказки сверху)

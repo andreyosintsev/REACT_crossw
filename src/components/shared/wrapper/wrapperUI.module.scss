@@ -1,0 +1,20 @@
+@use "../../../scss/breakpoints.scss" as *;
+
+.wrapper {
+    display: flex;
+    max-width: 1440px;
+    margin: 68px auto 0;
+
+    @include media-max(desktop) {
+        display: block;
+    }
+
+    @include media-max(laptop) {
+        display: block;
+    }
+
+    @include media-max(tablet) {
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+}

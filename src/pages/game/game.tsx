@@ -1,19 +1,19 @@
-import { useEffect, useLayoutEffect, FC } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-import AppStyles from "./game.module.scss";
+import Block from "../../components/shared/block/block";
+import Table from "../../components/game/table/table";
+import Controls from "../../components/game/controls/controls";
+import Tasks from "../../components/game/tasks/tasks";
 
-import PageBlock from "../../components/page-block/page-block";
-import Table from "./table/table";
-import Controls from "./controls/controls";
-
-import Tasks from "./tasks/tasks";
 import storeTasks from "../../store/storeTasks/storeTasks";
-import { storeGame } from "../../store/storeGame/storeGame";
+import storeGame from "../../store/storeGame/storeGame";
 import storeUser from "../../store/storeUser/storeUser";
 import { loadCrosswordBoardFromLocalStorage } from "../../utils/local-storage/local-storage";
 import storeApp from "../../store/storeApp/storeApp";
 import storeLegend from "../../store/storeLegend/storeLegend";
+
+import styles from "./game.module.scss";
 
 /**
  * Компонент страницы игры в японский кроссворд
@@ -29,7 +29,7 @@ import storeLegend from "../../store/storeLegend/storeLegend";
  * - Обработка параметров URL для определения задачи
  *
  */
-const Game: FC = () => {
+const Game = () => {
     // Получаем методы и состояние из различных хранилищ Zustand
 
     /** Функция получения задачи по ID из хранилища задач */
@@ -111,12 +111,12 @@ const Game: FC = () => {
             <aside>
                 <Tasks /> {/* Здеся будет ваша реклама */}
             </aside>
-            <main className={`${AppStyles.main}`}>
+            <main className={`${styles.main}`}>
                 {!error && task && (
-                    <PageBlock title={"Кроссворд № " + taskId}>
+                    <Block title={"Кроссворд № " + taskId}>
                         <Table task={task} />
                         <Controls onRestart={handleRestart} onHelp={handleHelp} />
-                    </PageBlock>
+                    </Block>
                 )}
             </main>
         </>
