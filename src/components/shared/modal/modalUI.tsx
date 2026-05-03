@@ -1,4 +1,3 @@
-import Backdrop from "../backdrop/backdrop";
 import IModal from "./modal.interface";
 
 import styles from "./modalUI.module.scss";

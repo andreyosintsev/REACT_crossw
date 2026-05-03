@@ -1,4 +1,5 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
+import { Link } from "react-router-dom";
 import cn from "classnames";
 
 import ISlider from "./slider.interface";
@@ -20,52 +21,18 @@ const SliderUI = ({ images }: ISlider) => {
     const sliderRef = useRef<HTMLUListElement | null>(null);
     const slidesRef = useRef<HTMLLIElement[]>([]);
 
-    const sliderStart = useRef(0);
-    const sliderWidth = useRef(0);
-    const slidesWidth = useRef(0);
-
     const getSlideWidth = (slide: HTMLLIElement) => {
         const style = getComputedStyle(slide);
         return slide.offsetWidth + parseInt(style.marginLeft) + parseInt(style.marginRight);
     };
-
-    const calculateSlidesWidth = () => {
-        slidesWidth.current = slidesRef.current.reduce((acc, slide) => acc + getSlideWidth(slide), 0);
-    };
-
-    useEffect(() => {
-        if (!sliderRef.current) return;
-
-        sliderWidth.current = sliderRef.current.clientWidth;
-        calculateSlidesWidth();
-
-        sliderRef.current.scroll({
-            left: sliderStart.current,
-            behavior: "smooth",
-        });
-
-        const handleResize = () => {
-            if (!sliderRef.current) return;
-            sliderWidth.current = sliderRef.current.clientWidth;
-            calculateSlidesWidth();
-        };
-
-        window.addEventListener("resize", handleResize);
-
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
 
     const slideLeft = () => {
         if (!sliderRef.current || !slidesRef.current.length) return;
 
         const step = getSlideWidth(slidesRef.current[0]);
 
-        sliderStart.current = sliderStart.current - step < 0 ? 0 : sliderStart.current - step;
-
-        sliderRef.current.scroll({
-            left: sliderStart.current,
+        sliderRef.current.scrollBy({
+            left: -step,
             behavior: "smooth",
         });
     };
@@ -73,15 +40,10 @@ const SliderUI = ({ images }: ISlider) => {
     const slideRight = () => {
         if (!sliderRef.current || !slidesRef.current.length) return;
 
-        const step = getSlideWidth(slidesRef.current[slidesRef.current.length - 1]);
+        const step = getSlideWidth(slidesRef.current[0]);
 
-        let nextStart = sliderStart.current + step;
-        nextStart = Math.min(nextStart, slidesWidth.current - sliderWidth.current);
-
-        sliderStart.current = nextStart;
-
-        sliderRef.current.scroll({
-            left: sliderStart.current,
+        sliderRef.current.scrollBy({
+            left: step,
             behavior: "smooth",
         });
     };
@@ -104,7 +66,7 @@ const SliderUI = ({ images }: ISlider) => {
                             <img className={styles.slider__image} src={image.src} alt={image.alt} />
                             <div className={styles.slider__info}>{image.alt}</div>
                         </div>
-                        <a className={styles.slider__link} href={image.link} title="Кроссворд № 1"></a>
+                        <Link className={styles.slider__link} to={image.link} title="Кроссворд № 1"></Link>
                     </li>
                 ))}
             </ul>
