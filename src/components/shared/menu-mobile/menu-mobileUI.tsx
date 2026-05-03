@@ -1,7 +1,5 @@
 import { IMenuMobile } from "./menu-mobile";
 
-import Backdrop from "../backdrop/backdrop";
-
 import styles from "./menu-mobileUI.module.scss";
 
 /**

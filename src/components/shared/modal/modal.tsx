@@ -1,7 +1,11 @@
+import { useEffect } from "react";
 import { createPortal } from "react-dom";
 
 import IModal from "./modal.interface";
+
 import ModalUI from "./modalUI";
+
+import storeApp from "../../../store/storeApp/storeApp";
 
 /**
  * @component Функциональный компонент модального окна
@@ -18,6 +22,16 @@ import ModalUI from "./modalUI";
  * Использует React Portals для корректного позиционирования модальных окон
  */
 const Modal = ({ title, image, children }: IModal) => {
+    const setModal = storeApp((state) => state.setModal);
+
+    useEffect(() => {
+        setModal(true);
+
+        return () => {
+            setModal(false);
+        };
+    }, [setModal]);
+
     const modalRoot = document.getElementById("modals");
 
     if (!modalRoot) return null;

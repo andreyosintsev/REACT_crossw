@@ -22,12 +22,12 @@ const storeApp = create<IStoreApp>((set) => ({
 
     isMenuMobileOpen: false,
     isModalOpen: false,
+
     setMenuMobile: (isOpen) => set({ isMenuMobileOpen: isOpen }),
     setModal: (isOpen) => set({ isModalOpen: isOpen }),
 
     closeAllOverlays: () => {
         set({ isMenuMobileOpen: false });
-        set({ isModalOpen: false });
     },
 }));
 
