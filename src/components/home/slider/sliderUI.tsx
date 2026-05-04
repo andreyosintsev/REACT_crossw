@@ -49,7 +49,7 @@ const SliderUI = ({ images }: ISlider) => {
     };
 
     return (
-        <div className={styles.slider} id="slider-new">
+        <div className={styles.slider}>
             <div className={cn(styles.slider__button, styles.slider__button_left)} onClick={slideLeft}>
                 <img className={styles.slider__image} src="/images/slider/arrow_left.svg" alt="<" />
             </div>

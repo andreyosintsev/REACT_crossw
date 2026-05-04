@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { loadCrosswordBoardFromLocalStorage } from "../../utils/local-storage/local-storage";
 
 import PageBlock from "../../components/shared/block/block";
 import PageSlider from "../../components/home/slider/slider";
@@ -10,6 +11,7 @@ import styles from "./home.module.scss";
 import { SITE_PROTOCOL, SITE_DOMAIN } from "../../declarations/constants";
 import { ITask } from "../../utils/api/api.interface";
 import storeTasks from "../../store/storeTasks/storeTasks";
+import storeUser from "../../store/storeUser/storeUser";
 
 /**
  * Компонент главной страницы приложения с японскими кроссвордами
@@ -48,7 +50,7 @@ const Home: FC<IHome> = () => {
      * // Возвращает массив вида:
      * [{
      *   src: "https://site.com/tasks/image1.jpg",
-     *   alt: "Разгадать кроссворд № 1",
+     *   alt: "Кроссворд № 1",
      *   link: "game/1"
      * }]
      */
@@ -56,7 +58,7 @@ const Home: FC<IHome> = () => {
         tasks.map((task) => {
             return {
                 src: `${SITE_PROTOCOL}${SITE_DOMAIN}/tasks/${task.image_preview}`,
-                alt: `Разгадать кроссворд № ${task.id}`,
+                alt: `Кроссворд № ${task.id}`,
                 link: `game/${task.id}`,
             };
         });
@@ -76,6 +78,21 @@ const Home: FC<IHome> = () => {
      * так как элементы легенд могут сохраняться в памяти после
      * предыдущих игровых сессий
      */
+
+    const { tasksCompleted, tasksNotCompleted } = tasks.reduce<{
+        tasksCompleted: ITask[];
+        tasksNotCompleted: ITask[];
+    }>(
+        (acc, task) => {
+            if (loadCrosswordBoardFromLocalStorage(task.id)?.gameCompleted) {
+                acc.tasksCompleted.push(task);
+            } else {
+                acc.tasksNotCompleted.push(task);
+            }
+            return acc;
+        },
+        { tasksCompleted: [], tasksNotCompleted: [] },
+    );
 
     return (
         <main className={styles.main}>
@@ -97,10 +114,16 @@ const Home: FC<IHome> = () => {
                     </p>
                 </div>
             </PageBlock>
-            <PageBlock title={"Новые кроссворды"}>
-                <PageSlider images={tasksToImages(tasks)} />
-            </PageBlock>
-            <PageBlock title={"Решенные кроссворды"}></PageBlock>
+            {tasksNotCompleted.length > 0 && (
+                <PageBlock title={"Новые кроссворды"}>
+                    <PageSlider images={tasksToImages(tasksNotCompleted)} />
+                </PageBlock>
+            )}
+            {tasksCompleted.length > 0 && (
+                <PageBlock title={"Решенные кроссворды"}>
+                    <PageSlider images={tasksToImages(tasksCompleted)} />
+                </PageBlock>
+            )}
             <PageBlock title={"Новости сайта"}>
                 <PageNews />
             </PageBlock>

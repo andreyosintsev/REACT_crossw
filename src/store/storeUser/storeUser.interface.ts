@@ -12,7 +12,7 @@ export interface IUserStore {
     /** Дата рождения пользователя */
     dateOfBirth: string;
     /** Список разгаданных кроссвордов пользователя */
-    crosswBoards: ICrosswBoard[] | null;
+    crosswBoards: ICrosswBoard[];
     /** Рейтинг пользователя */
     rating: number;
     /** Настройки пользователя */

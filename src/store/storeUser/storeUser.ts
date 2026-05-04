@@ -23,7 +23,7 @@ const storeUser = create<IUserStore>((set, get) => ({
     name: "",
     email: "",
     dateOfBirth: "",
-    crosswBoards: null,
+    crosswBoards: [],
     rating: 0,
     userSettings: {
         theme: {
@@ -43,17 +43,16 @@ const storeUser = create<IUserStore>((set, get) => ({
 
     setCrosswordBoards: (newBoard) => {
         saveCrosswordBoardToLocalStorage(newBoard.id, newBoard);
+
         set((state) => ({
-            crosswBoards: state.crosswBoards
-                ? state.crosswBoards.some((b) => b.id === newBoard.id)
-                    ? state.crosswBoards.map((b) => (b.id === newBoard.id ? newBoard : b))
-                    : [...state.crosswBoards, newBoard]
-                : [newBoard],
+            crosswBoards: state.crosswBoards.some((b) => b.id === newBoard.id)
+                ? state.crosswBoards.map((b) => (b.id === newBoard.id ? newBoard : b))
+                : [...state.crosswBoards, newBoard],
         }));
     },
 
     getCrosswordBoardById: (id) =>
-        get().crosswBoards?.find((board) => board.id === id) || {
+        get().crosswBoards.find((board) => board.id === id) || {
             gameCompleted: false,
             id: id,
             time: "",
