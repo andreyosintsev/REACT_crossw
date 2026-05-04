@@ -63,6 +63,15 @@ const Home: FC<IHome> = () => {
             };
         });
 
+    const tasksToImagesCompleted = (tasks: ITask[]) =>
+        tasks.map((task) => {
+            return {
+                src: `${SITE_PROTOCOL}${SITE_DOMAIN}/tasks/${task.image_solved}`,
+                alt: `№ ${task.id} ${task.name}`,
+                link: `game/${task.id}`,
+            };
+        });
+
     /**
      * Эффект очистки легенд при монтировании компонента
      * @dependency [clearLegend] - Зависит от функции очистки легенд
@@ -121,7 +130,7 @@ const Home: FC<IHome> = () => {
             )}
             {tasksCompleted.length > 0 && (
                 <PageBlock title={"Решенные кроссворды"}>
-                    <PageSlider images={tasksToImages(tasksCompleted)} />
+                    <PageSlider images={tasksToImagesCompleted(tasksCompleted)} />
                 </PageBlock>
             )}
             <PageBlock title={"Новости сайта"}>
