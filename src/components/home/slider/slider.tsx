@@ -13,6 +13,6 @@ import SliderUI from "./sliderUI";
  * @description Компонент представляет собой карусель изображений (слайдер),
  * который используется для отображения серии изображений на странице
  */
-const PageSlider = ({ images }: ISlider) => <SliderUI images={images}></SliderUI>;
+const Slider = ({ images }: ISlider) => <SliderUI images={images}></SliderUI>;
 
-export default PageSlider;
+export default Slider;

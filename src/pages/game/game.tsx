@@ -9,9 +9,10 @@ import Tasks from "../../components/game/tasks/tasks";
 import storeTasks from "../../store/storeTasks/storeTasks";
 import storeGame from "../../store/storeGame/storeGame";
 import storeUser from "../../store/storeUser/storeUser";
-import { loadCrosswordBoardFromLocalStorage } from "../../utils/local-storage/local-storage";
 import storeApp from "../../store/storeApp/storeApp";
 import storeLegend from "../../store/storeLegend/storeLegend";
+
+import { loadCrosswordBoardFromLocalStorage } from "../../utils/local-storage/local-storage";
 
 import styles from "./game.module.scss";
 
@@ -109,11 +110,11 @@ const Game = () => {
     return (
         <>
             <aside>
-                <Tasks /> {/* Здеся будет ваша реклама */}
+                <Tasks />
             </aside>
             <main className={`${styles.main}`}>
                 {!error && task && (
-                    <Block title={"Кроссворд № " + taskId}>
+                    <Block title={"Кроссворд " + taskId}>
                         <Table task={task} />
                         <Controls onRestart={handleRestart} onHelp={handleHelp} />
                     </Block>

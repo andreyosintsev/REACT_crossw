@@ -2,7 +2,7 @@
 export const SITE_DOMAIN = "crossw.ru";
 
 //Протокол стайта
-export const SITE_PROTOCOL = "http://";
+export const SITE_PROTOCOL = "https://";
 
 //Название сайта
 export const SITE_NAME = "Японские кроссворды";

@@ -100,7 +100,7 @@ const Home: FC<IHome> = () => {
             <PageBlock title={"Новые кроссворды"}>
                 <PageSlider images={tasksToImages(tasks)} />
             </PageBlock>
-            <PageBlock title={"Решённые кроссворды"}></PageBlock>
+            <PageBlock title={"Решенные кроссворды"}></PageBlock>
             <PageBlock title={"Новости сайта"}>
                 <PageNews />
             </PageBlock>
