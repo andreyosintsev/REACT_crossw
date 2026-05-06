@@ -1,17 +1,16 @@
 import { FC } from "react";
 import { loadCrosswordBoardFromLocalStorage } from "../../utils/local-storage/local-storage";
 
+import Page from "../../components/shared/page/page";
 import Block from "../../components/shared/block/block";
 import Slider from "../../components/home/slider/slider";
 import News from "../../components/home/news/news";
 
 import IHome from "./home.interface";
-import styles from "./home.module.scss";
 
 import { SITE_PROTOCOL, SITE_DOMAIN } from "../../declarations/constants";
 import { ITask } from "../../utils/api/api.interface";
 import storeTasks from "../../store/storeTasks/storeTasks";
-import storeUser from "../../store/storeUser/storeUser";
 
 /**
  * Компонент главной страницы приложения с японскими кроссвордами
@@ -104,7 +103,7 @@ const Home: FC<IHome> = () => {
     );
 
     return (
-        <main className={styles.main}>
+        <Page>
             <Block>
                 <div className="block__text">
                     <p>
@@ -137,7 +136,7 @@ const Home: FC<IHome> = () => {
             <Block title={"Новости сайта"}>
                 <News />
             </Block>
-        </main>
+        </Page>
     );
 };
 

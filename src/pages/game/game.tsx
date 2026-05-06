@@ -1,10 +1,10 @@
 import { useEffect, useLayoutEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
+import Page from "../../components/shared/page/page";
 import Block from "../../components/shared/block/block";
 import Table from "../../components/game/table/table";
 import Controls from "../../components/game/controls/controls";
-import Tasks from "../../components/game/tasks/tasks";
 
 import storeTasks from "../../store/storeTasks/storeTasks";
 import storeGame from "../../store/storeGame/storeGame";
@@ -13,8 +13,6 @@ import storeApp from "../../store/storeApp/storeApp";
 import storeLegend from "../../store/storeLegend/storeLegend";
 
 import { loadCrosswordBoardFromLocalStorage } from "../../utils/local-storage/local-storage";
-
-import styles from "./game.module.scss";
 
 /**
  * Компонент страницы игры в японский кроссворд
@@ -108,7 +106,7 @@ const Game = () => {
     }
 
     return (
-        <main className={styles.main}>
+        <Page>
             <Block>
                 <Controls onRestart={handleRestart} onHelp={handleHelp} />
             </Block>
@@ -117,7 +115,7 @@ const Game = () => {
                     <Table task={task} />
                 </Block>
             )}
-        </main>
+        </Page>
     );
 };
 
