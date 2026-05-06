@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import IStoreApp from "./storeApp.interface";
+import { IStoreApp } from "./storeApp.interface";
 
 /**
  * Хранилище Zustand для хранения состояния приложения

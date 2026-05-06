@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import IStoreNews from "./storeNews.interface";
+import { IStoreNews } from "./storeNews.interface";
 
 /**
  * Хранилище Zustand для управления новостями
@@ -25,7 +25,7 @@ import IStoreNews from "./storeNews.interface";
 const storeNews = create<IStoreNews>((set, get) => ({
     news: [],
 
-    setNews: (news) => set({ news: news }),
+    setNews: (news) => set({ news: news ?? [] }),
 }));
 
 export default storeNews;

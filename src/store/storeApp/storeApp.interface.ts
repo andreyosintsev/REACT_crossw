@@ -1,4 +1,4 @@
-interface IStoreApp {
+export interface IStoreApp {
     /** Флаг процесса загрузки */
     isLoading: boolean;
     /** Сообщение об ошибке */
@@ -46,5 +46,3 @@ interface IStoreApp {
     //Закрытие всех оверлеев
     closeAllOverlays: () => void;
 }
-
-export default IStoreApp;
