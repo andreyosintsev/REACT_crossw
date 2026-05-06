@@ -35,7 +35,7 @@ const Controls = ({ onRestart, onHelp }: IControls) => {
     // Состояние видимости модального окна подтверждения
     const [modalShow, setModalShow] = useState(false);
     // Получаем состояние и методы из игрового хранилища
-    const { gameCompleted, setGameCompleted, setWin } = storeGame();
+    const { solved, setGameCompleted, setWin } = storeGame();
 
     /**
      * Обработчик клика по кнопке "Начать заново"
@@ -118,7 +118,7 @@ const Controls = ({ onRestart, onHelp }: IControls) => {
                 <button className={styles.restart} onClick={restartHandler}>
                     Начать заново
                 </button>
-                <button className={`${styles.tip} ${gameCompleted && styles.blocked}`} onClick={helpHandler}>
+                <button className={`${styles.tip} ${solved && styles.blocked}`} onClick={helpHandler}>
                     Подсказка
                 </button>
             </div>

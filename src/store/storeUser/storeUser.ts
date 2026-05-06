@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { IUserStore } from "./storeUser.interface";
-import { saveCrosswordBoardToLocalStorage } from "../../utils/local-storage/local-storage";
+import { saveCrosswordToLocalStorage } from "../../utils/local-storage/local-storage";
+import { findCrosswordById, upsertCrossword } from "../../utils/game/game";
 
 /**
  * Хранилище Zustand для управления пользовательскими данными
@@ -23,7 +24,7 @@ const storeUser = create<IUserStore>((set, get) => ({
     name: "",
     email: "",
     dateOfBirth: "",
-    crosswBoards: [],
+    crosswords: [],
     rating: 0,
     userSettings: {
         theme: {
@@ -41,28 +42,20 @@ const storeUser = create<IUserStore>((set, get) => ({
     token: "",
     accessToken: "",
 
-    setCrosswordBoards: (newBoard) => {
-        saveCrosswordBoardToLocalStorage(newBoard.id, newBoard);
+    setCrossword: (crossword) => {
+        saveCrosswordToLocalStorage(crossword.id, crossword);
 
         set((state) => ({
-            crosswBoards: state.crosswBoards.some((b) => b.id === newBoard.id)
-                ? state.crosswBoards.map((b) => (b.id === newBoard.id ? newBoard : b))
-                : [...state.crosswBoards, newBoard],
+            crosswords: upsertCrossword(state.crosswords, crossword),
         }));
     },
 
-    getCrosswordBoardById: (id) =>
-        get().crosswBoards.find((board) => board.id === id) || {
-            gameCompleted: false,
-            id: id,
-            time: "",
-            star: 0,
-        },
+    getCrosswordById: (id) => findCrosswordById(get().crosswords, id),
 
     setRating: (rating) =>
-        set((state) => ({
-            rating: state.rating + rating,
-        })),
+        set({
+            rating,
+        }),
 
     setUserInfo: (userInfo) =>
         set({

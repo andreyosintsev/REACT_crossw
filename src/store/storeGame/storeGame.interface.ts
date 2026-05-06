@@ -3,7 +3,7 @@ import ILegendHorizontal from "../../components/game/legend-horizontal/legend-ho
 import ILegendVertical from "../../components/game/legend-vertical/legend-vertical.interface";
 
 import { ITask } from "../../utils/api/api.interface";
-import { ICrosswBoard } from "../storeUser/storeUser.interface";
+import { ICrossword } from "../storeUser/storeUser.interface";
 
 interface IStoreGame {
     /** Текущая задача кроссворда */
@@ -17,7 +17,7 @@ interface IStoreGame {
     /** Флаг победы в игре */
     isWin: boolean;
     /** Флаг пройденной игры */
-    gameCompleted: boolean;
+    solved: boolean;
     /** Флаг ошибки загрузки задачи */
     errorTask: boolean;
 
@@ -32,7 +32,7 @@ interface IStoreGame {
      * @param {ITask | null} task - Объект задачи
      * @param {IUserTaskInfo} userTaskInfo - Информация о выполнении задачи пользователем
      */
-    setTask: (task: ITask | null, userTaskInfo: ICrosswBoard) => void;
+    setTask: (task: ITask | null, userTaskInfo: ICrossword) => void;
 
     /**
      * Инициализирует игровой процесс

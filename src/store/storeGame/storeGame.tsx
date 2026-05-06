@@ -2,11 +2,11 @@ import { create } from "zustand";
 import IStoreGame from "./storeGame.interface";
 import {
     clearBoardInLocalStorage,
-    clearCrossBoardsInLocalStorage,
+    clearCrosswordInLocalStorage,
     loadBoardFromLocalStorage,
-    loadCrosswordBoardFromLocalStorage,
+    loadCrosswordFromLocalStorage,
     saveBoardToLocalStorage,
-    saveCrosswordBoardToLocalStorage,
+    saveCrosswordToLocalStorage,
 } from "../../utils/local-storage/local-storage";
 
 import IBoardElement from "../../components/game/board-element/board-element.interface";
@@ -43,7 +43,7 @@ const storeGame = create<IStoreGame>((set, get) => ({
         height: 0,
     },
     isWin: false,
-    gameCompleted: false,
+    solved: false,
     errorTask: false,
 
     setError: (state) => set({ errorTask: state }),
@@ -52,7 +52,7 @@ const storeGame = create<IStoreGame>((set, get) => ({
         if (!task) set({ errorTask: true });
         set({
             task: task,
-            gameCompleted: userTaskInfo.gameCompleted,
+            solved: userTaskInfo.solved,
             isWin: false,
         });
     },
@@ -301,10 +301,10 @@ const storeGame = create<IStoreGame>((set, get) => ({
         e.preventDefault();
         if (!task) return;
         clearBoardInLocalStorage(task.id);
-        clearCrossBoardsInLocalStorage(task.id);
+        clearCrosswordInLocalStorage(task.id);
         initBoard();
-        const loadCrosswordBoard = loadCrosswordBoardFromLocalStorage(task.id);
-        set({ gameCompleted: loadCrosswordBoard?.gameCompleted });
+        const loadCrosswordBoard = loadCrosswordFromLocalStorage(task.id);
+        set({ solved: loadCrosswordBoard?.solved });
     },
 
     setWin: (status) => set({ isWin: status }),
@@ -312,13 +312,13 @@ const storeGame = create<IStoreGame>((set, get) => ({
     setGameCompleted: (status) => {
         //@todo - надо проверить логику, что если !task - нужно ли устанавливать статус. А если нет, то set можно и не выполнять?
         const task = get().task;
-        set({ gameCompleted: status });
+        set({ solved: status });
         if (task)
-            saveCrosswordBoardToLocalStorage(task.id, {
-                gameCompleted: status,
+            saveCrosswordToLocalStorage(task.id, {
+                solved: status,
                 id: task.id,
                 time: "",
-                star: 0,
+                stars: 0,
             });
     },
 

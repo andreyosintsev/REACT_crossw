@@ -1,6 +1,6 @@
 import IBoardElement from "../../components/game/board-element/board-element.interface";
 
-import { ICrosswBoard } from "../../store/storeUser/storeUser.interface";
+import { ICrossword } from "../../store/storeUser/storeUser.interface";
 import { ITask } from "../api/api.interface";
 import { BOARD_PREFIX, TASK_PREFIX, TASKS_KEY, USER_BOARD_PREFIX } from "./local-storage.constants";
 
@@ -53,47 +53,47 @@ export const clearTaskInLocalStorage = (taskId: number): void => {
 };
 
 /** Сохраняет список заданий в localStorage
- * @param board массив заданий
+ * @param tasks массив заданий
  */
-export const saveTasksToLocalStorage = (board: ITask[]): void => {
-    localStorage.setItem(`${TASKS_KEY}`, JSON.stringify(board));
+export const saveTasksToLocalStorage = (tasks: ITask[]): void => {
+    localStorage.setItem(`${TASKS_KEY}`, JSON.stringify(tasks));
 };
 
 /**
- * @function Сохраняет состояние доски кроссворда в локальное хранилище
+ * @function Сохраняет состояние кроссворда в локальное хранилище
  * @param {number} id - Уникальный идентификатор кроссворда
- * @param {ICrosswBoard} data - Объект с данными доски для сохранения
+ * @param {ICrossword} crossword - Объект с данными кроссворда для сохранения
  */
-export const saveCrosswordBoardToLocalStorage = (id: number, data: ICrosswBoard): void => {
-    const serializedData = JSON.stringify(data);
+export const saveCrosswordToLocalStorage = (id: number, crossword: ICrossword): void => {
+    const serializedData = JSON.stringify(crossword);
     localStorage.setItem(`${USER_BOARD_PREFIX}${id}`, serializedData);
 };
 
 /**
- * @function Загружает состояние доски кроссворда из локального хранилища
+ * @function Загружает состояние кроссворда из локального хранилища
  * @param {number} id - Уникальный идентификатор кроссворда
- * @returns {ICrosswBoard | null} Объект с данными доски или null если не найден
+ * @returns {ICrossword | null} Объект с данными кроссворда или null если не найден
  */
-export const loadCrosswordBoardFromLocalStorage = (id: number): ICrosswBoard | null => {
+export const loadCrosswordFromLocalStorage = (id: number): ICrossword | null => {
     const serializedData = localStorage.getItem(`${USER_BOARD_PREFIX}${id}`);
     return serializedData ? JSON.parse(serializedData) : null;
 };
 
 /**
- * @function Обновляет состояние доски кроссворда в локальном хранилище
+ * @function Обновляет состояние кроссворда в локальном хранилище
  * @param {number} id - Уникальный идентификатор кроссворда
- * @param {ICrosswBoard} task - Обновленный объект с данными доски
+ * @param {ICrossword} crossword - Обновленный объект с данными кроссворда
  * @returns {void}
  */
-export const updateCrosswordBoardFromLocalStorage = (id: number, task: ICrosswBoard): void => {
-    localStorage.setItem(`${USER_BOARD_PREFIX}${id}`, JSON.stringify(task));
+export const updateCrosswordBoardFromLocalStorage = (id: number, crossword: ICrossword): void => {
+    localStorage.setItem(`${USER_BOARD_PREFIX}${id}`, JSON.stringify(crossword));
 };
 
 /**
- * @function Удаляет состояние доски кроссворда из локального хранилища
+ * @function Удаляет состояние кроссворда из локального хранилища
  * @param {number} id - Уникальный идентификатор кроссворда
  * @returns {void}
  */
-export const clearCrossBoardsInLocalStorage = (id: number): void => {
+export const clearCrosswordInLocalStorage = (id: number): void => {
     localStorage.removeItem(`${USER_BOARD_PREFIX}${id}`);
 };

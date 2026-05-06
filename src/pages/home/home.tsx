@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { loadCrosswordBoardFromLocalStorage } from "../../utils/local-storage/local-storage";
+import { loadCrosswordFromLocalStorage } from "../../utils/local-storage/local-storage";
 
 import Page from "../../components/shared/page/page";
 import Block from "../../components/shared/block/block";
@@ -92,7 +92,7 @@ const Home: FC<IHome> = () => {
         tasksNotCompleted: ITask[];
     }>(
         (acc, task) => {
-            if (loadCrosswordBoardFromLocalStorage(task.id)?.gameCompleted) {
+            if (loadCrosswordFromLocalStorage(task.id)?.solved) {
                 acc.tasksCompleted.push(task);
             } else {
                 acc.tasksNotCompleted.push(task);

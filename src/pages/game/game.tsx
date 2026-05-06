@@ -12,7 +12,7 @@ import storeUser from "../../store/storeUser/storeUser";
 import storeApp from "../../store/storeApp/storeApp";
 import storeLegend from "../../store/storeLegend/storeLegend";
 
-import { loadCrosswordBoardFromLocalStorage } from "../../utils/local-storage/local-storage";
+import { loadCrosswordFromLocalStorage } from "../../utils/local-storage/local-storage";
 
 /**
  * Компонент страницы игры в японский кроссворд
@@ -46,7 +46,7 @@ const Game = () => {
     /** Сообщение об ошибке из API хранилища */
     const error = storeApp((state) => state.error);
     /** Функция получения информации о кроссворде пользователя */
-    const getCrosswordBoardById = storeUser((state) => state.getCrosswordBoardById);
+    const getCrosswordById = storeUser((state) => state.getCrosswordById);
     /** Функция очистки легенд из хранилища легенд */
     const clearLegend = storeLegend((state) => state.clearLegend);
 
@@ -90,12 +90,12 @@ const Game = () => {
         }
 
         // Загружаем информацию о выполнении задачи (из localStorage или хранилища пользователя)
-        const userTaskInfo = loadCrosswordBoardFromLocalStorage(taskId) || getCrosswordBoardById(taskId);
+        const userTaskInfo = loadCrosswordFromLocalStorage(taskId) || getCrosswordById(taskId);
         // Устанавливаем задачу и информацию о выполнении
         setTask(getTaskById(taskId), userTaskInfo);
         // Инициализируем игровой процесс
         initializeGame();
-    }, [getCrosswordBoardById, getTaskById, initializeGame, setTask, taskId, navigate]);
+    }, [getCrosswordById, getTaskById, initializeGame, setTask, taskId, navigate]);
 
     useLayoutEffect(() => {
         clearLegend();

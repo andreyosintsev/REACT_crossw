@@ -11,8 +11,8 @@ export interface IUserStore {
     email: string;
     /** Дата рождения пользователя */
     dateOfBirth: string;
-    /** Список разгаданных кроссвордов пользователя */
-    crosswBoards: ICrosswBoard[];
+    /** Список разгадываемых кроссвордов пользователя */
+    crosswords: ICrossword[];
     /** Рейтинг пользователя */
     rating: number;
     /** Настройки пользователя */
@@ -23,10 +23,10 @@ export interface IUserStore {
     accessToken: string;
 
     /**
-     * Устанавливает новые кроссворды в хранилище
-     * @param {ICrosswBoard} newBoard - Новый кроссворд для добавления
+     * Добавляет в хранилище новый кроссворд
+     * @param {ICrossword} crossword - Новый кроссворд для добавления
      */
-    setCrosswordBoards: (newBoard: ICrosswBoard) => void;
+    setCrossword: (crossword: ICrossword) => void;
 
     /**
      * Метод получения кроссворда по его ID
@@ -37,7 +37,7 @@ export interface IUserStore {
      * @param {number} id - Уникальный идентификатор кроссворда для поиска
      * @returns {ICrosswBoard} Объект кроссворда или объект с дефолтными значениями
      */
-    getCrosswordBoardById: (id: number) => ICrosswBoard;
+    getCrosswordById: (id: number) => ICrossword;
 
     /**
      * Устанавливает новый рейтинг пользователя
@@ -106,16 +106,15 @@ interface ITheme {
 }
 
 /**
- * Интерфейс данных кроссвордного поля
- * Описывает структуру данных одного кроссвордного поля, включая результаты прохождения
+ * Результаты прохождения кроссворда
  */
-export interface ICrosswBoard {
+export interface ICrossword {
     /** Флаг завершения игры */
-    gameCompleted: boolean;
-    /** ID поля */
+    solved: boolean;
+    /** ID задачи */
     id: number;
     /** Время прохождения игры */
     time: string;
     /** Количество звезд за прохождение */
-    star: number;
+    stars: number;
 }
