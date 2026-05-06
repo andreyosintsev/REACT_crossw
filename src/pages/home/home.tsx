@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { loadCrosswordBoardFromLocalStorage } from "../../utils/local-storage/local-storage";
 
-import PageBlock from "../../components/shared/block/block";
-import PageSlider from "../../components/home/slider/slider";
-import PageNews from "../../components/home/news/news";
+import Block from "../../components/shared/block/block";
+import Slider from "../../components/home/slider/slider";
+import News from "../../components/home/news/news";
 
 import IHome from "./home.interface";
 import styles from "./home.module.scss";
@@ -105,7 +105,7 @@ const Home: FC<IHome> = () => {
 
     return (
         <main className={styles.main}>
-            <PageBlock>
+            <Block>
                 <div className="block__text">
                     <p>
                         <strong>Добро пожаловать на сайт японских кроссвордов.</strong>
@@ -122,20 +122,21 @@ const Home: FC<IHome> = () => {
                         её научной работы, по утверждению Исиды, родились нонограммы.
                     </p>
                 </div>
-            </PageBlock>
+            </Block>
+            <Block variant="ads"></Block>
             {tasksNotCompleted.length > 0 && (
-                <PageBlock title={"Новые кроссворды"}>
-                    <PageSlider images={tasksToImages(tasksNotCompleted)} />
-                </PageBlock>
+                <Block title={"Новые кроссворды"}>
+                    <Slider images={tasksToImages(tasksNotCompleted)} />
+                </Block>
             )}
             {tasksCompleted.length > 0 && (
-                <PageBlock title={"Решенные кроссворды"}>
-                    <PageSlider images={tasksToImagesCompleted(tasksCompleted)} />
-                </PageBlock>
+                <Block title={"Решенные кроссворды"}>
+                    <Slider images={tasksToImagesCompleted(tasksCompleted)} />
+                </Block>
             )}
-            <PageBlock title={"Новости сайта"}>
-                <PageNews />
-            </PageBlock>
+            <Block title={"Новости сайта"}>
+                <News />
+            </Block>
         </main>
     );
 };

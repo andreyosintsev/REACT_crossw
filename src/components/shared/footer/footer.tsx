@@ -16,16 +16,17 @@ import FooterUI from "./footerUI";
 
 interface IFooter {
     siteName: string;
+    children?: React.ReactNode;
 }
 
-const Footer = ({ siteName }: IFooter) => {
+const Footer = ({ siteName, children }: IFooter) => {
     // Получаем текущий год
     const currYear = new Date().getFullYear().toString(10);
 
     // Формируем строку с периодом работы сайта
     const yearString = currYear === SITE_YOB ? SITE_YOB : SITE_YOB + " - " + currYear;
 
-    return <FooterUI initialReleaseYear={yearString} appName={siteName} domain={SITE_DOMAIN}></FooterUI>;
+    return <FooterUI dob={yearString} appName={siteName} domain={SITE_DOMAIN} children={children}></FooterUI>;
 };
 
 export default Footer;

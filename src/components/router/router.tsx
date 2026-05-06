@@ -104,7 +104,9 @@ const Router: FC = () => {
                             </Ads>
                         </Sidebar>
                     </Wrapper>
-                    <Footer siteName={SITE_NAME} />
+                    <Footer siteName={SITE_NAME}>
+                        <img src="/images/banner-320x50.jpg" alt="Реклама" />
+                    </Footer>
                 </>
             )}
             {isModalShow && (

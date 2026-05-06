@@ -108,19 +108,16 @@ const Game = () => {
     }
 
     return (
-        <>
-            <aside>
-                <Tasks />
-            </aside>
-            <main className={`${styles.main}`}>
-                {!error && task && (
-                    <Block title={"Кроссворд " + taskId}>
-                        <Table task={task} />
-                        <Controls onRestart={handleRestart} onHelp={handleHelp} />
-                    </Block>
-                )}
-            </main>
-        </>
+        <main className={styles.main}>
+            <Block>
+                <Controls onRestart={handleRestart} onHelp={handleHelp} />
+            </Block>
+            {!error && task && (
+                <Block title={"Кроссворд " + taskId}>
+                    <Table task={task} />
+                </Block>
+            )}
+        </main>
     );
 };
 

@@ -14,6 +14,10 @@ import BlockUI from "./blockUI";
  * @description Компонент представляет собой контейнер для отображения информационного блока
  * с заголовком и содержимым на странице приложения
  */
-const Block = ({ title, children }: IBlock) => <BlockUI title={title}>{children}</BlockUI>;
+const Block = ({ title, children, variant }: IBlock) => (
+    <BlockUI title={title} variant={variant}>
+        {children}
+    </BlockUI>
+);
 
 export default Block;

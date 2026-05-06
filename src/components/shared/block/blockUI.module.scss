@@ -27,12 +27,26 @@
         margin: 0;
     }
 
+    &_ads {
+        display: none;
+    }
+
+    @include media-max(desktop) {
+        &_ads {
+            display: block;
+        }
+    }
+
     @include media-max(tablet) {
         padding: 10px;
 
         font-size: 14px;
 
         border-radius: 0;
+
+        &_ads {
+            display: none;
+        }
 
         &__title {
             margin: 20px 0;

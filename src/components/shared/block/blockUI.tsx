@@ -1,3 +1,5 @@
+import cn from "classnames";
+
 import IBlock from "./block.interface";
 import styles from "./blockUI.module.scss";
 
@@ -15,7 +17,7 @@ import styles from "./blockUI.module.scss";
  */
 const BlockUI = ({ title, children, variant = "text" }: IBlock) => {
     return (
-        <div className={styles.block}>
+        <div className={cn(styles.block, styles[`block_${variant}`])}>
             {title && <h2 className={styles.block__title}>{title}</h2>}
 
             <div className={`${styles[`block__${variant}`]}`}> {children}</div>

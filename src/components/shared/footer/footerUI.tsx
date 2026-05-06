@@ -1,5 +1,3 @@
-import IFooterUI from "./footerUI.interface";
-
 import styles from "./footerUI.module.scss";
 
 /**
@@ -15,12 +13,21 @@ import styles from "./footerUI.module.scss";
  * @description Базовый UI-компонент, отвечающий за отображение информации
  * в нижней части страницы (футере)
  */
-const FooterUI = ({ appName, initialReleaseYear, domain }: IFooterUI) => {
+
+interface IFooterUI {
+    appName: string;
+    dob: string;
+    domain: string;
+    children?: React.ReactNode;
+}
+
+const FooterUI = ({ appName, dob, domain, children }: IFooterUI) => {
     return (
         <footer className={styles.footer}>
             <div className={styles.footer__copy}>
-                &copy; {domain} - {appName}, {initialReleaseYear}
+                &copy; {domain} - {appName}, {dob}
             </div>
+            <div className={styles.footer__ads}>{children}</div>
         </footer>
     );
 };

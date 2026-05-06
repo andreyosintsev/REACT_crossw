@@ -23,9 +23,9 @@ export interface IMenuMobile {
 
 const MenuMobile = ({ menuItems, title }: IMenuMobile) => {
     const isOpen = storeApp((state) => state.isMenuMobileOpen);
-    const setMenu = storeApp((state) => state.setMenuMobile);
+    const closeAllOverlays = storeApp((state) => state.closeAllOverlays);
 
-    return <MenuMobileUI menuItems={menuItems} title={title} isOpen={isOpen} onClick={() => setMenu(false)} />;
+    return <MenuMobileUI menuItems={menuItems} title={title} isOpen={isOpen} onClick={() => closeAllOverlays()} />;
 };
 
 export default MenuMobile;
