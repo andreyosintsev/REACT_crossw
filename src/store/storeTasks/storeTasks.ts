@@ -1,8 +1,9 @@
 import { create } from "zustand";
-import IStoreTask from "./storeTasks.interface";
+import { IStoreTask } from "./storeTasks.interface";
 
 /**
  * Хранилище Zustand для управления задачами
+ *
  * @function
  * @returns {IStoreTask} Объект хранилища с состоянием и методами
  *
@@ -30,7 +31,13 @@ const storeTasks = create<IStoreTask>((set, get) => ({
             tasks: tasksData ?? [],
         }),
 
-    getTaskById: (id) => get().tasks.find((task) => task.id === id) ?? null,
+    getTaskById: (id) => {
+        const taskId = Number(id);
+
+        if (Number.isNaN(taskId)) return null;
+
+        return get().tasks.find((task) => task.id === id) ?? null;
+    },
 }));
 
 export default storeTasks;

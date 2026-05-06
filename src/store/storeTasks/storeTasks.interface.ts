@@ -1,6 +1,6 @@
 import { ITask } from "../../utils/api/api.interface";
 
-interface IStoreTask {
+export interface IStoreTask {
     /** Массив задач в хранилище
      * @type {ITask[]}
      * @memberof IStoreTask
@@ -21,5 +21,3 @@ interface IStoreTask {
      */
     getTaskById: (id: number) => ITask | null;
 }
-
-export default IStoreTask;
