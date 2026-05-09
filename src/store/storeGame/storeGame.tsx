@@ -9,8 +9,8 @@ import {
     saveCrosswordToLocalStorage,
 } from "../../utils/local-storage/local-storage";
 
-import IBoardElement from "../../components/game/board-element/board-element.interface";
-import { TBoardElementContent } from "../../utils/api/api.interface";
+import { createEmptyBoard, generateLegends, getCellIndex, isBoardSolved, cleanBoard } from "../../utils/game/game";
+import { applyRandomHelp } from "../../utils/game/help";
 
 /**
  * Хранилище Zustand для управления игровым процессом кроссворда
@@ -42,8 +42,8 @@ const storeGame = create<IStoreGame>((set, get) => ({
         width: 0,
         height: 0,
     },
-    isWin: false,
-    solved: false,
+    isWin: false, // Победа именно в процессе решения кроссворда
+    solved: false, // Флаг разгаданного кроссворда, полученного из локального хранилища
     errorTask: false,
 
     setError: (state) => set({ errorTask: state }),
@@ -57,49 +57,14 @@ const storeGame = create<IStoreGame>((set, get) => ({
         });
     },
 
+    setWin: (status) => set({ isWin: status }),
+
     initializeGame: () => {
-        const { task, createLegend, initBoard } = get();
+        const { task, createLegends, initBoard } = get();
         if (!task) return;
 
-        createLegend();
+        createLegends();
         initBoard();
-    },
-
-    handleHelp: () => {
-        //1. Получить текущую задачу
-        //2. Получить текущее состояние поля
-        //3. Создать новый массив help несовпадающих элементов
-        //4. Пробегаем элементы массив задачи и сравниваем с текущим состоянием поля
-        //5. Если клетка в задаче и в текущем состоянии не совпадают, то
-        //6. Добавляем в массив координату несоответствующей клетки
-        //7. Рандомом выбираем один из элементов получившегося массива
-        //8. Закрашиваем клетку текущего состояния этим элементом.
-
-        const { task, board } = get();
-        if (!task || board.length === 0) return;
-
-        const help: {
-            pos: number;
-            content: TBoardElementContent;
-        }[] = [];
-
-        const n = Math.min(task.task.length, board.length);
-        for (let i = 0; i < n; i++) {
-            if (
-                (task.task[i] === "0" && board[i]?.content === "1") ||
-                (task.task[i] === "1" && (board[i]?.content === "0" || board[i]?.content === "X"))
-            )
-                help.push({ pos: i, content: task.task[i] });
-        }
-
-        if (help.length === 0) return;
-
-        const index = Math.floor(Math.random() * help.length);
-        const newBoard = board.map((cell, idx) => (idx === help[index].pos ? { ...cell, content: help[index].content } : cell));
-
-        // Устанавливаем состояние и сохраняем
-        set({ board: newBoard });
-        saveBoardToLocalStorage(task.id, newBoard);
     },
 
     initBoard: () => {
@@ -107,141 +72,37 @@ const storeGame = create<IStoreGame>((set, get) => ({
 
         if (!task) return;
         // Загружаем сохраненное состояние или создаем пустой массив
-        const newBoard: IBoardElement[] = loadBoardFromLocalStorage(task.id) || [];
+        const savedBoard = loadBoardFromLocalStorage(task.id);
 
-        // Если поле пустое - создаем новое
-        if (newBoard.length === 0) {
-            for (let y = 0; y < task.height; y++) {
-                for (let x = 0; x < task.width; x++) {
-                    newBoard.push({
-                        xCoord: x, // X-координата клетки
-                        yCoord: y, // Y-координата клетки
-                        content: "0", // Состояние: "0" - пусто, "1" - закрашено, "X" - крестик
-                    });
-                }
-            }
-        }
+        const board = savedBoard && savedBoard.length > 0 ? savedBoard : createEmptyBoard(task);
 
-        set({ board: newBoard });
-        saveBoardToLocalStorage(task.id, newBoard);
+        set({ board });
+        saveBoardToLocalStorage(task.id, board);
     },
 
-    createLegend: () => {
-        const { task, createVerticalLegend, createHorizontalLegend } = get();
+    giveHint: () => {
+        //Получить текущую задачу
+        //Получить текущее состояние поля
+        const { task, board } = get();
+        if (!task || board.length === 0) return;
+
+        //Получаем новый вариант поля с примененной подсказкой
+        const updatedBoard = applyRandomHelp(task, board);
+
+        //Если новый вариант поля - это на самом деле старое поле, выходим
+        const hasChanges = updatedBoard !== board;
+        if (!hasChanges) return;
+
+        // Устанавливаем состояние и сохраняем в localStorage
+        set({ board: updatedBoard });
+        saveBoardToLocalStorage(task.id, updatedBoard);
+    },
+
+    createLegends: () => {
+        const { task } = get();
         if (!task) return;
 
-        set({
-            verticalLegend: createVerticalLegend(task),
-            horizontalLegend: createHorizontalLegend(task),
-        });
-    },
-
-    createVerticalLegend: (task) => {
-        const legend: number[][] = [];
-
-        // Анализируем каждую строку
-        for (let y = 0; y < task.height; y++) {
-            const row: number[] = [];
-            let sum = 0;
-
-            for (let x = 0; x < task.width; x++) {
-                const index = y * task.width + x;
-                if (task.task[index] === "1") {
-                    sum++;
-                } else {
-                    if (sum > 0) {
-                        row.push(sum);
-                        sum = 0;
-                    }
-                }
-            }
-
-            if (sum > 0) {
-                row.push(sum);
-            }
-
-            legend.push(row);
-        }
-
-        // Находим максимальное количество подсказок в строке
-        const max = Math.max(...legend.map((row) => row.length), 0);
-
-        // Выравниваем все строки до максимальной длины
-        const equLegend: (number | null)[][] = legend.map((row) => {
-            const missing = max - row.length;
-            return missing > 0 ? [...Array(missing).fill(null), ...row] : [...row];
-        });
-
-        // Преобразуем в плоский массив для отображения
-        const outLegend: (number | null)[] = [];
-        for (let y = 0; y < equLegend.length; y++) {
-            for (let x = 0; x < max; x++) {
-                outLegend.push(equLegend[y][x]);
-            }
-        }
-
-        return {
-            legend: outLegend,
-            width: max,
-            height: equLegend.length,
-        };
-    },
-
-    createHorizontalLegend: (task) => {
-        let legend = [];
-        let col = [];
-
-        for (let x = 0; x < task.width; x++) {
-            let sum = 0;
-            for (let y = 0; y < task.height; y++) {
-                if (task.task[y * task.width + x] === "1") {
-                    sum++;
-                } else {
-                    if (sum > 0) {
-                        col.push(sum);
-                    }
-                    sum = 0;
-                }
-            }
-            if (sum > 0) {
-                col.push(sum);
-            }
-
-            legend.push(col);
-            col = [];
-        }
-
-        // Находим максимальное количество подсказок в столбце
-        let max = 0;
-        legend.forEach((col) => {
-            max = col.length > max ? col.length : max;
-        });
-
-        // Выравниваем все столбцы до максимальной длины
-        let equLegend: (number | null)[][] = legend.map((col) => [...col]);
-
-        legend.forEach((col, num) => {
-            if (col.length < max) {
-                for (let i = col.length; i < max; ++i) {
-                    equLegend[num].unshift(null);
-                }
-            }
-        });
-
-        // Преобразуем в плоский массив для отображения
-        const outLegend = [];
-
-        for (let y = 0; y < max; y++) {
-            for (let x = 0; x < equLegend.length; x++) {
-                outLegend.push(equLegend[x][y]);
-            }
-        }
-
-        return {
-            legend: outLegend,
-            width: Math.floor(outLegend.length / max),
-            height: max,
-        };
+        set(generateLegends(task));
     },
 
     handleBoardClick: (e) => {
@@ -259,9 +120,7 @@ const storeGame = create<IStoreGame>((set, get) => ({
         }
 
         // Получаем координаты клетки
-        const x = +target.dataset.x;
-        const y = +target.dataset.y;
-        const cellIndex = y * task.width + x;
+        const cellIndex = getCellIndex(Number(target.dataset.x), Number(target.dataset.y), task.width);
 
         // Создаем копию текущего состояния поля
         let newBoard = [...board];
@@ -296,18 +155,21 @@ const storeGame = create<IStoreGame>((set, get) => ({
         }
     },
 
-    handleRestart: (e) => {
+    restartGame: () => {
         const { task, initBoard } = get();
-        e.preventDefault();
         if (!task) return;
+
         clearBoardInLocalStorage(task.id);
         clearCrosswordInLocalStorage(task.id);
-        initBoard();
-        const loadCrosswordBoard = loadCrosswordFromLocalStorage(task.id);
-        set({ solved: loadCrosswordBoard?.solved });
-    },
 
-    setWin: (status) => set({ isWin: status }),
+        initBoard();
+        const crossword = loadCrosswordFromLocalStorage(task.id);
+
+        set({
+            solved: crossword?.solved ?? false,
+            isWin: false,
+        });
+    },
 
     setGameCompleted: (status) => {
         //@todo - надо проверить логику, что если !task - нужно ли устанавливать статус. А если нет, то set можно и не выполнять?
@@ -324,26 +186,23 @@ const storeGame = create<IStoreGame>((set, get) => ({
 
     checkWin: (board) => {
         const { task, isWin } = get();
-        if (!task || isWin) return false;
-        if (board.length === 0) {
-            return;
-        }
 
-        for (let i = 0; i < board.length; i++) {
-            const content = board[i].content === "X" ? "0" : board[i].content;
+        if (!task || isWin || board.length === 0) return false;
 
-            if (content !== task.task[i]) {
-                return;
-            }
-        }
+        const solved = isBoardSolved(task, board);
 
-        const cleanedBoard = board.map((element) => ({
-            ...element,
-            content: element.content === "X" ? "0" : element.content,
-        }));
+        if (!solved) return false;
 
-        set({ board: cleanedBoard, isWin: true });
+        const cleanedBoard = cleanBoard(board);
+
+        set({
+            board: cleanedBoard,
+            isWin: true,
+        });
+
         saveBoardToLocalStorage(task.id, cleanedBoard);
+
+        return true;
     },
 }));
 

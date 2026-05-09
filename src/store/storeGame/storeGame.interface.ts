@@ -55,7 +55,7 @@ interface IStoreGame {
      * - Применяет подсказку к игровому полю
      * - Сохраняет обновленное состояние
      */
-    handleHelp: () => void;
+    giveHint: () => void;
 
     /**
      * Инициализирует игровое поле
@@ -78,27 +78,7 @@ interface IStoreGame {
      * - Анализирует структуру решения задачи
      * - Создает числовые подсказки для строк и столбцов
      */
-    createLegend: () => void;
-
-    /**
-     * Создает вертикальную легенду (подсказки слева)
-     * @param {ITask} task - Объект задачи
-     * @returns {ILegend} Объект вертикальной легенды
-     *
-     * @description
-     * Анализирует решение по строкам и создает числовые подсказки
-     */
-    createVerticalLegend: (task: ITask) => ILegendVertical;
-
-    /**
-     * Создает горизонтальную легенду (подсказки сверху)
-     * @param {ITask} task - Объект задачи
-     * @returns {ILegend} Объект горизонтальной легенды
-     *
-     * @description
-     * Анализирует решение по столбцам и создает числовые подсказки
-     */
-    createHorizontalLegend: (task: ITask) => ILegendHorizontal;
+    createLegends: () => void;
 
     /**
      * Обрабатывает клик по игровому полю
@@ -134,7 +114,7 @@ interface IStoreGame {
      * - Инициализирует новое поле
      * - Сбрасывает статус завершения
      */
-    handleRestart: (e: React.MouseEvent) => void;
+    restartGame: () => void;
 
     /**
      * Устанавливает статус победы

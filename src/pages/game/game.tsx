@@ -38,9 +38,9 @@ const Game = () => {
     /** Функция установки текущей задачи */
     const setTask = storeGame((state) => state.setTask);
     /** Функция обработки перезапуска игры */
-    const handleRestart = storeGame((state) => state.handleRestart);
+    const handleRestart = storeGame((state) => state.restartGame);
     /** Функция обработки подсказки */
-    const handleHelp = storeGame((state) => state.handleHelp);
+    const handleHint = storeGame((state) => state.giveHint);
     /** Функция инициализации игрового процесса */
     const initializeGame = storeGame((state) => state.initializeGame);
     /** Сообщение об ошибке из API хранилища */
@@ -108,7 +108,7 @@ const Game = () => {
     return (
         <Page>
             <Block>
-                <Controls onRestart={handleRestart} onHelp={handleHelp} />
+                <Controls onRestart={handleRestart} onHelp={handleHint} />
             </Block>
             {!error && task && (
                 <Block title={"Кроссворд " + taskId}>

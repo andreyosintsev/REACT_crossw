@@ -2,7 +2,7 @@ import IBoardElement from "../../components/game/board-element/board-element.int
 
 import { ICrossword } from "../../store/storeUser/storeUser.interface";
 import { ITask } from "../api/api.interface";
-import { BOARD_PREFIX, TASK_PREFIX, TASKS_KEY, USER_BOARD_PREFIX } from "./local-storage.constants";
+import { BOARD_PREFIX, TASK_PREFIX, TASKS_KEY, CROSSWORD_PREFIX } from "./local-storage.constants";
 
 /** Сохраняет игровое поле в localStorage
  * @param boardId идентификатор поля
@@ -66,7 +66,7 @@ export const saveTasksToLocalStorage = (tasks: ITask[]): void => {
  */
 export const saveCrosswordToLocalStorage = (id: number, crossword: ICrossword): void => {
     const serializedData = JSON.stringify(crossword);
-    localStorage.setItem(`${USER_BOARD_PREFIX}${id}`, serializedData);
+    localStorage.setItem(`${CROSSWORD_PREFIX}${id}`, serializedData);
 };
 
 /**
@@ -75,7 +75,7 @@ export const saveCrosswordToLocalStorage = (id: number, crossword: ICrossword): 
  * @returns {ICrossword | null} Объект с данными кроссворда или null если не найден
  */
 export const loadCrosswordFromLocalStorage = (id: number): ICrossword | null => {
-    const serializedData = localStorage.getItem(`${USER_BOARD_PREFIX}${id}`);
+    const serializedData = localStorage.getItem(`${CROSSWORD_PREFIX}${id}`);
     return serializedData ? JSON.parse(serializedData) : null;
 };
 
@@ -86,7 +86,7 @@ export const loadCrosswordFromLocalStorage = (id: number): ICrossword | null => 
  * @returns {void}
  */
 export const updateCrosswordBoardFromLocalStorage = (id: number, crossword: ICrossword): void => {
-    localStorage.setItem(`${USER_BOARD_PREFIX}${id}`, JSON.stringify(crossword));
+    localStorage.setItem(`${CROSSWORD_PREFIX}${id}`, JSON.stringify(crossword));
 };
 
 /**
@@ -95,5 +95,5 @@ export const updateCrosswordBoardFromLocalStorage = (id: number, crossword: ICro
  * @returns {void}
  */
 export const clearCrosswordInLocalStorage = (id: number): void => {
-    localStorage.removeItem(`${USER_BOARD_PREFIX}${id}`);
+    localStorage.removeItem(`${CROSSWORD_PREFIX}${id}`);
 };
