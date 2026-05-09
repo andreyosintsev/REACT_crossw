@@ -31,7 +31,7 @@ import styles from "./board.module.scss";
  */
 const Board = ({ width, height }: IGameBoardProps) => {
     // Получаем состояние и методы из игрового хранилища
-    const { board, handleBoardClick, solved, checkWin } = storeGame();
+    const { board, solved, checkWin } = storeGame();
 
     /**
      * Эффект проверки условия победы при изменении состояния поля
@@ -54,13 +54,7 @@ const Board = ({ width, height }: IGameBoardProps) => {
 
     return (
         <>
-            <DynamicGrid
-                columns={width}
-                rows={height}
-                onCellClick={handleBoardClick}
-                onContextMenu={(e) => e.preventDefault()}
-                className={`${solved ? styles.blocked : ""}`}
-            >
+            <DynamicGrid columns={width} rows={height} className={`${solved ? styles.blocked : ""}`}>
                 {board.map((item, i) => {
                     return <BoardElement key={`board${i}`} xCoord={item.xCoord} yCoord={item.yCoord} content={item.content} />;
                 })}

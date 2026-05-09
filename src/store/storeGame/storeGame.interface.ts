@@ -1,6 +1,7 @@
 import IBoardElement from "../../components/game/board-element/board-element.interface";
 import ILegendHorizontal from "../../components/game/legend-horizontal/legend-horizontal.interface";
 import ILegendVertical from "../../components/game/legend-vertical/legend-vertical.interface";
+import { TCellAction } from "../../types/game";
 
 import { ITask } from "../../utils/api/api.interface";
 import { ICrossword } from "../storeUser/storeUser.interface";
@@ -81,27 +82,14 @@ interface IStoreGame {
     createLegends: () => void;
 
     /**
-     * Обрабатывает клик по игровому полю
-     * @param {React.MouseEvent} e - Событие мыши
-     * @returns {void}
+     * Обрабатывает взаимодействие указателя и клетки
      *
-     * @description
-     * Обрабатывает взаимодействия пользователя с полем:
-     * - Левая кнопка: переключает закрашивание клетки
-     * - Правая кнопка: переключает крестик
-     * - Сохраняет изменения в localStorage
+     * @param xCoord - координата X клетки
+     * @param yCoord - координата Y клетки
+     * @param action - действие
+     * @returns
      */
-    handleBoardClick: (e: React.MouseEvent) => void;
-
-    /**
-     * Обрабатывает взаимодействия с игровым полем
-     * @param {MouseEvent} event - Событие мыши
-     * @returns {void}
-     *
-     * @description
-     * Главный обработчик событий для игрового поля
-     */
-    handleBoardInteraction: (event: MouseEvent) => void;
+    applyCellAction: (xCoord: number, yCoord: number, action: TCellAction) => void;
 
     /**
      * Обрабатывает перезапуск игры

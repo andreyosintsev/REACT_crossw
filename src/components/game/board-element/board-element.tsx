@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import cn from "classnames";
 
 import IBoardElement from "./board-element.interface";
 
@@ -32,12 +32,22 @@ import styles from "./board-element.module.scss";
  * />
  */
 const BoardElement = ({ xCoord, yCoord, content }: IBoardElement) => {
-    // Ref для доступа к DOM-элементу клетки
-    const ref = useRef<HTMLDivElement | null>(null);
+    const applyCellAction = storeGame((state) => state.applyCellAction);
+    const highlightLegends = storeLegend((state) => state.highlightLegends);
+    const clearHighlight = storeLegend((state) => state.clearHighlight);
+    //const clearLegends = storeLegend((state) => state.clearLegends);
 
-    // Получаем обработчики взаимодействий из хранилищ
-    const { handleBoardInteraction } = storeGame();
-    const { highlightLegends } = storeLegend();
+    const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+        e.preventDefault();
+
+        const action = e.pointerType === "mouse" && e.button === 2 ? "cross" : "fill";
+
+        applyCellAction(xCoord, yCoord, action);
+    };
+
+    const handleContextMenu = (e: React.MouseEvent<HTMLDivElement>) => {
+        e.preventDefault();
+    };
 
     /**
      * Формирует строку CSS-классов на основе координат и состояния клетки
@@ -48,50 +58,29 @@ const BoardElement = ({ xCoord, yCoord, content }: IBoardElement) => {
      * - Нижняя граница: для каждой 5-й клетки по Y-координате
      * - Основной стиль: определяется содержимым клетки (be_0, be_1, be_X)
      */
-    let style = "";
 
-    // Добавляем правую границу для каждой 5-й клетки по горизонтали
-    if ((xCoord + 1) % 5 === 0) {
-        style = styles["be_border-right"];
-    }
-
-    // Добавляем нижнюю границу для каждой 5-й клетки по вертикали
-    if ((yCoord + 1) % 5 === 0) {
-        style += " " + styles["be_border-bottom"];
-    }
-
-    /**
-     * Эффект управления обработчиками событий клетки
-     * @dependency [] - Запускается единожды при монтировании
-     *
-     * @description
-     * Устанавливает и очищает обработчики событий для клетки:
-     * - mouseenter/mouseleave: обработка наведения/ухода курсора
-     * - click: обработка кликов (левая и правая кнопка мыши)
-     * - mousemove: подсветка соответствующих легенд
-     *
-     * @cleanup
-     * Автоматически удаляет все обработчики при размонтировании компонента
-     * для предотвращения утечек памяти
-     */
-    useEffect(() => {
-        const element = ref.current;
-        if (!element) return;
-
-        element.addEventListener("mouseenter", handleBoardInteraction);
-        element.addEventListener("mouseleave", handleBoardInteraction);
-        element.addEventListener("click", handleBoardInteraction);
-        element.addEventListener("mousemove", highlightLegends);
-
-        return () => {
-            element.removeEventListener("mouseenter", handleBoardInteraction);
-            element.removeEventListener("mouseleave", handleBoardInteraction);
-            element.removeEventListener("click", handleBoardInteraction);
-            element.removeEventListener("mousemove", highlightLegends);
-        };
-    }, []);
-
-    return <div ref={ref} className={`${styles.be} ${styles["be_" + content]} ${style}`} data-x={xCoord} data-y={yCoord}></div>;
+    return (
+        <div
+            className={cn(
+                styles.be,
+                // Основной стиль: определяется содержимым клетки (be_0, be_1, be_X)
+                styles[`be_${content}`],
+                {
+                    // Добавляем правую границу для каждой 5-й клетки по горизонтали
+                    [styles["be_border-right"]]: (xCoord + 1) % 5 === 0,
+                    // Добавляем нижнюю границу для каждой 5-й клетки по вертикали
+                    [styles["be_border-bottom"]]: (yCoord + 1) % 5 === 0,
+                },
+            )}
+            data-x={xCoord}
+            data-y={yCoord}
+            onPointerDown={handlePointerDown}
+            onPointerEnter={() => highlightLegends(xCoord, yCoord)}
+            onPointerMove={() => highlightLegends(xCoord, yCoord)}
+            onPointerLeave={clearHighlight}
+            onContextMenu={handleContextMenu}
+        />
+    );
 };
 
 export default BoardElement;

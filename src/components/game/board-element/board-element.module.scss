@@ -5,29 +5,29 @@
     cursor: pointer;
 
     transition: all 0.15s ease-in-out;
-}
 
-.be_0 {
-    background: #ffffff;
-}
+    &_0 {
+        background: #ffffff;
+    }
 
-.be_1 {
-    background: #000000;
-    border-right: 1px solid #aaaaaa !important;
-    border-bottom: 1px solid #aaaaaa !important;
-}
+    &_1 {
+        background: #000000;
+        border-right: 1px solid #aaaaaa !important;
+        border-bottom: 1px solid #aaaaaa !important;
+    }
 
-.be_X {
-    background: #ffffff;
-    background-image: url("./images/cross2.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-}
+    &_X {
+        background: #ffffff;
+        background-image: url("./images/cross2.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
 
-.be_border-right {
-    border-right: 1px solid #333333;
-}
+    &_border-right {
+        border-right: 1px solid #333333;
+    }
 
-.be_border-bottom {
-    border-bottom: 1px solid #333333;
+    &_border-bottom {
+        border-bottom: 1px solid #333333;
+    }
 }

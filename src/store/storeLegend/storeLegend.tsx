@@ -25,47 +25,36 @@ const storeLegend = create<IStoreLegend>((set, get) => ({
     legendVerticalElements: [],
 
     // Вспомогательная функция для подсветки легенд
-    highlightLegends: (event) => {
-        const target = event.currentTarget as HTMLDivElement;
-
-        const x = Number(target.dataset.x);
-        const y = Number(target.dataset.y);
+    highlightLegends: (xCoord, yCoord) => {
+        const clearHighlight = get().clearHighlight;
 
         // Убираем предыдущие выделения
-        get().legendHorizontalElements.forEach((ele) =>
-            ele.classList.remove("le_hover")
-        );
-        get().legendVerticalElements.forEach((ele) =>
-            ele.classList.remove("le_hover")
-        );
+        clearHighlight();
 
         // Находим и выделяем соответствующие элементы
-        get().legendHorizontalElements.forEach(
-            (ele) =>
-                ele.dataset.type === `lh_${x}` && ele.classList.add("le_hover")
-        );
-        get().legendVerticalElements.forEach(
-            (ele) =>
-                ele.dataset.type === `lv_${y}` && ele.classList.add("le_hover")
-        );
+        get().legendHorizontalElements.forEach((ele) => ele.dataset.type === `lh_${xCoord}` && ele.classList.add("le_hover"));
+        get().legendVerticalElements.forEach((ele) => ele.dataset.type === `lv_${yCoord}` && ele.classList.add("le_hover"));
+    },
+
+    clearHighlight: () => {
+        // Убираем предыдущие выделения
+        get().legendHorizontalElements.forEach((ele) => ele.classList.remove("le_hover"));
+        get().legendVerticalElements.forEach((ele) => ele.classList.remove("le_hover"));
     },
 
     addLegendElement: (div) => {
         if (div?.dataset.type?.includes("lh")) {
             set({
-                legendHorizontalElements:
-                    get().legendHorizontalElements.concat(div),
+                legendHorizontalElements: get().legendHorizontalElements.concat(div),
             });
         } else {
             set({
-                legendVerticalElements:
-                    get().legendVerticalElements.concat(div),
+                legendVerticalElements: get().legendVerticalElements.concat(div),
             });
         }
     },
 
-    clearLegend: () =>
-        set({ legendVerticalElements: [], legendHorizontalElements: [] }),
+    clearLegend: () => set({ legendVerticalElements: [], legendHorizontalElements: [] }),
 }));
 
 export default storeLegend;

@@ -1,8 +1,9 @@
 import { ICrossword } from "../../store/storeUser/storeUser.interface";
-import { ITask } from "../api/api.interface";
+import { ITask, TBoardElementContent } from "../api/api.interface";
 import IBoardElement from "../../components/game/board-element/board-element.interface";
 import ILegendVertical from "../../components/game/legend-vertical/legend-vertical.interface";
 import ILegendHorizontal from "../../components/game/legend-horizontal/legend-horizontal.interface";
+import { TCellAction } from "../../types/game";
 
 /**
  * Метод задания кроссворда по умолчанию, если кроссворд
@@ -247,3 +248,19 @@ export const cleanBoard = (board: IBoardElement[]): IBoardElement[] =>
         ...cell,
         content: normalizeCellContentForCheck(cell.content),
     }));
+
+export const toggleCellContent = (content: TBoardElementContent, action: TCellAction): TBoardElementContent => {
+    if (action === "fill") {
+        return content !== "1" ? "1" : "0";
+    }
+
+    if (action === "cross") {
+        return content !== "X" ? "X" : "0";
+    }
+
+    return content;
+};
+
+export const updateBoardCell = (board: IBoardElement[], cellIndex: number, action: TCellAction): IBoardElement[] => {
+    return board.map((cell, index) => (index === cellIndex ? { ...cell, content: toggleCellContent(cell.content, action) } : cell));
+};

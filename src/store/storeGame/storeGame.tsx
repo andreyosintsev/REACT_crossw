@@ -4,12 +4,11 @@ import {
     clearBoardInLocalStorage,
     clearCrosswordInLocalStorage,
     loadBoardFromLocalStorage,
-    loadCrosswordFromLocalStorage,
     saveBoardToLocalStorage,
     saveCrosswordToLocalStorage,
 } from "../../utils/local-storage/local-storage";
 
-import { createEmptyBoard, generateLegends, getCellIndex, isBoardSolved, cleanBoard } from "../../utils/game/game";
+import { createEmptyBoard, generateLegends, getCellIndex, isBoardSolved, cleanBoard, updateBoardCell } from "../../utils/game/game";
 import { applyRandomHelp } from "../../utils/game/help";
 
 /**
@@ -49,11 +48,16 @@ const storeGame = create<IStoreGame>((set, get) => ({
     setError: (state) => set({ errorTask: state }),
 
     setTask: (task, userTaskInfo) => {
-        if (!task) set({ errorTask: true });
+        if (!task) {
+            set({ errorTask: true });
+            return;
+        }
+
         set({
-            task: task,
+            task,
             solved: userTaskInfo.solved,
             isWin: false,
+            errorTask: false,
         });
     },
 
@@ -105,54 +109,21 @@ const storeGame = create<IStoreGame>((set, get) => ({
         set(generateLegends(task));
     },
 
-    handleBoardClick: (e) => {
+    //Применяет действие к клетке игрового поля
+    applyCellAction: (xCoord, yCoord, action) => {
         const { task, board, checkWin } = get();
-        // Предотвращаем стандартное поведение браузера
-        e.preventDefault();
 
         if (!task) return;
 
-        const target = e.target as HTMLElement;
-
-        // Проверяем наличие dataset свойств
-        if (!target.dataset.x || !target.dataset.y) {
-            return;
-        }
-
-        // Получаем координаты клетки
-        const cellIndex = getCellIndex(Number(target.dataset.x), Number(target.dataset.y), task.width);
+        const cellIndex = getCellIndex(xCoord, yCoord, task.width);
 
         // Создаем копию текущего состояния поля
-        let newBoard = [...board];
+        const newBoard = updateBoardCell(board, cellIndex, action);
 
-        // Обрабатываем разные типы кликов
-        switch (e.buttons) {
-            case 1: // Левая кнопка мыши - закрашивание
-                newBoard[cellIndex].content = board[cellIndex].content !== "1" ? "1" : "0";
-                break;
-            case 2: // Правая кнопка мыши - крестик
-                newBoard[cellIndex].content = board[cellIndex].content !== "X" ? "X" : "0";
-                break;
-            default: // Другие кнопки - ноль по умолчанию
-                newBoard[cellIndex].content = board[cellIndex].content !== "X" ? "X" : "0";
-        }
-
-        // Обновляем состояние и сохраняем в localStorage
         set({ board: newBoard });
+
         checkWin(newBoard);
         saveBoardToLocalStorage(task.id, newBoard);
-    },
-
-    // Основная функция обработки событий
-    handleBoardInteraction: (event: MouseEvent) => {
-        const handleBoardClick = get().handleBoardClick;
-
-        // Обработка кликов
-        if ((event.buttons === 1 || event.buttons === 2) && event.type !== "mouseleave") {
-            const eve = event as unknown as React.MouseEvent<Element, MouseEvent>;
-            handleBoardClick(eve);
-            return;
-        }
     },
 
     restartGame: () => {
@@ -163,25 +134,26 @@ const storeGame = create<IStoreGame>((set, get) => ({
         clearCrosswordInLocalStorage(task.id);
 
         initBoard();
-        const crossword = loadCrosswordFromLocalStorage(task.id);
 
         set({
-            solved: crossword?.solved ?? false,
+            solved: false,
             isWin: false,
         });
     },
 
     setGameCompleted: (status) => {
-        //@todo - надо проверить логику, что если !task - нужно ли устанавливать статус. А если нет, то set можно и не выполнять?
-        const task = get().task;
+        const { task } = get();
+
+        if (!task) return;
+
         set({ solved: status });
-        if (task)
-            saveCrosswordToLocalStorage(task.id, {
-                solved: status,
-                id: task.id,
-                time: "",
-                stars: 0,
-            });
+
+        saveCrosswordToLocalStorage(task.id, {
+            solved: status,
+            id: task.id,
+            time: "",
+            stars: 0,
+        });
     },
 
     checkWin: (board) => {
