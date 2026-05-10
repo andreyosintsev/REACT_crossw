@@ -45,10 +45,15 @@ const Game = () => {
     const initializeGame = storeGame((state) => state.initializeGame);
     /** Сообщение об ошибке из API хранилища */
     const error = storeApp((state) => state.error);
+    /** Состояние загрузки*/
+    const isLoading = storeApp((state) => state.isLoading);
     /** Функция получения информации о кроссворде пользователя */
     const getCrosswordById = storeUser((state) => state.getCrosswordById);
     /** Функция очистки легенд из хранилища легенд */
     const clearLegend = storeLegend((state) => state.clearLegend);
+
+    // Для отладки - список всех задач
+    const tasks = storeTasks((state) => state.tasks);
 
     // Получаем метод навигации
     const navigate = useNavigate();
@@ -77,7 +82,12 @@ const Game = () => {
         // Если в адресной строке неверный номер задачи
         if (Number.isNaN(taskId)) {
             console.error("game.tsx: taskId is NaN");
-            navigate("/");
+            navigate("/", { replace: true });
+            return;
+        }
+
+        //Если задачи не загружены или в процессе загрузки
+        if (isLoading || tasks.length === 0) {
             return;
         }
 
@@ -85,17 +95,17 @@ const Game = () => {
 
         if (!currentTask) {
             console.error(`game.tsx: task with id=${taskId} not found`);
-            navigate("/");
+            navigate("/", { replace: true });
             return;
         }
 
         // Загружаем информацию о выполнении задачи (из localStorage или хранилища пользователя)
         const userTaskInfo = loadCrosswordFromLocalStorage(taskId) || getCrosswordById(taskId);
         // Устанавливаем задачу и информацию о выполнении
-        setTask(getTaskById(taskId), userTaskInfo);
+        setTask(currentTask, userTaskInfo);
         // Инициализируем игровой процесс
         initializeGame();
-    }, [getCrosswordById, getTaskById, initializeGame, setTask, taskId, navigate]);
+    }, [getCrosswordById, getTaskById, initializeGame, setTask, taskId, navigate, isLoading, tasks]);
 
     useLayoutEffect(() => {
         clearLegend();

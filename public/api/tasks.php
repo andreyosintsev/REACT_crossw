@@ -1,22 +1,58 @@
 <?php
 
-require('connect.php');
+if (isset($_GET['count'])) {
 
-$sql = $DBH->prepare('SELECT id FROM tasks ORDER BY id DESC LIMIT 10');
-$sql->execute();
+    $count = $_GET['count'];
 
-$result = [];
+    require('connect.php');
 
-while ($row = $sql->fetch(PDO::FETCH_LAZY)) {
-  array_push($result, $row['id']);
+    $sql = ('SELECT * FROM tasks ORDER BY id ASC LIMIT :count');
+    $stmt = $DBH->prepare($sql);
+    $stmt->bindParam(':count', $count, PDO::PARAM_INT);
+    $stmt->execute();
+
+    $result = '{
+                    "tasks": [';
+
+    while ($row = $stmt->fetch(PDO::FETCH_LAZY)) {
+        $task = '
+                    {
+                        "id": "'. $row['id'] .'",
+                        "name": "'. $row['name'] .'",
+                        "task": [' . $row['task'] . '],
+                        "width": "' . $row['width'] . '",
+                        "height": "' . $row['height'] . '",
+                        "image_preview": "' . $row['image_preview'] . '",
+                        "image_solved": "' . $row['image_solved'] . '"
+                    },';
+
+        $result .= $task;
+    }
+
+    $result = substr($result, 0, -1);
+    $result .= '],';
+    $result .= '"success": "true"';
+    $result .= '}';
+
+    header('Access-Control-Allow-Origin: *');
+    header('Content-Type: application/json; charset=utf-8');
+
+    echo $result;
+
+    require('disconnect.php');
+
+} else {
+
+    $json = '
+                {   
+                    "success": "false"
+                }
+            ';
+
+    header('Access-Control-Allow-Origin: *');
+    header('Content-Type: application/json; charset=utf-8');
+  
+    echo $json;
 }
-
-$json = json_encode($result);
-
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
-echo $json;
-
-require('disconnect.php');
 
 exit();

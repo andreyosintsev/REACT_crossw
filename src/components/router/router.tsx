@@ -1,5 +1,5 @@
 import { FC, useCallback, useEffect, useState } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 
 import { SITE_MENU_MAIN, SITE_NAME } from "../../declarations/constants";
 
@@ -96,6 +96,7 @@ const Router: FC = () => {
                         <Routes>
                             <Route path="/" element={<Home />} />
                             <Route path="/game/:taskNumber" element={<Game />} />
+                            <Route path="*" element={<Navigate to="/" replace />} />
                         </Routes>
 
                         <Sidebar>
