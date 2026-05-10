@@ -33,9 +33,8 @@ import styles from "./board-element.module.scss";
  */
 const BoardElement = ({ xCoord, yCoord, content }: IBoardElement) => {
     const applyCellAction = storeGame((state) => state.applyCellAction);
-    const highlightLegends = storeLegend((state) => state.highlightLegends);
-    const clearHighlight = storeLegend((state) => state.clearHighlight);
-    //const clearLegends = storeLegend((state) => state.clearLegends);
+    const setHighlightedLegend = storeLegend((state) => state.setHighlightedLegend);
+    const clearHighlightedLegend = storeLegend((state) => state.clearHighlightedLegend);
 
     const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
         e.preventDefault();
@@ -75,9 +74,9 @@ const BoardElement = ({ xCoord, yCoord, content }: IBoardElement) => {
             data-x={xCoord}
             data-y={yCoord}
             onPointerDown={handlePointerDown}
-            onPointerEnter={() => highlightLegends(xCoord, yCoord)}
-            onPointerMove={() => highlightLegends(xCoord, yCoord)}
-            onPointerLeave={clearHighlight}
+            onPointerEnter={() => setHighlightedLegend(xCoord, yCoord)}
+            onPointerMove={() => setHighlightedLegend(xCoord, yCoord)}
+            onPointerLeave={clearHighlightedLegend}
             onContextMenu={handleContextMenu}
         />
     );

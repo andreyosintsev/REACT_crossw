@@ -50,7 +50,7 @@ const Game = () => {
     /** Функция получения информации о кроссворде пользователя */
     const getCrosswordById = storeUser((state) => state.getCrosswordById);
     /** Функция очистки легенд из хранилища легенд */
-    const clearLegend = storeLegend((state) => state.clearLegend);
+    const clearHighlightedLegend = storeLegend((state) => state.clearHighlightedLegend);
 
     // Для отладки - список всех задач
     const tasks = storeTasks((state) => state.tasks);
@@ -108,8 +108,8 @@ const Game = () => {
     }, [getCrosswordById, getTaskById, initializeGame, setTask, taskId, navigate, isLoading, tasks]);
 
     useLayoutEffect(() => {
-        clearLegend();
-    }, [taskId, clearLegend]);
+        clearHighlightedLegend();
+    }, [taskId, clearHighlightedLegend]);
 
     if (Number.isNaN(taskId)) {
         return null;

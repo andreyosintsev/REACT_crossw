@@ -10,51 +10,27 @@ import IStoreLegend from "./storeLegend.interface";
  * Специализированное хранилище для координации визуального взаимодействия
  * между игровым полем и легендами. Использует глобальные переменные
  * для хранения DOM-элементов, что обеспечивает высокую производительность.
- *
- * @note
- * Внимание: используется глобальное состояние (переменные вне хранилища)
- * для максимальной производительности при частых DOM-операциях
- *
- * @example
- * // Использование в компоненте
- * const { highlightLegends, getLegendElement } = legendStore();
  */
-const storeLegend = create<IStoreLegend>((set, get) => ({
-    // Глобальные массивы для хранения DOM-элементов легенд вне хранилища
-    legendHorizontalElements: [],
-    legendVerticalElements: [],
+const storeLegend = create<IStoreLegend>((set) => ({
+    // Координаты подсвеченного столбца и строки легенды
+    highlightedX: null,
+    highlightedY: null,
 
-    // Вспомогательная функция для подсветки легенд
-    highlightLegends: (xCoord, yCoord) => {
-        const clearHighlight = get().clearHighlight;
-
-        // Убираем предыдущие выделения
-        clearHighlight();
-
-        // Находим и выделяем соответствующие элементы
-        get().legendHorizontalElements.forEach((ele) => ele.dataset.type === `lh_${xCoord}` && ele.classList.add("le_hover"));
-        get().legendVerticalElements.forEach((ele) => ele.dataset.type === `lv_${yCoord}` && ele.classList.add("le_hover"));
+    // Метод установки текущих подсвеченного столбца и строки легенды
+    setHighlightedLegend: (xCoord, yCoord) => {
+        set({
+            highlightedX: xCoord,
+            highlightedY: yCoord,
+        });
     },
 
-    clearHighlight: () => {
-        // Убираем предыдущие выделения
-        get().legendHorizontalElements.forEach((ele) => ele.classList.remove("le_hover"));
-        get().legendVerticalElements.forEach((ele) => ele.classList.remove("le_hover"));
+    // Метод очистки подсвеченных элементов легенд
+    clearHighlightedLegend: () => {
+        set({
+            highlightedX: null,
+            highlightedY: null,
+        });
     },
-
-    addLegendElement: (div) => {
-        if (div?.dataset.type?.includes("lh")) {
-            set({
-                legendHorizontalElements: get().legendHorizontalElements.concat(div),
-            });
-        } else {
-            set({
-                legendVerticalElements: get().legendVerticalElements.concat(div),
-            });
-        }
-    },
-
-    clearLegend: () => set({ legendVerticalElements: [], legendHorizontalElements: [] }),
 }));
 
 export default storeLegend;

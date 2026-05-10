@@ -3,77 +3,24 @@
  * @interface
  */
 interface IStoreLegend {
-    legendHorizontalElements: HTMLDivElement[];
-    legendVerticalElements: HTMLDivElement[];
+    /**Подсвеченный столбец*/
+    highlightedX: number | null;
+    /**Подсвеченная строка*/
+    highlightedY: number | null;
 
     /**
-     * Подсвечивает соответствующие легенды при взаимодействии с клеткой поля
+     * Устанавливает подсветку легенд
      * @param {number} xCoord - координата X клетки
      * @param {number} yCoord - координата Y клетки
      * @returns {void}
      *
-     * @description
-     * Обрабатывает события взаимодействия с клетками игрового поля:
-     * 1. Убирает предыдущие выделения со всех легенд
-     * 2. Находит соответствующие горизонтальные и вертикальные легенды
-     * 3. Добавляет класс подсветки найденным элементам
-     *
-     *
-     * @visualEffects
-     * - Удаляет класс 'le_hover' со всех элементов легенд
-     * - Добавляет класс 'le_hover' соответствующим легендам
      */
-    highlightLegends: (xCoord: number, yCoord: number) => void;
-
-    clearHighlight: () => void;
+    setHighlightedLegend: (xCoord: number, yCoord: number) => void;
 
     /**
-     * Регистрирует DOM-элемент легенды в соответствующем глобальном массиве
-     * @param {HTMLDivElement} div - DOM-элемент легенды для регистрации
-     * @returns {void}
-     *
-     * @description
-     * Определяет тип легенды по data-атрибуту и добавляет элемент
-     * в соответствующий глобальный массив для последующего управления.
-     * Не вызывает обновления состояния хранилища для производительности.
-     *
-     * @performance
-     * Прямое добавление в глобальные массивы без setState
-     * для исключения лишних ререндеров
-     *
-     * @logic
-     * - Если data-type содержит "LegendHorizontal" → добавляет в горизонтальные
-     * - Все остальные случаи → добавляет в вертикальные
-     *
-     * @example
-     * // В компоненте легенды
-     * useEffect(() => {
-     *   if (ref.current) {
-     *     getLegendElement(ref.current);
-     *   }
-     * }, []);
+     * Очищает подсветку легенд
      */
-    addLegendElement: (div: HTMLDivElement) => void;
-
-    /**
-     * Очищает глобальные массивы DOM-элементов легенд
-     * @returns {void}
-     *
-     * @description
-     * Полностью очищает глобальные коллекции зарегистрированных элементов легенд.
-     * Используется при:
-     * - Перезагрузке игры
-     * - Смене уровня/задачи
-     * - Очистке перед повторной регистрацией
-     *
-     * @performance
-     * Прямая работа с глобальными массивами без обновления состояния
-     *
-     * @example
-     * // При размонтировании компонента или смене задачи
-     * clearLegend();
-     */
-    clearLegend: () => void;
+    clearHighlightedLegend: () => void;
 }
 
 export default IStoreLegend;

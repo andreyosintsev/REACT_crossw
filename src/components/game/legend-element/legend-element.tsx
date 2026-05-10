@@ -1,9 +1,11 @@
 import { FC, useEffect, useRef } from "react";
+import cn from "classnames";
 
 import styles from "./legend-element.module.scss";
 import ILegendElement from "./legend-element.interface";
 
 import storeLegend from "../../../store/storeLegend/storeLegend";
+import { isHorizontalLegendHighlighted, isVerticalLegendHighlighted } from "../../../utils/legends/legends";
 
 /**
  * Компонент элемента легенды для японского кроссворда
@@ -32,56 +34,27 @@ import storeLegend from "../../../store/storeLegend/storeLegend";
  * />
  */
 const LegendElement: FC<ILegendElement> = ({ text, xCoord, yCoord, type }) => {
-    // Получаем функцию регистрации элемента из хранилища легенд
-    const { addLegendElement } = storeLegend();
-    // Ref для доступа к DOM-элементу
-    const ref = useRef<HTMLDivElement | null>(null);
+    const highlightedX = storeLegend((state) => state.highlightedX);
+    const highlightedY = storeLegend((state) => state.highlightedY);
 
-    /**
-     * Формирует строку CSS-классов на основе координат и содержания
-     * @type {string}
-     *
-     * @logic
-     * - Правая граница: для каждого 5-го элемента по X
-     * - Нижняя граница: для каждого 5-го элемента по Y
-     * - Стиль содержимого: если элемент не пустой (text !== null)
-     */
-    let style = "";
+    const isHorizontal = type?.startsWith("lh_");
+    const isVertical = type?.startsWith("lv_");
 
-    // Добавляем правую границу для каждого 5-го элемента по горизонтали
-    if ((xCoord + 1) % 5 === 0) {
-        style = styles["border_right"];
-    }
+    const isHighlighted =
+        (isHorizontal && isHorizontalLegendHighlighted(xCoord, highlightedX)) ||
+        (isVertical && isVerticalLegendHighlighted(yCoord, highlightedY));
 
-    // Добавляем нижнюю границу для каждого 5-го элемента по вертикали
-    if ((yCoord + 1) % 5 === 0) {
-        style += " " + styles["border_bottom"];
-    }
-
-    // Добавляем стиль для элементов с содержимым
-    if (text) {
-        style += " " + styles["contented"];
-    }
-
-    /**
-     * Эффект регистрации DOM-элемента в хранилище
-     * @dependency [] - Запускается единожды при монтировании
-     *
-     * @description
-     * После монтирования компонента регистрирует DOM-элемент
-     * в глобальном хранилище для последующего управления:
-     * - Подсветка при наведении на клетки поля
-     * - Групповая анимация
-     * - Синхронизация состояния
-     */
-    useEffect(() => {
-        if (ref.current) {
-            addLegendElement(ref.current);
-        }
-    }, []);
+    if (isHighlighted) console.log(isHighlighted);
 
     return (
-        <div ref={ref} className={`${styles.le} ${style}`} data-type={type}>
+        <div
+            className={cn(styles.le, {
+                [styles.le_borderRight]: (xCoord + 1) % 5 === 0,
+                [styles.le_borderBottom]: (yCoord + 1) % 5 === 0,
+                [styles.le_contented]: text !== null,
+                [styles.le_hover]: isHighlighted,
+            })}
+        >
             {text}
         </div>
     );
