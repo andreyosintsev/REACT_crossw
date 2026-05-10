@@ -1,8 +1,6 @@
-import { FC, useEffect, useRef } from "react";
 import cn from "classnames";
 
 import styles from "./legend-element.module.scss";
-import ILegendElement from "./legend-element.interface";
 
 import storeLegend from "../../../store/storeLegend/storeLegend";
 import { isHorizontalLegendHighlighted, isVerticalLegendHighlighted } from "../../../utils/legends/legends";
@@ -33,7 +31,15 @@ import { isHorizontalLegendHighlighted, isVerticalLegendHighlighted } from "../.
  *   dataAttribute="LegendHorizontal_2"
  * />
  */
-const LegendElement: FC<ILegendElement> = ({ text, xCoord, yCoord, type }) => {
+
+interface ILegendElement {
+    text: number | null;
+    xCoord: number;
+    yCoord: number;
+    type?: string;
+}
+
+const LegendElement = ({ text, xCoord, yCoord, type }: ILegendElement) => {
     const highlightedX = storeLegend((state) => state.highlightedX);
     const highlightedY = storeLegend((state) => state.highlightedY);
 

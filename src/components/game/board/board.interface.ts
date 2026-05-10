@@ -1,4 +1,4 @@
-import IBoardElement from "../board-element/board-element.interface";
+import { IBoardElement } from "../board-element/board-element.interface";
 
 export interface IGameBoard {
     width: number;

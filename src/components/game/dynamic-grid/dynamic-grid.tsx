@@ -1,5 +1,4 @@
-import { FC } from "react";
-import IDynamicGrid from "./dynamic-grid.interface";
+import { IDynamicGrid } from "./dynamic-grid.interface";
 import DynamicGridUI from "./dynamic-gridUI";
 
 /**

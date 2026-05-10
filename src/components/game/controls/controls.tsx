@@ -1,7 +1,5 @@
 import { useState } from "react";
 
-import IControls from "./controls.interface";
-
 import Modal from "../../../components/shared/modal/modal";
 import ModalButton from "../../../components/shared/button/button";
 
@@ -31,6 +29,12 @@ import styles from "./controls.module.scss";
  *   onHelp={handleHelp}
  * />
  */
+
+interface IControls {
+    onRestart: (e: React.MouseEvent) => void;
+    onHelp: () => void;
+}
+
 const Controls = ({ onRestart, onHelp }: IControls) => {
     // Состояние видимости модального окна подтверждения
     const [modalShow, setModalShow] = useState(false);

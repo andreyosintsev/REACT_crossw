@@ -1,6 +1,6 @@
-import { useState, useEffect, FC } from "react";
+import { useState, useEffect } from "react";
 
-import { ITable } from "./table.interface";
+import { ITask } from "../../../utils/api/api.interface";
 
 import Board from "../board/board";
 import LegendHorizontal from "../legend-horizontal/legend-horizontal";
@@ -33,7 +33,12 @@ import styles from "./table.module.scss";
  * @example
  * <Table task={currentTask} />
  */
-const Table: FC<ITable> = ({ task }) => {
+
+export interface ITable {
+    task: ITask;
+}
+
+const Table = ({ task }: ITable) => {
     // Состояние отображения модального окна
     const [modalShow, setModalShow] = useState(false);
     // Получаем состояние и методы из игрового хранилища

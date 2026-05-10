@@ -1,5 +1,5 @@
 import styles from "./dynamic-gridUI.module.scss";
-import IDynamicGridUI from "./dynamic-gridUI.interface";
+import { IDynamicGridUI } from "./dynamic-gridUI.interface";
 
 /**
  * @component Компонент динамической сетки UI.

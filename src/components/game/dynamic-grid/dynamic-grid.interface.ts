@@ -1,4 +1,4 @@
-interface IDynamicGrid {
+export interface IDynamicGrid {
     columns: number; // количество колонок
     rows: number; // количество строк
     cellWidth?: number; // ширина ячейки
@@ -10,5 +10,3 @@ interface IDynamicGrid {
     children?: React.ReactNode;
     className?: string;
 }
-
-export default IDynamicGrid;

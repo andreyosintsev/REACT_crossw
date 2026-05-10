@@ -1,8 +1,8 @@
 import { ICrossword } from "../../store/storeUser/storeUser.interface";
 import { ITask, TBoardElementContent } from "../api/api.interface";
-import IBoardElement from "../../components/game/board-element/board-element.interface";
-import ILegendVertical from "../../components/game/legend-vertical/legend-vertical.interface";
-import ILegendHorizontal from "../../components/game/legend-horizontal/legend-horizontal.interface";
+import { IBoardElement } from "../../components/game/board-element/board-element.interface";
+import { ILegendVertical } from "../../components/game/legend-vertical/legend-vertical.interface";
+import { ILegendHorizontal } from "../../components/game/legend-horizontal/legend-horizontal.interface";
 import { TCellAction } from "../../types/game";
 
 /**

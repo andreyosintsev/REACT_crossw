@@ -1,6 +1,6 @@
-import IBoardElement from "../../components/game/board-element/board-element.interface";
-import ILegendHorizontal from "../../components/game/legend-horizontal/legend-horizontal.interface";
-import ILegendVertical from "../../components/game/legend-vertical/legend-vertical.interface";
+import { IBoardElement } from "../../components/game/board-element/board-element.interface";
+import { ILegendHorizontal } from "../../components/game/legend-horizontal/legend-horizontal.interface";
+import { ILegendVertical } from "../../components/game/legend-vertical/legend-vertical.interface";
 import { TCellAction } from "../../types/game";
 
 import { ITask } from "../../utils/api/api.interface";

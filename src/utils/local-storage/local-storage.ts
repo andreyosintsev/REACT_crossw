@@ -1,8 +1,8 @@
-import IBoardElement from "../../components/game/board-element/board-element.interface";
+import { BOARD_PREFIX, TASK_PREFIX, TASKS_KEY, CROSSWORD_PREFIX } from "./local-storage.constants";
 
+import { IBoardElement } from "../../components/game/board-element/board-element.interface";
 import { ICrossword } from "../../store/storeUser/storeUser.interface";
 import { ITask } from "../api/api.interface";
-import { BOARD_PREFIX, TASK_PREFIX, TASKS_KEY, CROSSWORD_PREFIX } from "./local-storage.constants";
 
 /** Сохраняет игровое поле в localStorage
  * @param boardId идентификатор поля

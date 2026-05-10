@@ -1,6 +1,6 @@
 import cn from "classnames";
 
-import IBoardElement from "./board-element.interface";
+import { IBoardElement } from "./board-element.interface";
 
 import storeGame from "../../../store/storeGame/storeGame";
 import storeLegend from "../../../store/storeLegend/storeLegend";
@@ -47,16 +47,6 @@ const BoardElement = ({ xCoord, yCoord, content }: IBoardElement) => {
     const handleContextMenu = (e: React.MouseEvent<HTMLDivElement>) => {
         e.preventDefault();
     };
-
-    /**
-     * Формирует строку CSS-классов на основе координат и состояния клетки
-     * @type {string}
-     *
-     * @logic
-     * - Правая граница: для каждой 5-й клетки по X-координате
-     * - Нижняя граница: для каждой 5-й клетки по Y-координате
-     * - Основной стиль: определяется содержимым клетки (be_0, be_1, be_X)
-     */
 
     return (
         <div

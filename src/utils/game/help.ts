@@ -1,4 +1,4 @@
-import IBoardElement from "../../components/game/board-element/board-element.interface";
+import { IBoardElement } from "../../components/game/board-element/board-element.interface";
 import { ITask, TBoardElementContent } from "../../utils/api/api.interface";
 
 interface IHelpCandidate {

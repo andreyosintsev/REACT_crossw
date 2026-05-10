@@ -1,10 +1,9 @@
-import { FC } from "react";
-
-import LegendElement from "../legend-element/legend-element";
 import styles from "./legend-vertical.module.scss";
 
-import ILegendVertical from "./legend-vertical.interface";
+import { ILegendVertical } from "./legend-vertical.interface";
+
 import DynamicGrid from "../../../components/game/dynamic-grid/dynamic-grid";
+import LegendElement from "../legend-element/legend-element";
 
 /**
  * Компонент вертикальной легенды для японского кроссворда
@@ -30,9 +29,10 @@ import DynamicGrid from "../../../components/game/dynamic-grid/dynamic-grid";
  *   height={3}
  * />
  */
-const LegendVertical: FC<ILegendVertical> = ({ legend, width, height }) => {
+
+const LegendVertical = ({ legend, width, height }: ILegendVertical) => {
     return (
-        <DynamicGrid rows={height} columns={width} className={styles.vertical_legend}>
+        <DynamicGrid rows={height} columns={width} className={styles.legendVertical}>
             {legend.map((item, i) => {
                 const columnIndex = Math.floor(i / width);
                 return (

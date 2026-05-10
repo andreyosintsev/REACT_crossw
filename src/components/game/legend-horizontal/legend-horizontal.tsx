@@ -1,10 +1,9 @@
-import { FC } from "react";
-
-import LegendElement from "../legend-element/legend-element";
+import { ILegendHorizontal } from "./legend-horizontal.interface";
 
 import styles from "./legend-horizontal.module.scss";
-import ILegendHorizontal from "./legend-horizontal.interface";
+
 import DynamicGrid from "../../../components/game/dynamic-grid/dynamic-grid";
+import LegendElement from "../legend-element/legend-element";
 
 /**
  * Компонент горизонтальной легенды для японского кроссворда
@@ -31,9 +30,10 @@ import DynamicGrid from "../../../components/game/dynamic-grid/dynamic-grid";
  *   height={2}
  * />
  */
-const LegendHorizontal: FC<ILegendHorizontal> = ({ legend, width, height }) => {
+
+const LegendHorizontal = ({ legend, width, height }: ILegendHorizontal) => {
     return (
-        <DynamicGrid rows={height} columns={width} className={styles.horizontal_legend}>
+        <DynamicGrid rows={height} columns={width} className={styles.legendHorizontal}>
             {legend.map((item, i) => {
                 const rowIndex = i % width;
                 return (
