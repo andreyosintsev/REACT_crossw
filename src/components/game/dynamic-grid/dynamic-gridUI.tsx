@@ -1,4 +1,3 @@
-import { FC } from "react";
 import styles from "./dynamic-gridUI.module.scss";
 import IDynamicGridUI from "./dynamic-gridUI.interface";
 
@@ -14,14 +13,9 @@ import IDynamicGridUI from "./dynamic-gridUI.interface";
  * @returns {JSX.Element} - Элемент JSX компонента.
  */
 
-const DynamicGridUI: FC<IDynamicGridUI> = ({ style, onCellClick, onContextMenu, children, className }) => {
+const DynamicGridUI = ({ style, onCellClick, onContextMenu, children, className }: IDynamicGridUI) => {
     return (
-        <div
-            className={`${styles.board} ${className || ""}`}
-            style={style as React.CSSProperties}
-            onMouseDown={onCellClick}
-            onContextMenu={onContextMenu}
-        >
+        <div className={styles.grid + ` ${className || ""}`} style={style} onMouseDown={onCellClick} onContextMenu={onContextMenu}>
             {children}
         </div>
     );

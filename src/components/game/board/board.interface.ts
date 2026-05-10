@@ -1,6 +1,6 @@
 import IBoardElement from "../board-element/board-element.interface";
 
-export interface IGameBoardProps {
+export interface IGameBoard {
     width: number;
     height: number;
 }

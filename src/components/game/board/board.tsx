@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import { IGameBoardProps } from "./board.interface";
+import { IGameBoard } from "./board.interface";
 
 import BoardElement from "../board-element/board-element";
 import DynamicGrid from "../../../components/game/dynamic-grid/dynamic-grid";
@@ -29,7 +29,7 @@ import styles from "./board.module.scss";
  * @example
  * <Board width={15} height={15} />
  */
-const Board = ({ width, height }: IGameBoardProps) => {
+const Board = ({ width, height }: IGameBoard) => {
     // Получаем состояние и методы из игрового хранилища
     const { board, solved, checkWin } = storeGame();
 
@@ -54,7 +54,7 @@ const Board = ({ width, height }: IGameBoardProps) => {
 
     return (
         <>
-            <DynamicGrid columns={width} rows={height} className={`${solved ? styles.blocked : ""}`}>
+            <DynamicGrid columns={width} rows={height} className={solved ? styles.blocked : ""}>
                 {board.map((item, i) => {
                     return <BoardElement key={`board${i}`} xCoord={item.xCoord} yCoord={item.yCoord} content={item.content} />;
                 })}

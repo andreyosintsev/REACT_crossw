@@ -30,7 +30,7 @@ import DynamicGridUI from "./dynamic-gridUI";
  * 2. cellSize - общий размер (если не указаны индивидуальные)
  * 3. Значение по умолчанию - 24px
  */
-const DynamicGrid: FC<IDynamicGrid> = ({
+const DynamicGrid = ({
     columns,
     rows,
     cellWidth,
@@ -41,25 +41,25 @@ const DynamicGrid: FC<IDynamicGrid> = ({
     onContextMenu,
     children,
     className,
-}) => {
+}: IDynamicGrid) => {
     const parseSize = (size: number | string | undefined): string => {
         if (size === "auto") return "auto";
         if (typeof size === "number") return `${size}px`;
         return `${24}px`;
     };
 
-    const sizeWidth = parseSize(cellWidth || cellSize);
-    const sizeHeight = parseSize(cellHeight || cellSize);
-    const sizeGap = `${gap || 0}px`;
+    const sizeWidth = parseSize(cellWidth ?? cellSize);
+    const sizeHeight = parseSize(cellHeight ?? cellSize);
+    const sizeGap = `${gap ?? 0}px`;
 
-    const styles = {
-        "--columns": `repeat(${columns}, ${sizeWidth})`,
-        "--rows": `repeat(${rows}, ${sizeHeight})`,
-        "--gap": sizeGap,
-    } as React.CSSProperties;
+    const style: React.CSSProperties = {
+        ["--columns" as string]: `repeat(${columns}, ${sizeWidth})`,
+        ["--rows" as string]: `repeat(${rows}, ${sizeHeight})`,
+        ["--gap" as string]: sizeGap,
+    };
 
     return (
-        <DynamicGridUI style={styles} onCellClick={onCellClick} onContextMenu={onContextMenu} className={className}>
+        <DynamicGridUI style={style} onCellClick={onCellClick} onContextMenu={onContextMenu} className={className}>
             {children}
         </DynamicGridUI>
     );
