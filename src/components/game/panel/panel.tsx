@@ -1,6 +1,6 @@
-import { FC } from "react";
-import PanelStyles from "./panel.module.scss";
-import IPanel from "./panel.interface";
+import { ReactNode } from "react";
+
+import styles from "./panel.module.scss";
 
 /**
  * @component - Универсальный компонент панели (контейнера)
@@ -18,8 +18,13 @@ import IPanel from "./panel.interface";
  *
  * @see PanelStyles Модуль стилей панели
  **/
-const Panel: FC<IPanel> = ({ children }) => {
-    return <div className={PanelStyles.panel}>{children}</div>;
+
+interface IPanel {
+    children: ReactNode;
+}
+
+const Panel = ({ children }: IPanel) => {
+    return <div className={styles.panel}>{children}</div>;
 };
 
 export default Panel;
