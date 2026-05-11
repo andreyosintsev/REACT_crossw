@@ -50,8 +50,6 @@ const LegendElement = ({ text, xCoord, yCoord, type }: ILegendElement) => {
         (isHorizontal && isHorizontalLegendHighlighted(xCoord, highlightedX)) ||
         (isVertical && isVerticalLegendHighlighted(yCoord, highlightedY));
 
-    if (isHighlighted) console.log(isHighlighted);
-
     return (
         <div
             className={cn(styles.le, {

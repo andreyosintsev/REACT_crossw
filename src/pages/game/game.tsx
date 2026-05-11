@@ -121,7 +121,7 @@ const Game = () => {
                 <Controls onRestart={handleRestart} onHelp={handleHint} />
             </Block>
             {!error && task && (
-                <Block title={"Кроссворд " + taskId}>
+                <Block title={"Кроссворд " + taskId} variant="game">
                     <Table task={task} />
                 </Block>
             )}
