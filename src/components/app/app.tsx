@@ -5,6 +5,8 @@ import { fetchNews, fetchTasks } from "../../utils/api/apiService";
 
 import Router from "../router/router";
 
+import styles from "./app.module.scss";
+
 import storeApp from "../../store/storeApp/storeApp";
 import storeNews from "../../store/storeNews/storeNews";
 import storeTasks from "../../store/storeTasks/storeTasks";
@@ -93,10 +95,41 @@ const App = () => {
         };
     }, [isMenuMobileOpen]);
 
+    //Расчет и установка единицы высоты для устройств на iOS
+    useEffect(() => {
+        const setFullHeight = () => {
+            const vh = window.innerHeight * 0.01;
+
+            document.documentElement.style.setProperty("--vh", `${vh}px`);
+        };
+
+        setFullHeight();
+
+        const viewport = window.visualViewport;
+
+        if (viewport) {
+            viewport.addEventListener("resize", setFullHeight);
+        } else {
+            window.addEventListener("resize", setFullHeight);
+            window.addEventListener("orientationchange", setFullHeight);
+        }
+
+        return () => {
+            if (viewport) {
+                window.visualViewport?.removeEventListener("resize", setFullHeight);
+            } else {
+                window.removeEventListener("resize", setFullHeight);
+                window.removeEventListener("orientationchange", setFullHeight);
+            }
+        };
+    }, []);
+
     return (
-        <BrowserRouter>
-            <Router />
-        </BrowserRouter>
+        <div className={styles.app}>
+            <BrowserRouter>
+                <Router />
+            </BrowserRouter>
+        </div>
     );
 };
 

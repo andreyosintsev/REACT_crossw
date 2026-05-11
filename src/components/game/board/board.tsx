@@ -53,13 +53,13 @@ const Board = ({ width, height }: IGameBoard) => {
     }, [board, checkWin]);
 
     return (
-        <>
+        <div className={styles.board}>
             <DynamicGrid columns={width} rows={height} className={solved ? styles.blocked : ""}>
                 {board.map((item, i) => {
                     return <BoardElement key={`board${i}`} xCoord={item.xCoord} yCoord={item.yCoord} content={item.content} />;
                 })}
             </DynamicGrid>
-        </>
+        </div>
     );
 };
 
