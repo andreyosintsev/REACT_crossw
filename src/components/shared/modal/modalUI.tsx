@@ -19,7 +19,7 @@ const ModalUI = ({ title, image, children }: IModal) => (
     <>
         <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
             <img className={styles.modal__image} src={`/images/${image}`} alt="" />
-            <p>{title}</p>
+            <p className={styles.modal__p}>{title}</p>
             <div className={styles.modal__buttons}>{children}</div>
         </div>
     </>

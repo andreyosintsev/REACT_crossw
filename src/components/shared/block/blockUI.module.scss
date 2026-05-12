@@ -54,6 +54,13 @@
         display: none;
     }
 
+    &__controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+    }
+
     @include media-max(desktop) {
         &_ads {
             display: block;

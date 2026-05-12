@@ -1,7 +1,8 @@
 import { ReactNode } from "react";
 
 interface IButton {
-    onClick: (e: React.MouseEvent) => void;
+    className?: string;
+    onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
     children: ReactNode;
 }
 

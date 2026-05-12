@@ -1,11 +1,14 @@
+import cn from "classnames";
+
 import IButton from "./button.interface";
 
 import styles from "./buttonUI.module.scss";
 
 /**
- * @component Визуальный компонент кнопки модального окна
+ * @component Визуальный компонент кнопки
  *
  * @param {Object} IButton - Интерфейс пропсов компонента кнопки
+ * @param {string} className - Имя дополнительного класса кнопки
  * @param {Function} onClick - Обработчик клика по кнопке
  * @param {ReactNode} children - Текст или контент кнопки
  *
@@ -14,11 +17,11 @@ import styles from "./buttonUI.module.scss";
  * @description Базовый UI-компонент, представляющий собой кнопку
  * для выполнения действий внутри модального окна
  */
-const ButtonUI = ({ onClick, children }: IButton) => {
+const ButtonUI = ({ className, onClick, children }: IButton) => {
     return (
-        <div className={styles.button}>
-            <button onClick={onClick}>{children}</button>
-        </div>
+        <button className={cn(styles.button, className)} onClick={onClick}>
+            {children}
+        </button>
     );
 };
 

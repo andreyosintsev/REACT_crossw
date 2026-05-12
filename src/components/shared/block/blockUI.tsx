@@ -17,10 +17,9 @@ import styles from "./blockUI.module.scss";
  */
 const BlockUI = ({ title, children, variant = "text" }: IBlock) => {
     return (
-        <div className={cn(styles.block, styles[`block_${variant}`])}>
+        <div className={cn(styles.block, styles[`block__${variant}`])}>
             {title && <h2 className={styles.block__title}>{title}</h2>}
-
-            <div className={`${styles[`block__${variant}`]}`}> {children}</div>
+            {children}
         </div>
     );
 };

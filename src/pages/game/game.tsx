@@ -117,11 +117,11 @@ const Game = () => {
 
     return (
         <Page>
-            <Block>
+            <Block variant="controls">
                 <Controls onRestart={handleRestart} onHelp={handleHint} />
             </Block>
             {!error && task && (
-                <Block title={"Кроссворд " + taskId} variant="game">
+                <Block variant="game">
                     <Table task={task} />
                 </Block>
             )}

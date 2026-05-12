@@ -1,7 +1,7 @@
 import { useState } from "react";
 
+import Button from "../../../components/shared/button/button";
 import Modal from "../../../components/shared/modal/modal";
-import ModalButton from "../../../components/shared/button/button";
 
 import storeGame from "../../../store/storeGame/storeGame";
 
@@ -119,17 +119,21 @@ const Controls = ({ onRestart, onHelp }: IControls) => {
     return (
         <>
             <div className={styles.controls}>
-                <button className={styles.restart} onClick={restartHandler}>
+                <Button className={styles.restart} onClick={restartHandler}>
                     Начать заново
-                </button>
-                <button className={`${styles.tip} ${solved && styles.blocked}`} onClick={helpHandler}>
+                </Button>
+                <Button className={`${styles.tip} ${solved && styles.blocked}`} onClick={helpHandler}>
                     Подсказка
-                </button>
+                </Button>
             </div>
             {modalShow && (
                 <Modal image="modal1.png" title="Вы хотите начать заново?">
-                    <ModalButton onClick={dialogRestartHandler}>Начать заново</ModalButton>
-                    <ModalButton onClick={dialogCancelHandler}>Отменить</ModalButton>
+                    <Button className={styles.button_modal} onClick={dialogRestartHandler}>
+                        Начать заново
+                    </Button>
+                    <Button className={styles.button_modal} onClick={dialogCancelHandler}>
+                        Отменить
+                    </Button>
                 </Modal>
             )}
         </>
