@@ -5,6 +5,7 @@ import Page from "../../components/shared/page/page";
 import Block from "../../components/shared/block/block";
 import Table from "../../components/game/table/table";
 import Controls from "../../components/game/controls/controls";
+import Status from "../../components/game/status/status";
 
 import storeTasks from "../../store/storeTasks/storeTasks";
 import storeGame from "../../store/storeGame/storeGame";
@@ -114,6 +115,7 @@ const Game = () => {
     return (
         <Page>
             <Block variant="controls">
+                <Status />
                 <Controls />
             </Block>
             {!error && task && (

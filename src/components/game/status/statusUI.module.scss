@@ -1,0 +1,38 @@
+@use "../../../scss/breakpoints.scss" as *;
+
+.status {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    font-family: var(--base-font-family, sans-serif);
+    font-size: 14px;
+    line-height: 20px;
+
+    &__entry {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-right: 20px;
+
+        &:nth-last-child(1) {
+            margin-right: 0;
+        }
+
+        @include media-max(tablet) {
+            margin-right: 10px;
+        }
+    }
+
+    &__key {
+        margin-right: 5px;
+
+        @include media-max(tablet) {
+            display: none;
+        }
+    }
+
+    &__value {
+        font-weight: bold;
+    }
+}

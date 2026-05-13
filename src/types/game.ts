@@ -16,3 +16,9 @@ export type TControlItem =
           type: "separator";
           key: string;
       };
+
+// Типизация статуса игры
+export type TStatusItem = {
+    key: string;
+    value: string;
+};
