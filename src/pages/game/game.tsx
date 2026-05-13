@@ -38,10 +38,6 @@ const Game = () => {
     /** Функция установки текущей задачи */
     const setTask = storeGame((state) => state.setTask);
     /** Функция обработки перезапуска игры */
-    const handleRestart = storeGame((state) => state.restartGame);
-    /** Функция обработки подсказки */
-    const handleHint = storeGame((state) => state.giveHint);
-    /** Функция инициализации игрового процесса */
     const initializeGame = storeGame((state) => state.initializeGame);
     /** Сообщение об ошибке из API хранилища */
     const error = storeApp((state) => state.error);
@@ -118,7 +114,7 @@ const Game = () => {
     return (
         <Page>
             <Block variant="controls">
-                <Controls onRestart={handleRestart} onHelp={handleHint} />
+                <Controls />
             </Block>
             {!error && task && (
                 <Block variant="game">

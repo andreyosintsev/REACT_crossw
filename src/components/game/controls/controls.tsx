@@ -1,7 +1,10 @@
 import { useState } from "react";
 
+import { TControlItem } from "../../../types/game";
+
 import Button from "../../../components/shared/button/button";
 import Modal from "../../../components/shared/modal/modal";
+import ControlsUI from "./controlsUI";
 
 import storeGame from "../../../store/storeGame/storeGame";
 
@@ -30,16 +33,15 @@ import styles from "./controls.module.scss";
  * />
  */
 
-interface IControls {
-    onRestart: (e: React.MouseEvent) => void;
-    onHelp: () => void;
-}
+const Controls = () => {
+    const onHelp = storeGame((state) => state.giveHint);
 
-const Controls = ({ onRestart, onHelp }: IControls) => {
+    const onRestart = storeGame((state) => state.restartGame);
+
     // Состояние видимости модального окна подтверждения
     const [modalShow, setModalShow] = useState(false);
     // Получаем состояние и методы из игрового хранилища
-    const { solved, setGameCompleted, setWin } = storeGame();
+    const { setGameCompleted, setWin } = storeGame();
 
     /**
      * Обработчик клика по кнопке "Начать заново"
@@ -81,9 +83,9 @@ const Controls = ({ onRestart, onHelp }: IControls) => {
      * - Сбрасывает статус завершения игры
      * - Сбрасывает флаг победы
      */
-    const dialogRestartHandler = (e: React.MouseEvent) => {
+    const dialogRestartHandler = () => {
         setModalShow(false);
-        onRestart(e);
+        onRestart();
         setGameCompleted(false);
         setWin(false);
     };
@@ -102,30 +104,52 @@ const Controls = ({ onRestart, onHelp }: IControls) => {
         setModalShow(false);
     };
 
-    /**
-     * Обработчик закрытия модального окна по клику на фон
-     * @param {React.MouseEvent} e - Событие клика
-     * @returns {void}
-     *
-     * @description
-     * Закрывает модальное окно при клике на затемненный фон
-     * Аналогично отмене перезапуска
-     */
-    const closeHandler = (e: React.MouseEvent) => {
-        e.preventDefault();
-        setModalShow(false);
-    };
+    const controlItems: TControlItem[] = [
+        {
+            type: "button",
+            key: "size-up",
+            tooltip: "Увеличить клетки",
+            image: "/images/buttons/size-up.svg",
+            alt: "Уменьшить клетки",
+            onClick: () => {},
+        },
+        {
+            type: "button",
+            key: "size-down",
+            tooltip: "Уменьшить клетки",
+            image: "/images/buttons/size-down.svg",
+            alt: "Увеличить клетки",
+            onClick: () => {},
+        },
+        {
+            type: "separator",
+            key: "separator-1",
+        },
+        {
+            type: "button",
+            key: "help",
+            tooltip: "Взять подсказку",
+            image: "/images/buttons/help.svg",
+            alt: "Подсказка",
+            onClick: helpHandler,
+        },
+        {
+            type: "separator",
+            key: "separator-2",
+        },
+        {
+            type: "button",
+            key: "restart",
+            tooltip: "Начать заново",
+            image: "/images/buttons/restart.svg",
+            alt: "Перезапуск",
+            onClick: restartHandler,
+        },
+    ];
 
     return (
         <>
-            <div className={styles.controls}>
-                <Button className={styles.restart} onClick={restartHandler}>
-                    Начать заново
-                </Button>
-                <Button className={`${styles.tip} ${solved && styles.blocked}`} onClick={helpHandler}>
-                    Подсказка
-                </Button>
-            </div>
+            <ControlsUI controlItems={controlItems} />
             {modalShow && (
                 <Modal image="modal1.png" title="Вы хотите начать заново?">
                     <Button className={styles.button_modal} onClick={dialogRestartHandler}>
