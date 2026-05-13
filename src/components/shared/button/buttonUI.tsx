@@ -20,7 +20,7 @@ import styles from "./buttonUI.module.scss";
  */
 const ButtonUI = ({ className, onClick, tooltip, children }: IButton) => {
     return (
-        <button className={cn(styles.button, className)} onClick={onClick} data-title={tooltip}>
+        <button className={cn(styles.button, className)} type="button" onClick={onClick} data-title={tooltip}>
             {children}
         </button>
     );

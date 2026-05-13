@@ -61,30 +61,6 @@ const Controls = () => {
     };
 
     /**
-     * Обработчик клика по кнопке "Подсказка"
-     * @param {React.MouseEvent} e - Событие клика
-     * @returns {void}
-     *
-     * @description
-     * Вызывает переданную функцию запроса подсказки
-     * Заблокирован после завершения игры
-     */
-    const helpHandler = (e: React.MouseEvent) => {
-        e.preventDefault();
-        onHelp();
-    };
-
-    const sizeUpHandler = (e: React.MouseEvent) => {
-        e.preventDefault();
-        onSizeUp();
-    };
-
-    const sizeDownHandler = (e: React.MouseEvent) => {
-        e.preventDefault();
-        onSizeDown();
-    };
-
-    /**
      * Обработчик подтверждения перезапуска игры
      * @param {React.MouseEvent} e - Событие клика
      * @returns {void}
@@ -124,7 +100,7 @@ const Controls = () => {
             tooltip: "Увеличить клетки",
             image: "/images/buttons/size-up.svg",
             alt: "Уменьшить клетки",
-            onClick: sizeUpHandler,
+            onClick: onSizeUp,
         },
         {
             type: "button",
@@ -132,7 +108,7 @@ const Controls = () => {
             tooltip: "Уменьшить клетки",
             image: "/images/buttons/size-down.svg",
             alt: "Увеличить клетки",
-            onClick: sizeDownHandler,
+            onClick: onSizeDown,
         },
         {
             type: "separator",
@@ -144,7 +120,7 @@ const Controls = () => {
             tooltip: "Взять подсказку",
             image: "/images/buttons/help.svg",
             alt: "Подсказка",
-            onClick: helpHandler,
+            onClick: onHelp,
         },
         {
             type: "separator",
