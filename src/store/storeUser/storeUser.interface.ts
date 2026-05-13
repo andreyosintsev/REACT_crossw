@@ -50,6 +50,16 @@ export interface IUserStore {
      * @param {IUserApi} userInfo - Объект с данными пользователя
      */
     setUserInfo: (userInfo: IUserApi) => void;
+
+    /**
+     * Увеличение размера клетки игрового поля
+     */
+    sizeUp(): void;
+
+    /**
+     * Уменьшение размера клетки игрового поля
+     */
+    sizeDown(): void;
 }
 
 /**
@@ -84,7 +94,7 @@ interface IUserSettings {
  * Интерфейс темы оформления
  * Содержит параметры визуального оформления интерфейса
  */
-interface ITheme {
+export interface ITheme {
     /**
      * Настройки элементов границы
      * @typedef {Object} BorderElement
@@ -95,13 +105,12 @@ interface ITheme {
      * @property {number} width - Ширина ячейки
      * @property {number} height - Высота ячейки
      */
-    borderElement: {
+    boardElement: {
         border: string;
-        colorText: string;
+        color: string;
         board: string;
-        cellColoring: string;
-        width: number;
-        height: number;
+        background: string;
+        size: number;
     };
 }
 

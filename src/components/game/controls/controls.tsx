@@ -7,6 +7,7 @@ import Modal from "../../../components/shared/modal/modal";
 import ControlsUI from "./controlsUI";
 
 import storeGame from "../../../store/storeGame/storeGame";
+import storeUser from "../../../store/storeUser/storeUser";
 
 import styles from "./controls.module.scss";
 
@@ -35,8 +36,10 @@ import styles from "./controls.module.scss";
 
 const Controls = () => {
     const onHelp = storeGame((state) => state.giveHint);
-
     const onRestart = storeGame((state) => state.restartGame);
+
+    const onSizeUp = storeUser((state) => state.sizeUp);
+    const onSizeDown = storeUser((state) => state.sizeDown);
 
     // Состояние видимости модального окна подтверждения
     const [modalShow, setModalShow] = useState(false);
@@ -69,6 +72,16 @@ const Controls = () => {
     const helpHandler = (e: React.MouseEvent) => {
         e.preventDefault();
         onHelp();
+    };
+
+    const sizeUpHandler = (e: React.MouseEvent) => {
+        e.preventDefault();
+        onSizeUp();
+    };
+
+    const sizeDownHandler = (e: React.MouseEvent) => {
+        e.preventDefault();
+        onSizeDown();
     };
 
     /**
@@ -111,7 +124,7 @@ const Controls = () => {
             tooltip: "Увеличить клетки",
             image: "/images/buttons/size-up.svg",
             alt: "Уменьшить клетки",
-            onClick: () => {},
+            onClick: sizeUpHandler,
         },
         {
             type: "button",
@@ -119,7 +132,7 @@ const Controls = () => {
             tooltip: "Уменьшить клетки",
             image: "/images/buttons/size-down.svg",
             alt: "Увеличить клетки",
-            onClick: () => {},
+            onClick: sizeDownHandler,
         },
         {
             type: "separator",

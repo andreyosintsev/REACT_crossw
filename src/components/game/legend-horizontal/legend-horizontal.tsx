@@ -1,4 +1,4 @@
-import { ILegendHorizontal } from "./legend-horizontal.interface";
+import { ILegendHorizontalProps } from "./legend-horizontal.interface";
 
 import styles from "./legend-horizontal.module.scss";
 
@@ -31,9 +31,9 @@ import LegendElement from "../legend-element/legend-element";
  * />
  */
 
-const LegendHorizontal = ({ legend, width, height }: ILegendHorizontal) => {
+const LegendHorizontal = ({ legend, width, height, appearance }: ILegendHorizontalProps) => {
     return (
-        <DynamicGrid rows={height} columns={width} className={styles.legendHorizontal}>
+        <DynamicGrid rows={height} columns={width} className={styles.legendHorizontal} cellSize={appearance.boardElement.size}>
             {legend.map((item, i) => {
                 const rowIndex = i % width;
                 return (

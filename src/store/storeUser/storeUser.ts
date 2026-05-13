@@ -28,13 +28,12 @@ const storeUser = create<IUserStore>((set, get) => ({
     rating: 0,
     userSettings: {
         theme: {
-            borderElement: {
+            boardElement: {
                 border: "",
-                colorText: "",
+                color: "",
                 board: "",
-                cellColoring: "",
-                width: 0,
-                height: 0,
+                background: "",
+                size: 24,
             },
         },
         mailing: false,
@@ -65,6 +64,44 @@ const storeUser = create<IUserStore>((set, get) => ({
             dateOfBirth: userInfo.dateOfBirth,
             userSettings: userInfo.userSettings,
         }),
+
+    sizeUp: () => {
+        const size = get().userSettings.theme.boardElement.size;
+
+        if (size >= 32) return;
+
+        set((state) => ({
+            userSettings: {
+                ...state.userSettings,
+                theme: {
+                    ...state.userSettings.theme,
+                    boardElement: {
+                        ...state.userSettings.theme.boardElement,
+                        size: size + 1,
+                    },
+                },
+            },
+        }));
+    },
+
+    sizeDown: () => {
+        const size = get().userSettings.theme.boardElement.size;
+
+        if (size <= 20) return;
+
+        set((state) => ({
+            userSettings: {
+                ...state.userSettings,
+                theme: {
+                    ...state.userSettings.theme,
+                    boardElement: {
+                        ...state.userSettings.theme.boardElement,
+                        size: size - 1,
+                    },
+                },
+            },
+        }));
+    },
 }));
 
 export default storeUser;

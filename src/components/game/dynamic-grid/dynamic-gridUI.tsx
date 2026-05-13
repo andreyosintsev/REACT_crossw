@@ -1,3 +1,5 @@
+import cn from "classnames";
+
 import styles from "./dynamic-gridUI.module.scss";
 import { IDynamicGridUI } from "./dynamic-gridUI.interface";
 
@@ -15,7 +17,7 @@ import { IDynamicGridUI } from "./dynamic-gridUI.interface";
 
 const DynamicGridUI = ({ style, onCellClick, onContextMenu, children, className }: IDynamicGridUI) => {
     return (
-        <div className={styles.grid + ` ${className || ""}`} style={style} onMouseDown={onCellClick} onContextMenu={onContextMenu}>
+        <div className={cn(styles.grid, className)} style={style} onMouseDown={onCellClick} onContextMenu={onContextMenu}>
             {children}
         </div>
     );

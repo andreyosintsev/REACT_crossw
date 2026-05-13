@@ -1,6 +1,6 @@
 import styles from "./legend-vertical.module.scss";
 
-import { ILegendVertical } from "./legend-vertical.interface";
+import { ILegendVerticalProps } from "./legend-vertical.interface";
 
 import DynamicGrid from "../../../components/game/dynamic-grid/dynamic-grid";
 import LegendElement from "../legend-element/legend-element";
@@ -30,9 +30,9 @@ import LegendElement from "../legend-element/legend-element";
  * />
  */
 
-const LegendVertical = ({ legend, width, height }: ILegendVertical) => {
+const LegendVertical = ({ legend, width, height, appearance }: ILegendVerticalProps) => {
     return (
-        <DynamicGrid rows={height} columns={width} className={styles.legendVertical}>
+        <DynamicGrid rows={height} columns={width} className={styles.legendVertical} cellSize={appearance.boardElement.size}>
             {legend.map((item, i) => {
                 const columnIndex = Math.floor(i / width);
                 return (

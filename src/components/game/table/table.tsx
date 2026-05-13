@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import cn from "classnames";
 
 import { ITask } from "../../../utils/api/api.interface";
 
@@ -46,6 +47,8 @@ const Table = ({ task }: ITable) => {
     // Получаем метод сохранения прогресса из пользовательского хранилища
     const { setCrossword } = storeUser();
 
+    const appearance = storeUser((state) => state.userSettings.theme);
+
     /**
      * Обрабатывает закрытие модального окна
      * @param {React.MouseEvent} e - Событие клика
@@ -90,10 +93,20 @@ const Table = ({ task }: ITable) => {
         verticalLegend && (
             <>
                 <DynamicGrid columns={2} rows={2} cellSize={"auto"} className={styles.table}>
-                    <DynamicGrid key="boardZeroField" columns={1} rows={1} className={`${styles.zero_field} ${solved ? styles.win : ""}`} />
-                    <LegendHorizontal legend={horizontalLegend.legend} width={horizontalLegend.width} height={horizontalLegend.height} />
-                    <LegendVertical legend={verticalLegend.legend} width={verticalLegend.width} height={verticalLegend.height} />
-                    <Board width={task.width} height={task.height} />
+                    <DynamicGrid key="boardZeroField" columns={1} rows={1} className={cn(styles.zero_field, { [styles.win]: solved })} />
+                    <LegendHorizontal
+                        legend={horizontalLegend.legend}
+                        width={horizontalLegend.width}
+                        height={horizontalLegend.height}
+                        appearance={appearance}
+                    />
+                    <LegendVertical
+                        legend={verticalLegend.legend}
+                        width={verticalLegend.width}
+                        height={verticalLegend.height}
+                        appearance={appearance}
+                    />
+                    <Board width={task.width} height={task.height} appearance={appearance} />
                 </DynamicGrid>
                 {modalShow && (
                     <Modal image="modal1.png" title="Поздравляем, вы разгадали кроссворд!">

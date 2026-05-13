@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import { IGameBoard } from "./board.interface";
+import { IBoardProps } from "./board.interface";
 
 import BoardElement from "../board-element/board-element";
 import DynamicGrid from "../../../components/game/dynamic-grid/dynamic-grid";
@@ -13,7 +13,7 @@ import styles from "./board.module.scss";
  * Компонент игрового поля японского кроссворда
  *
  * @component
- * @param {IGameBoardProps} props - Свойства компонента
+ * @param {IBoardProps} props - Свойства компонента
  * @param {number} props.width - Ширина игрового поля в клетках
  * @param {number} props.height - Высота игрового поля в клетках
  * @returns {JSX.Element} Игровое поле с клетками и обработкой взаимодействий
@@ -29,7 +29,7 @@ import styles from "./board.module.scss";
  * @example
  * <Board width={15} height={15} />
  */
-const Board = ({ width, height }: IGameBoard) => {
+const Board = ({ width, height, appearance }: IBoardProps) => {
     // Получаем состояние и методы из игрового хранилища
     const { board, solved, checkWin } = storeGame();
 
@@ -54,7 +54,7 @@ const Board = ({ width, height }: IGameBoard) => {
 
     return (
         <div className={styles.board}>
-            <DynamicGrid columns={width} rows={height} className={solved ? styles.blocked : ""}>
+            <DynamicGrid columns={width} rows={height} className={solved ? styles.blocked : ""} cellSize={appearance.boardElement.size}>
                 {board.map((item, i) => {
                     return <BoardElement key={`board${i}`} xCoord={item.xCoord} yCoord={item.yCoord} content={item.content} />;
                 })}
