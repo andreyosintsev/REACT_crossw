@@ -46,7 +46,7 @@ const Table = ({ task }: ITable) => {
     const { horizontalLegend, verticalLegend, setWin, isWin, solved, setGameCompleted } = storeGame();
     // Получаем метод сохранения прогресса из пользовательского хранилища
     const { setCrossword } = storeUser();
-
+    // Внешний вид игрового поля
     const appearance = storeUser((state) => state.userSettings.theme);
 
     /**

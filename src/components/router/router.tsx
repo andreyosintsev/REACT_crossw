@@ -100,9 +100,7 @@ const Router: FC = () => {
                         </Routes>
 
                         <Sidebar>
-                            <Ads>
-                                <img src="/images/banner-300x800.png" alt="Реклама" />
-                            </Ads>
+                            <Ads></Ads>
                         </Sidebar>
                     </Wrapper>
                     <Footer siteName={SITE_NAME}>

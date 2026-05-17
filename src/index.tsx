@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
+import { BrowserRouter } from "react-router-dom";
+
 import "./scss/normalize.scss";
 import "./scss/fonts.scss";
 import "./scss/constants.scss";
@@ -17,7 +19,9 @@ if (rootElement) {
 
     root.render(
         <React.StrictMode>
-            <App />
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
         </React.StrictMode>,
     );
 }

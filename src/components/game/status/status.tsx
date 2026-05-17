@@ -1,16 +1,21 @@
 import { TStatusItem } from "../../../types/game";
 import StatusUI from "./statusUI";
 
-const Status = () => {
+interface IStatus {
+    taskNumber: number;
+}
+
+const Status = ({ taskNumber }: IStatus) => {
     const statusItems: TStatusItem[] = [
         {
-            key: "Кроссворд",
-            value: "№ 1",
+            key: "crossword",
+            title: "Кроссворд",
+            value: `№ ${taskNumber}`,
         },
-        {
-            key: "Время",
-            value: "01:16",
-        },
+        // {
+        //     key: "Время",
+        //     value: "01:16",
+        // },
     ];
 
     return <StatusUI statusItems={statusItems} />;

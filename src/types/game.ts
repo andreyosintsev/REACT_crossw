@@ -20,5 +20,6 @@ export type TControlItem =
 // Типизация статуса игры
 export type TStatusItem = {
     key: string;
+    title: string;
     value: string;
 };

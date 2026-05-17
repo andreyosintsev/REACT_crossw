@@ -115,7 +115,7 @@ const Game = () => {
     return (
         <Page>
             <Block variant="controls">
-                <Status />
+                <Status taskNumber={taskId} />
                 <Controls />
             </Block>
             {!error && task && (

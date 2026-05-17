@@ -28,6 +28,13 @@
     }
 
     &__game {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        height: calc(100dvh - 199px);
+        height: calc(var(--vh, 1vh) * 100 - 199px);
+        min-height: calc(100vh - 199px);
+        min-height: calc(var(--vh, 1vh) * 100 - 199px);
         overflow: auto;
     }
 
@@ -80,6 +87,22 @@
 
         &__title {
             margin: 20px 0;
+        }
+
+        &__game {
+            height: calc(100dvh - 170px);
+            height: calc(var(--vh, 1vh) * 100 - 170px);
+            min-height: calc(100vh - 170px);
+            min-height: calc(var(--vh, 1vh) * 100 - 170px);
+        }
+    }
+
+    @include media-max(mobile) {
+        &__game {
+            height: calc(100dvh - 170px);
+            height: calc(var(--vh, 1vh) * 100 - 170px);
+            min-height: calc(100vh - 170px);
+            min-height: calc(var(--vh, 1vh) * 100 - 170px);
         }
     }
 }

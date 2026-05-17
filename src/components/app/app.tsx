@@ -1,5 +1,7 @@
+import cn from "classnames";
+
 import { useEffect } from "react";
-import { BrowserRouter } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import { fetchNews, fetchTasks } from "../../utils/api/apiService";
 
@@ -42,6 +44,10 @@ const App = () => {
 
     const isMenuMobileOpen = storeApp((state) => state.isMenuMobileOpen);
 
+    const location = useLocation();
+
+    const isGamePage = location.pathname.startsWith("/game");
+
     /**
      * Эффект инициализации приложения
      * @dependency [] - Запускается единожды при монтировании
@@ -83,17 +89,17 @@ const App = () => {
     }, [setNews, setTasks, setLoading, setError]);
 
     //Отключение скроллинга при открытии меню
-    useEffect(() => {
-        if (isMenuMobileOpen) {
-            document.body.style.overflow = "hidden";
-        } else {
-            document.body.style.overflow = "auto";
-        }
+    // useEffect(() => {
+    //     if (isMenuMobileOpen) {
+    //         document.body.style.overflow = "hidden";
+    //     } else {
+    //         document.body.style.overflow = "auto";
+    //     }
 
-        return () => {
-            document.body.style.overflow = "auto";
-        };
-    }, [isMenuMobileOpen]);
+    //     return () => {
+    //         document.body.style.overflow = "auto";
+    //     };
+    // }, [isMenuMobileOpen]);
 
     //Расчет и установка единицы высоты для устройств на iOS
     useEffect(() => {
@@ -125,10 +131,12 @@ const App = () => {
     }, []);
 
     return (
-        <div className={styles.app}>
-            <BrowserRouter>
-                <Router />
-            </BrowserRouter>
+        <div
+            className={cn(styles.app, {
+                [styles.app_scroll_locked]: isGamePage,
+            })}
+        >
+            <Router />
         </div>
     );
 };

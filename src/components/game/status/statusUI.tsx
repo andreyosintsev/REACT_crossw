@@ -10,8 +10,8 @@ const StatusUI = ({ statusItems }: IStatusUI) => {
     return (
         <div className={styles.status}>
             {statusItems.map((item) => (
-                <div className={styles.status__entry}>
-                    <div className={styles.status__key}>{item.key}</div>
+                <div key={item.key} className={styles.status__entry}>
+                    <div className={styles.status__title}>{item.title}</div>
                     <div className={styles.status__value}>{item.value}</div>
                 </div>
             ))}
