@@ -14,6 +14,7 @@ import storeApp from "../../store/storeApp/storeApp";
 import storeLegend from "../../store/storeLegend/storeLegend";
 
 import { loadCrosswordFromLocalStorage } from "../../utils/local-storage/local-storage";
+import { Helmet } from "react-helmet-async";
 
 /**
  * Компонент страницы игры в японский кроссворд
@@ -113,17 +114,23 @@ const Game = () => {
     }
 
     return (
-        <Page>
-            <Block variant="controls">
-                <Status taskNumber={taskId} />
-                <Controls />
-            </Block>
-            {!error && task && (
-                <Block variant="game">
-                    <Table task={task} />
+        <>
+            <Helmet>
+                <title>Японский кроссворд № {taskNumber} | Японские кроссворды, нонограммы онлайн</title>
+                <meta name="description" content={`Японский кроссворд № ${taskNumber} для разгадывания на компьютере или телефоне`} />
+            </Helmet>
+            <Page>
+                <Block variant="controls">
+                    <Status taskNumber={taskId} />
+                    <Controls />
                 </Block>
-            )}
-        </Page>
+                {!error && task && (
+                    <Block variant="game">
+                        <Table task={task} />
+                    </Block>
+                )}
+            </Page>
+        </>
     );
 };
 

@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { Helmet } from "react-helmet-async";
 import { loadCrosswordFromLocalStorage } from "../../utils/local-storage/local-storage";
 
 import Page from "../../components/shared/page/page";
@@ -103,40 +104,46 @@ const Home: FC<IHome> = () => {
     );
 
     return (
-        <Page>
-            <Block>
-                <div className="block__text">
-                    <p>
-                        <strong>Добро пожаловать на сайт японских кроссвордов.</strong>
-                    </p>
-                    <p>
-                        Японский кроссворд (или нонограмма) - это головоломка, напоминающая привычный кроссворд, однако вместо слов в нём
-                        зашифровано изображение.
-                    </p>
-                    <p>Нонограммы появились в Японии в конце XX века.</p>
-                    <p>
-                        Нон Исида (яп. 石田 のん), иллюстратор и графический редактор, утверждавшая, что ещё в 1970 году она создавала
-                        нонограммы как средство общения между людьми и животными. Нон Исида верила, что животные очень разумные существа, но
-                        из-за отсутствия средств коммуникации между людьми и животными человек недооценивает земные существа. В результате
-                        её научной работы, по утверждению Исиды, родились нонограммы.
-                    </p>
-                </div>
-            </Block>
-            <Block variant="ads"></Block>
-            {tasksNotCompleted.length > 0 && (
-                <Block title={"Новые кроссворды"}>
-                    <Slider images={tasksToImages(tasksNotCompleted)} />
+        <>
+            <Helmet>
+                <title>Японские кроссворды, нонограммы онлайн | {SITE_DOMAIN}</title>
+                <meta name="description" content="Сайт с коллекцией японских кроссвордов, которые можно разгадывать онлайн" />
+            </Helmet>
+            <Page>
+                <Block>
+                    <div className="block__text">
+                        <p>
+                            <strong>Добро пожаловать на сайт японских кроссвордов.</strong>
+                        </p>
+                        <p>
+                            Японский кроссворд (или нонограмма) - это головоломка, напоминающая привычный кроссворд, однако вместо слов в
+                            нём зашифровано изображение.
+                        </p>
+                        <p>Нонограммы появились в Японии в конце XX века.</p>
+                        <p>
+                            Нон Исида (яп. 石田 のん), иллюстратор и графический редактор, утверждавшая, что ещё в 1970 году она создавала
+                            нонограммы как средство общения между людьми и животными. Нон Исида верила, что животные очень разумные
+                            существа, но из-за отсутствия средств коммуникации между людьми и животными человек недооценивает земные
+                            существа. В результате её научной работы, по утверждению Исиды, родились нонограммы.
+                        </p>
+                    </div>
                 </Block>
-            )}
-            {tasksCompleted.length > 0 && (
-                <Block title={"Решенные кроссворды"}>
-                    <Slider images={tasksToImagesCompleted(tasksCompleted)} />
+                <Block variant="ads"></Block>
+                {tasksNotCompleted.length > 0 && (
+                    <Block title={"Новые кроссворды"}>
+                        <Slider images={tasksToImages(tasksNotCompleted)} />
+                    </Block>
+                )}
+                {tasksCompleted.length > 0 && (
+                    <Block title={"Решенные кроссворды"}>
+                        <Slider images={tasksToImagesCompleted(tasksCompleted)} />
+                    </Block>
+                )}
+                <Block title={"Новости сайта"}>
+                    <News />
                 </Block>
-            )}
-            <Block title={"Новости сайта"}>
-                <News />
-            </Block>
-        </Page>
+            </Page>
+        </>
     );
 };
 
