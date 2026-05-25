@@ -56,3 +56,6 @@ export const BOARD_ELEMENT_CONTENT_VALUES = ["0", "1", "X"] as const;
 
 //Номер счетчика Яндекс.Метрики
 export const YANDEX_METRIKA_COUNTER = 109407072;
+
+//Пороговое значение, при котором игра понимает, что это был скролл, иначе касание
+export const TOUCH_MOVE_THRESHOLD = 10;

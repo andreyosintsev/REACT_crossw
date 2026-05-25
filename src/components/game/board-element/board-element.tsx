@@ -1,9 +1,13 @@
+import { useRef } from "react";
+
 import cn from "classnames";
 
 import { IBoardElement } from "./board-element.interface";
 
 import storeGame from "../../../store/storeGame/storeGame";
 import storeLegend from "../../../store/storeLegend/storeLegend";
+
+import { TOUCH_MOVE_THRESHOLD } from "../../../declarations/constants";
 
 import styles from "./board-element.module.scss";
 
@@ -36,12 +40,49 @@ const BoardElement = ({ xCoord, yCoord, content }: IBoardElement) => {
     const setHighlightedLegend = storeLegend((state) => state.setHighlightedLegend);
     const clearHighlightedLegend = storeLegend((state) => state.clearHighlightedLegend);
 
+    const touchStartRef = useRef({ x: 0, y: 0, moved: false });
+
     const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+        setHighlightedLegend(xCoord, yCoord);
+
+        if (e.pointerType === "touch") {
+            touchStartRef.current = { x: e.clientX, y: e.clientY, moved: false };
+
+            return;
+        }
+
         e.preventDefault();
 
-        const action = e.pointerType === "mouse" && e.button === 2 ? "cross" : "fill";
+        const action = e.button === 2 ? "cross" : "fill";
 
         applyCellAction(xCoord, yCoord, action);
+    };
+
+    const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+        setHighlightedLegend(xCoord, yCoord);
+
+        if (e.pointerType !== "touch") {
+            return;
+        }
+
+        const dx = Math.abs(e.clientX - touchStartRef.current.x);
+        const dy = Math.abs(e.clientY - touchStartRef.current.y);
+
+        if (dx > TOUCH_MOVE_THRESHOLD || dy > TOUCH_MOVE_THRESHOLD) {
+            touchStartRef.current.moved = true;
+        }
+    };
+
+    const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+        if (e.pointerType !== "touch") {
+            return;
+        }
+
+        if (touchStartRef.current.moved) {
+            return;
+        }
+
+        applyCellAction(xCoord, yCoord, "fill");
     };
 
     const handleContextMenu = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -64,8 +105,9 @@ const BoardElement = ({ xCoord, yCoord, content }: IBoardElement) => {
             data-x={xCoord}
             data-y={yCoord}
             onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
             onPointerEnter={() => setHighlightedLegend(xCoord, yCoord)}
-            onPointerMove={() => setHighlightedLegend(xCoord, yCoord)}
             onPointerLeave={clearHighlightedLegend}
             onContextMenu={handleContextMenu}
         />
