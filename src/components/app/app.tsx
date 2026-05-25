@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import { fetchNews, fetchTasks } from "../../utils/api/apiService";
 
 import Router from "../router/router";
+import Metrika from "../../components/shared/metrika/metrika";
 
 import styles from "./app.module.scss";
 
@@ -137,6 +138,7 @@ const App = () => {
             })}
         >
             <Router />
+            <Metrika />
         </div>
     );
 };

@@ -53,3 +53,6 @@ export const SITE_LOGO = "/images/logo.png";
 
 //Типы значений в клетках игрового поля
 export const BOARD_ELEMENT_CONTENT_VALUES = ["0", "1", "X"] as const;
+
+//Номер счетчика Яндекс.Метрики
+export const YANDEX_METRIKA_COUNTER = 109407072;
