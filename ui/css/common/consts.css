@@ -79,4 +79,5 @@
     --button-hover: scale(1.05);
     --button-active: scale(0.95);
 
+    --button-pressed: var(--pink-lighter);
 }

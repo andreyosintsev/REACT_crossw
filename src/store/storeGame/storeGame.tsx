@@ -44,6 +44,7 @@ const storeGame = create<IStoreGame>((set, get) => ({
     isWin: false, // Победа именно в процессе решения кроссворда
     solved: false, // Флаг разгаданного кроссворда, полученного из локального хранилища
     errorTask: false,
+    fillMode: "fill",
 
     setError: (state) => set({ errorTask: state }),
 
@@ -121,6 +122,7 @@ const storeGame = create<IStoreGame>((set, get) => ({
         const newBoard = updateBoardCell(board, cellIndex, action);
 
         set({ board: newBoard });
+        set({ fillMode: action });
 
         checkWin(newBoard);
         saveBoardToLocalStorage(task.id, newBoard);
@@ -175,6 +177,18 @@ const storeGame = create<IStoreGame>((set, get) => ({
         saveBoardToLocalStorage(task.id, cleanedBoard);
 
         return true;
+    },
+
+    setFillMode: (fillMode) => set({ fillMode }),
+
+    toggleFillMode: () => {
+        const { fillMode } = get();
+
+        const newFillMode = fillMode === "fill" ? "cross" : "fill";
+
+        set({ fillMode: newFillMode });
+
+        return newFillMode;
     },
 }));
 

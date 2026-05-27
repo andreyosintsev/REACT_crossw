@@ -6,6 +6,8 @@ import { TCellAction } from "../../types/game";
 import { ITask } from "../../utils/api/api.interface";
 import { ICrossword } from "../storeUser/storeUser.interface";
 
+import { TFillMode } from "../../types/game";
+
 interface IStoreGame {
     /** Текущая задача кроссворда */
     task: ITask | null;
@@ -21,6 +23,8 @@ interface IStoreGame {
     solved: boolean;
     /** Флаг ошибки загрузки задачи */
     errorTask: boolean;
+    /** Режим заполнения */
+    fillMode: TFillMode;
 
     /**
      * Устанавливает флаг ошибки задачи
@@ -128,6 +132,12 @@ interface IStoreGame {
      * - Очищает поле от крестиков при победе
      */
     checkWin: (borad: IBoardElement[]) => void;
+
+    /** Установка режима заполнения */
+    setFillMode: (mode: TFillMode) => void;
+
+    /** Переключение режима заполнения на противоположный */
+    toggleFillMode: () => TFillMode;
 }
 
 export default IStoreGame;

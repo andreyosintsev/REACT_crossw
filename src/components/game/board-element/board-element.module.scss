@@ -6,6 +6,13 @@
 
     transition: all 0.15s ease-in-out;
 
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+
+    touch-action: manipulation;
+
     &_0 {
         background: #ffffff;
     }

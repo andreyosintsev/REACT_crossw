@@ -65,6 +65,10 @@
         &_restart {
             padding: 3px;
         }
+
+        &_activated {
+            background-color: var(--pink-lighter, #cccccc);
+        }
     }
 
     &__image {

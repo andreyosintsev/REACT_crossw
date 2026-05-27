@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { TControlItem } from "../../../types/game";
 
@@ -41,10 +41,23 @@ const Controls = () => {
     const onSizeUp = storeUser((state) => state.sizeUp);
     const onSizeDown = storeUser((state) => state.sizeDown);
 
+    const setFillMode = storeGame((state) => state.setFillMode);
+    const fillMode = storeGame((state) => state.fillMode);
+
     // Состояние видимости модального окна подтверждения
     const [modalShow, setModalShow] = useState(false);
+
     // Получаем состояние и методы из игрового хранилища
-    const { setGameCompleted, setWin } = storeGame();
+    const setGameCompleted = storeGame((state) => state.setGameCompleted);
+    const setWin = storeGame((state) => state.setWin);
+
+    /**DEBUG */
+
+    useEffect(() => {
+        console.log("fillMode: ", fillMode);
+        console.log("isFill:", fillMode === "fill");
+        console.log("isCross:", fillMode === "cross");
+    }, [fillMode]);
 
     /**
      * Обработчик клика по кнопке "Начать заново"
@@ -94,6 +107,28 @@ const Controls = () => {
     };
 
     const controlItems: TControlItem[] = [
+        {
+            type: "button",
+            key: "mode-fill",
+            buttonClassName: fillMode === "fill" ? "activated" : undefined,
+            tooltip: "Режим заливки",
+            image: "/images/buttons/mode-fill.svg",
+            alt: "Режим заливки",
+            onClick: () => setFillMode("fill"),
+        },
+        {
+            type: "button",
+            key: "mode-cross",
+            buttonClassName: fillMode === "cross" ? "activated" : undefined,
+            tooltip: "Режим крестиков",
+            image: "/images/buttons/mode-cross.svg",
+            alt: "Режим крестиков",
+            onClick: () => setFillMode("cross"),
+        },
+        {
+            type: "separator",
+            key: "separator-0",
+        },
         {
             type: "button",
             key: "size-up",

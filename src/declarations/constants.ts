@@ -48,7 +48,6 @@ export const API_TASKS = "/api/tasks.php";
 */
 
 //Логотип
-
 export const SITE_LOGO = "/images/logo.png";
 
 //Типы значений в клетках игрового поля
@@ -59,3 +58,6 @@ export const YANDEX_METRIKA_COUNTER = 109407072;
 
 //Пороговое значение, при котором игра понимает, что это был скролл, иначе касание
 export const TOUCH_MOVE_THRESHOLD = 10;
+
+//Время нажатия для переключения режима закрашивания
+export const TOUCH_MODE_THRESHOLD = 300;

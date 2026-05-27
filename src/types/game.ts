@@ -23,3 +23,5 @@ export type TStatusItem = {
     title: string;
     value: string;
 };
+
+export type TFillMode = "fill" | "cross";

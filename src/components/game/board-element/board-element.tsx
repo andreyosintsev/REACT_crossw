@@ -7,7 +7,7 @@ import { IBoardElement } from "./board-element.interface";
 import storeGame from "../../../store/storeGame/storeGame";
 import storeLegend from "../../../store/storeLegend/storeLegend";
 
-import { TOUCH_MOVE_THRESHOLD } from "../../../declarations/constants";
+import { TOUCH_MOVE_THRESHOLD, TOUCH_MODE_THRESHOLD } from "../../../declarations/constants";
 
 import styles from "./board-element.module.scss";
 
@@ -40,22 +40,49 @@ const BoardElement = ({ xCoord, yCoord, content }: IBoardElement) => {
     const setHighlightedLegend = storeLegend((state) => state.setHighlightedLegend);
     const clearHighlightedLegend = storeLegend((state) => state.clearHighlightedLegend);
 
+    const toggleFillMode = storeGame((state) => state.toggleFillMode);
+
     const touchStartRef = useRef({ x: 0, y: 0, moved: false });
+    const touchLongTimerRef = useRef<number | null>(null);
+    const touchLongTriggered = useRef(false);
 
     const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
         setHighlightedLegend(xCoord, yCoord);
 
-        if (e.pointerType === "touch") {
-            touchStartRef.current = { x: e.clientX, y: e.clientY, moved: false };
+        if (e.pointerType !== "touch") {
+            e.preventDefault();
+
+            const action = e.button === 2 ? "cross" : "fill";
+            applyCellAction(xCoord, yCoord, action);
 
             return;
         }
 
-        e.preventDefault();
+        e.currentTarget.setPointerCapture(e.pointerId);
 
-        const action = e.button === 2 ? "cross" : "fill";
+        touchStartRef.current = { x: e.clientX, y: e.clientY, moved: false };
 
-        applyCellAction(xCoord, yCoord, action);
+        touchLongTriggered.current = false;
+
+        clearLongPressTimer();
+
+        touchLongTimerRef.current = window.setTimeout(() => {
+            if (touchStartRef.current.moved) {
+                return;
+            }
+
+            toggleFillMode();
+            touchLongTriggered.current = true;
+
+            navigator.vibrate?.(30);
+        }, TOUCH_MODE_THRESHOLD);
+    };
+
+    const clearLongPressTimer = () => {
+        if (touchLongTimerRef.current !== null) {
+            clearTimeout(touchLongTimerRef.current);
+            touchLongTimerRef.current = null;
+        }
     };
 
     const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -70,6 +97,7 @@ const BoardElement = ({ xCoord, yCoord, content }: IBoardElement) => {
 
         if (dx > TOUCH_MOVE_THRESHOLD || dy > TOUCH_MOVE_THRESHOLD) {
             touchStartRef.current.moved = true;
+            clearLongPressTimer();
         }
     };
 
@@ -78,15 +106,28 @@ const BoardElement = ({ xCoord, yCoord, content }: IBoardElement) => {
             return;
         }
 
+        clearLongPressTimer();
+
         if (touchStartRef.current.moved) {
             return;
         }
 
-        applyCellAction(xCoord, yCoord, "fill");
+        const currentFillMode = storeGame.getState().fillMode;
+
+        applyCellAction(xCoord, yCoord, currentFillMode);
     };
 
     const handleContextMenu = (e: React.MouseEvent<HTMLDivElement>) => {
         e.preventDefault();
+    };
+
+    const handlePointerEnter = () => {
+        setHighlightedLegend(xCoord, yCoord);
+    };
+
+    const handlePointerCancel = () => {
+        clearLongPressTimer();
+        clearHighlightedLegend();
     };
 
     return (
@@ -107,8 +148,9 @@ const BoardElement = ({ xCoord, yCoord, content }: IBoardElement) => {
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
             onPointerUp={handlePointerUp}
-            onPointerEnter={() => setHighlightedLegend(xCoord, yCoord)}
+            onPointerEnter={handlePointerEnter}
             onPointerLeave={clearHighlightedLegend}
+            onPointerCancel={handlePointerCancel}
             onContextMenu={handleContextMenu}
         />
     );
