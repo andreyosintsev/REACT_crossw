@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import { IMenuMobile } from "./menu-mobile";
 
 import styles from "./menu-mobileUI.module.scss";
@@ -24,7 +26,11 @@ const MenuMobileUI = ({ menuItems, title, isOpen, onClick }: IMenuMobileUI) => {
 
     return (
         <div className={style} onClick={onClick}>
-            {title && <div className={styles.menuMobile__title}>{title}</div>}
+            {title && (
+                <Link className={styles.menuMobile__link} to="/" title="На главную">
+                    <div className={styles.menuMobile__title}>{title}</div>
+                </Link>
+            )}
 
             <ul className={styles.menuMobile__items}>
                 {menuItems.map((menuItem, index) => (

@@ -74,7 +74,7 @@ const BoardElement = ({ xCoord, yCoord, content }: IBoardElement) => {
             toggleFillMode();
             touchLongTriggered.current = true;
 
-            navigator.vibrate?.(30);
+            navigator.vibrate?.(100);
         }, TOUCH_MODE_THRESHOLD);
     };
 

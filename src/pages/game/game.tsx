@@ -49,6 +49,9 @@ const Game = () => {
     const getCrosswordById = storeUser((state) => state.getCrosswordById);
     /** Функция очистки легенд из хранилища легенд */
     const clearHighlightedLegend = storeLegend((state) => state.clearHighlightedLegend);
+    /** Поле указывающее, разгадан ли кроссворд */
+    const isSolved = storeGame((state) => state.solved);
+    console.log("solved: ", isSolved);
 
     // Для отладки - список всех задач
     const tasks = storeTasks((state) => state.tasks);
@@ -116,8 +119,15 @@ const Game = () => {
     return (
         <>
             <Helmet>
-                <title>Японский кроссворд № {taskNumber} | Японские кроссворды, нонограммы онлайн</title>
-                <meta name="description" content={`Японский кроссворд № ${taskNumber} для разгадывания на компьютере или телефоне`} />
+                <title>Японский кроссворд № {taskNumber} | Японские кроссворды онлайн</title>
+                {isSolved ? (
+                    <meta
+                        name="description"
+                        content={`Решённый японский кроссворд № ${taskNumber}${task?.name ? ` - ${task.name}` : ""}`}
+                    />
+                ) : (
+                    <meta name="description" content={`Японский кроссворд № ${taskNumber} для разгадывания на компьютере или телефоне`} />
+                )}
             </Helmet>
             <Page>
                 <Block variant="controls">

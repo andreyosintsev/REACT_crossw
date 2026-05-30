@@ -13,10 +13,6 @@ export const SITE_YOB = "2024";
 //Главное меню
 export const SITE_MENU_MAIN = [
     {
-        title: "Главная",
-        link: "/",
-    },
-    {
         title: "О кроссвордах",
         link: "/about",
     },

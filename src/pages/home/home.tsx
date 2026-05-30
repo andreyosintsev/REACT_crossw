@@ -106,7 +106,7 @@ const Home: FC<IHome> = () => {
     return (
         <>
             <Helmet>
-                <title>Японские кроссворды, нонограммы онлайн | {SITE_DOMAIN}</title>
+                <title>Японские кроссворды онлайн | {SITE_DOMAIN}</title>
                 <meta name="description" content="Сайт с коллекцией японских кроссвордов, которые можно разгадывать онлайн" />
             </Helmet>
             <Page>
