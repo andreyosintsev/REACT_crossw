@@ -108,6 +108,7 @@ const Home: FC<IHome> = () => {
             <Helmet>
                 <title>Японские кроссворды онлайн | {SITE_DOMAIN}</title>
                 <meta name="description" content="Сайт с коллекцией японских кроссвордов, которые можно разгадывать онлайн" />
+                <link rel="canonical" href={`${SITE_PROTOCOL}${SITE_DOMAIN}/`}></link>
             </Helmet>
             <Page>
                 <Block>
