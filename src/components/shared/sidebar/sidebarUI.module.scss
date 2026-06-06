@@ -4,7 +4,12 @@
     max-width: 320px;
     margin-bottom: 20px;
 
-    background-color: var(--white);
+    height: calc(100dvh - 100px);
+    height: calc(var(--vh, 1vh) * 100 - 136px);
+    min-height: calc(100vh - 100px);
+    min-height: calc(var(--vh, 1vh) * 100 - 136px);
+
+    // background-color: var(--white);
 
     border-radius: var(--border-radius);
 

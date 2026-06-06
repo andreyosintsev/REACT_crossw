@@ -32,9 +32,9 @@
         justify-content: flex-start;
         align-items: flex-start;
         height: calc(100dvh - 199px);
-        height: calc(var(--vh, 1vh) * 100 - 199px);
+        height: calc(var(--vh, 1vh) * 100 - 215px);
         min-height: calc(100vh - 199px);
-        min-height: calc(var(--vh, 1vh) * 100 - 199px);
+        min-height: calc(var(--vh, 1vh) * 100 - 215px);
         overflow: auto;
     }
 
@@ -71,6 +71,13 @@
     @include media-max(desktop) {
         &_ads {
             display: block;
+        }
+
+        &__game {
+            height: calc(100dvh - 207px);
+            height: calc(var(--vh, 1vh) * 100 - 207px);
+            min-height: calc(100vh - 207px);
+            min-height: calc(var(--vh, 1vh) * 100 - 207px);
         }
     }
 

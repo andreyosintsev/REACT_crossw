@@ -128,7 +128,7 @@ const Home: FC<IHome> = () => {
                         </p>
                     </div>
                 </Block>
-                <Block variant="ads"></Block>
+                {false && <Block variant="ads"></Block>}
                 {tasksNotCompleted.length > 0 && (
                     <Block title={"Новые кроссворды"}>
                         <Slider images={tasksToImages(tasksNotCompleted)} />

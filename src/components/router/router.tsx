@@ -100,11 +100,13 @@ const Router: FC = () => {
                         </Routes>
 
                         <Sidebar>
-                            <Ads></Ads>
+                            <Ads>
+                                <img src="/images/sidebar300.webp" alt="Реклама" />
+                            </Ads>
                         </Sidebar>
                     </Wrapper>
                     <Footer siteName={SITE_NAME}>
-                        <img src="/images/banner-320x50.jpg" alt="Реклама" />
+                        <img src="/images/banner-320x50.webp" alt="Реклама" />
                     </Footer>
                 </>
             )}

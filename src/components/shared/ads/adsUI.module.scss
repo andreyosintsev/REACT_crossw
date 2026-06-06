@@ -2,4 +2,10 @@
     width: 300px;
 
     box-shadow: 0px 6px 9px -3px rgba(0, 0, 0, 0.1);
+
+    img {
+        border-radius: var(--border-radius);
+
+        overflow: hidden;
+    }
 }
