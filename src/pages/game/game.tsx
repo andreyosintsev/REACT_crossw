@@ -1,6 +1,8 @@
 import { useEffect, useLayoutEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
+import { SITE_PROTOCOL, SITE_DOMAIN } from "../../declarations/constants";
+
 import Page from "../../components/shared/page/page";
 import Block from "../../components/shared/block/block";
 import Table from "../../components/game/table/table";
@@ -128,6 +130,7 @@ const Game = () => {
                 ) : (
                     <meta name="description" content={`Японский кроссворд № ${taskNumber} для разгадывания на компьютере или телефоне`} />
                 )}
+                <link rel="canonical" href={`${SITE_PROTOCOL}${SITE_DOMAIN}/game/${taskNumber}`}></link>
             </Helmet>
             <Page>
                 <Block variant="controls">

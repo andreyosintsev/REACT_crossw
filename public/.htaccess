@@ -1,1 +1,5 @@
 FallbackResource /index.html
+
+RewriteEngine On
+RewriteRule ^sitemap\.xml$ api/sitemap.php [L]
+RewriteRule ^game/([0-9]+)/$ /game/$1 [R=301,L]
