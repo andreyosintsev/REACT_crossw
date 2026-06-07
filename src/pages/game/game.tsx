@@ -53,7 +53,6 @@ const Game = () => {
     const clearHighlightedLegend = storeLegend((state) => state.clearHighlightedLegend);
     /** Поле указывающее, разгадан ли кроссворд */
     const isSolved = storeGame((state) => state.solved);
-    console.log("solved: ", isSolved);
 
     // Для отладки - список всех задач
     const tasks = storeTasks((state) => state.tasks);
@@ -121,14 +120,23 @@ const Game = () => {
     return (
         <>
             <Helmet>
-                <title>Японский кроссворд № {taskNumber} | Японские кроссворды онлайн</title>
+                <title>
+                    {`Японский кроссворд № ${taskNumber} ${task?.name ? `- ${task.name}` : ""} ${
+                        task?.width && task?.height ? `(${task?.width}x${task?.height})` : ""
+                    } | Японские кроссворды онлайн`}
+                </title>
                 {isSolved ? (
                     <meta
                         name="description"
                         content={`Решённый японский кроссворд № ${taskNumber}${task?.name ? ` - ${task.name}` : ""}`}
                     />
                 ) : (
-                    <meta name="description" content={`Японский кроссворд № ${taskNumber} для разгадывания на компьютере или телефоне`} />
+                    <meta
+                        name="description"
+                        content={`Японский кроссворд № ${taskNumber}${
+                            task?.name ? ` «${task.name}»` : ""
+                        } онлайн. Размер ${task?.width}×${task?.height}. Удобно решать на компьютере и телефоне.`}
+                    />
                 )}
                 <link rel="canonical" href={`${SITE_PROTOCOL}${SITE_DOMAIN}/game/${taskNumber}`}></link>
             </Helmet>
